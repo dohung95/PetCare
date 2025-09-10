@@ -4,9 +4,9 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Job from "./components/Job";
 import Login from "./components/Login";
-import Service from "./components/service";
 import About from "./components/about";
 import Contact from "./components/contact";
+import VeterinarianRegistration from "./components/Veterinarian_Registration";
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
               </ul>
             </div>
           } />
+          <Route path="/service/Veterinarian_Registration" element={<VeterinarianRegistration/>} />
           <Route path="/service/dog-products" element={<h1>Dog Products Page</h1>} />
           <Route path="/service/cat-products" element={<h1>Cat Products Page</h1>} />    
           <Route path="/" element={<Home/>} />
