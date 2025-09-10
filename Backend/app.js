@@ -18,6 +18,9 @@ const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const authRouter = require('./routes/AuthRoutes');
 
 
+const authRouter = require('./routes/AuthRoutes');
+
+
 var app = express();
 
 // Bật CORS
@@ -42,6 +45,8 @@ app.use('/users', usersRouter);
 app.use('/api/vets', veterinarianRouter);
 app.use('/api/health-records', HealthRecordRouter);
 
+
+app.use('/api/auth', authRouter);
 
 app.use('/api/auth', authRouter);
 
