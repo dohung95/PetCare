@@ -1,4 +1,6 @@
 var createError = require('http-errors');
+require('dotenv').config();
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -13,12 +15,15 @@ var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 
+const authRouter = require('./routes/AuthRoutes');
+
+
 var app = express();
 
 // Bật CORS
 app.use(cors()); // Thêm dòng này
 
-mongoose.connect('mongodb://localhost:27017/PetCare')
+mongoose.connect('mongodb://127.0.0.1:27017/PetCare') //nhớ check kỹ nha mấy a mấy chị 😁
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error(`Could not connect to MongoDB... ${err}`));
 
@@ -37,6 +42,8 @@ app.use('/users', usersRouter);
 app.use('/api/vets', veterinarianRouter);
 app.use('/api/health-records', HealthRecordRouter);
 
+
+app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
