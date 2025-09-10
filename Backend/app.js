@@ -17,10 +17,6 @@ const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 
 const authRouter = require('./routes/AuthRoutes');
 
-
-const authRouter = require('./routes/AuthRoutes');
-
-
 var app = express();
 
 // Bật CORS
