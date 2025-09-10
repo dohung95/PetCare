@@ -1,6 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Job from "./components/Job";
+import Login from "./components/Login";
+import Service from "./components/service";
+import About from "./components/about";
+import Contact from "./components/contact";
 
 function App() {
   return (
@@ -20,11 +26,13 @@ function App() {
             </div>
           } />
           <Route path="/service/dog-products" element={<h1>Dog Products Page</h1>} />
-          <Route path="/service/cat-products" element={<h1>Cat Products Page</h1>} />
-          <Route path="/about" element={<h1>About Page</h1>} />
-          <Route path="/contact" element={<h1>Contact Page</h1>} />
-          <Route path="/job" element={<h1>Job Page</h1>} />
-          <Route path="/login" element={<h1>Login Page</h1>} />
+          <Route path="/service/cat-products" element={<h1>Cat Products Page</h1>} />    
+          <Route path="/" element={<Home/>} />
+          <Route path="/service" element={<Service/>} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/contact" element={<Contact/>} />
+          <Route path="/job" element={<Job/>} />
+          <Route path="/login" element={<Login/>} />
         </Routes>
       </div>
     </Router>
