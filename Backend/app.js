@@ -3,11 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const veterinarianRouter = require('./routes/veterinarian');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost:27017/PetCare')
+.then(() => console.log('Connected to MongoDB...'))
+.catch(err => console.error(`Could not connect to MongoDB... ${err}`));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +42,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
 
 module.exports = app;
