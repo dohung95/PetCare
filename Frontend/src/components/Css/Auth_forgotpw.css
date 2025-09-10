@@ -1,0 +1,300 @@
+/* ======= Forgot Password – Minimal Email Validation Page ======= */
+:root{
+  --fp-bg: #f6f7fb;
+  --fp-card-bg: #ffffff;
+  --fp-border: #eef0f5;
+  --fp-text: #1d2433;
+  --fp-muted: #6b7280;
+  --fp-primary: var(--primary, #05F2DB);
+}
+
+.fp-wrap {
+  min-height: 100vh;
+  background:
+    radial-gradient(1000px 600px at 10% 0%, #e6fbff 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 100%, #f9e6ff 0%, transparent 55%),
+    var(--fp-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px 80px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--fp-text);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card */
+.fp-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--fp-card-bg);
+  border: 1px solid var(--fp-border);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.08);
+  padding: 28px 28px 24px;
+}
+
+/* Header */
+.fp-head {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.fp-icon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.fp-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.fp-subtitle {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--fp-muted);
+}
+
+/* Form */
+.fp-form { margin-top: 10px; }
+.fp-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 10px 4px 6px;
+  color: #2b3343;
+}
+.fp-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #f2f4f8;
+  border: 1px solid #e6e9f0;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.fp-input::placeholder { color: #9aa3b2; }
+.fp-input:focus {
+  background: #fff;
+  border-color: color-mix(in srgb, var(--fp-primary) 45%, #cfe8ff);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--fp-primary) 18%, transparent);
+}
+
+/* Validation states */
+.fp-input--invalid {
+  border-color: #fca5a5 !important;
+  box-shadow: 0 0 0 4px rgba(252,165,165,.25) !important;
+  background: #fff !important;
+}
+
+/* Messages */
+.fp-msg {
+  margin-top: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  animation: fp-fade-in .25s ease both;
+}
+.fp-error {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #fecdd3;
+}
+.fp-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+@keyframes fp-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Shake effect when invalid submit */
+.fp-shake {
+  animation: fp-shake .45s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes fp-shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+
+/* Actions (không override <button>) */
+.fp-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.fp-actions button {
+  background: var(--fp-primary);
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 0;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 240px;
+  cursor: pointer;
+  transition: background .2s ease, transform .1s ease;
+}
+
+/* Links */
+.fp-links {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.fp-link {
+  color: color-mix(in srgb, var(--fp-primary) 75%, #0ea5a5);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.fp-link:hover {
+  text-decoration: underline;
+}
+
+/* Back Home khu vực (tận dụng css cũ của bạn) */
+.btn_home {
+  text-align: center;
+  margin-top: 18px;
+  background: var(--fp-primary);
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 0;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 240px;
+  cursor: pointer;
+}
+
+.btn-home-link {
+  text-decoration: none;
+  color: white;
+}
+/* Responsive */
+@media (max-width: 480px) {
+  .fp-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .fp-title {
+    font-size: 24px;
+  }
+}
+
+/* ===== Validation styles & animations ===== */
+
+/* Input invalid: viền đỏ + glow nhẹ */
+.fp-input--invalid {
+  border-color: #fca5a5 !important;
+  box-shadow: 0 0 0 4px rgba(252, 165, 165, .25) !important;
+  background: #fff !important;
+}
+
+/* Error / Success messages */
+.fp-msg {
+  margin-top: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  animation: fp-fade-in .25s ease both;
+}
+
+.fp-error {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #fecdd3;
+}
+
+.fp-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+@keyframes fp-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shake khi submit lỗi */
+.fp-shake {
+  animation: fp-shake .45s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes fp-shake {
+
+  10%,
+  90% {
+    transform: translateX(-2px);
+  }
+
+  20%,
+  80% {
+    transform: translateX(4px);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  60% {
+    transform: translateX(6px);
+  }
+}
+
+/* Password hints (live checks) */
+.fp-hints {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 10px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.fp-hints li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.fp-hints li::before {
+  content: "✖";
+  color: #ef4444;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.fp-hints li.ok {
+  color: #059669;
+  font-weight: 600;
+}
+
+.fp-hints li.ok::before {
+  content: "✔";
+  color: #10b981;
+}

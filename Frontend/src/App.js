@@ -8,11 +8,12 @@ import Service from "./components/service";
 import About from "./components/about";
 import Contact from "./components/contact";
 import VeterinarianRegistration from "./components/Veterinarian_Registration";
+import Forgotpw from "./components/auth/Forgotpw";
 
 function Layout() {
   const location = useLocation();
-  const hideNavbar = location.pathname === "/login";
-
+  const hideNavbar = location.pathname === "/auth/login" || location.pathname === "/auth/forgot_password";
+  
   return (
     <>
       {!hideNavbar && <Navbar />}
@@ -37,7 +38,8 @@ function Layout() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/job" element={<Job />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/forgot_password" element={<Forgotpw />} />
         </Routes>
       </div>
     </>

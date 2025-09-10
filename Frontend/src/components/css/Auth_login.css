@@ -151,3 +151,39 @@
   .body_login .overlay-panel{ padding: 0 24px; }
   .body_login button{ padding: 10px 32px; }
 }
+
+
+
+/* ===== Validation styles shared by Login & Signup ===== */
+.body_login .is-invalid {
+  border: 1px solid #ff4a4a !important;
+  box-shadow: 0 0 0 4px rgba(252,165,165,.25) !important;
+  background: #fff !important;
+}
+
+.body_login .form-error {
+  margin-top: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #9f1239;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  padding: 8px 10px;
+  border-radius: 10px;
+  animation: login-fade .25s ease both;
+}
+
+@keyframes login-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.body_login .form-shake {
+  animation: login-shake .45s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes login-shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}

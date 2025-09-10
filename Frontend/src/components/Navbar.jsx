@@ -22,7 +22,7 @@ const Navbar = () => {
         <li><Link to="/about" style={styles.link}>About</Link></li>
         <li><Link to="/contact" style={styles.link}>Contact</Link></li>
         <li><Link to="/job" style={styles.link}>Job</Link></li>
-        <li><Link to="/login" style={styles.link}>Login</Link></li>
+        <li><Link to="/auth/login" style={styles.link}>Login</Link></li>
       </ul>
     </nav>
   );
