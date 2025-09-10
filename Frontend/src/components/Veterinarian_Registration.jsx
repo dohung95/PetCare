@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import Axios
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const VeterinarianRegistration = () => {
@@ -46,25 +47,21 @@ const VeterinarianRegistration = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('http://localhost:3000/api/vets/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-          specialization: formData.specialization,
-          experience: formData.experience ? parseInt(formData.experience) : 0
-        })
+      const response = await axios.post('http://localhost:3000/api/vets/register', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        specialization: formData.specialization,
+        experience: formData.experience ? parseInt(formData.experience) : 0
       });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Registration failed');
-
-      setSubmitStatus({ type: 'success', message: data.message || 'Registration successful!' });
+      setSubmitStatus({ type: 'success', message: response.data.message || 'Registration successful!' });
     } catch (error) {
-      setSubmitStatus({ type: 'error', message: error.message });
+      setSubmitStatus({ 
+        type: 'error', 
+        message: error.response?.data?.error || error.message || 'Registration failed' 
+      });
     } finally {
       setIsSubmitting(false);
     }
