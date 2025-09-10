@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Job from "./components/Job";
-import Login from "./components/Login";
+import Login from "./components/auth/Login";
 import Service from "./components/service";
 import About from "./components/about";
 import Contact from "./components/contact";
@@ -15,7 +15,8 @@ function Layout() {
   return (
     <>
       {!hideNavbar && <Navbar />}
-      <div style={{ padding: "20px" }}>
+      {/* <div style={{ padding: "20px" }}> */}
+      <div>
         <Routes>
           <Route path="/" element={<h1>Home Page</h1>} />
           <Route path="/service" element={<h1>Service Page</h1>} />

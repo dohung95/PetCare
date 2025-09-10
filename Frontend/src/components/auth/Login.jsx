@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../css/Auth_login.css";
+import "../Css/Auth_login.css";
 import { Link } from "react-router-dom";
 
 export default function Login() {
@@ -63,7 +63,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div>
+      <div className="btn_home" style={{ textAlign: "center", marginTop: "40px" }}>
         <button><Link to="/">GO BACK HOME</Link></button>
       </div>
     </div>
