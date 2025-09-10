@@ -1,4 +1,4 @@
-const Veterinarian = require("../model/veterinarian.model");
+const Veterinarian = require("../models/veterinarian.model");
 // const Appointment = require("../model/Appointment");
 // const HealthRecord = require("../model/HealthRecord");
 

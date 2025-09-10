@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const vetController = require("../controller/veterinarianController");
+const vetController = require("../controllers/veterinarianController");
 
 // Đăng ký bác sĩ
 router.post("/register", vetController.registerVet);
