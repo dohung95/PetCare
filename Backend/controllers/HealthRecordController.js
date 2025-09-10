@@ -2,7 +2,9 @@ const HealthRecord = require('../models/HealthRecord');
 
 exports.getHealthRecords = async (req, res) => {
   try {
-    const HealthRecords = await Pet.find();
+
+    const HealthRecords = await HealthRecord.find();
+
     res.status(200).json({success: true, data: HealthRecords});
 
   } catch (error) {
@@ -13,8 +15,10 @@ exports.getHealthRecords = async (req, res) => {
 exports.getHealthRecordById = async (req, res) => {
   try {
     const HealthRecord = await HealthRecord.findById(req.params.id);
-    if (!HealthRecord){
-      return res.status(404).json({success: true, data: HealthRecord})
+
+    if (!record){
+      return res.status(404).json({success: true, data: record})
+
     }
   } catch (error) {
     res.status(500).json({success: false, message: error.message}); 
