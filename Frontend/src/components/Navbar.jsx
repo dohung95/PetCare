@@ -1,56 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Css/Navbar.css";
 
 const Navbar = () => {
+  const [serviceOpen, setServiceOpen] = useState(false);
+  const [jobOpen, setJobOpen] = useState(false);
+
   return (
-    <nav style={styles.nav}>
-      <h2 style={styles.logo}>MySite</h2>
-      <ul style={styles.menu}>
-        <li><Link to="/" style={styles.link}>Home</Link></li>
-        <li className="dropdown">
-          <span>Service</span>
-          <ul className="dropdown-menu">
-            <li>
-              <Link to="/service/store">Store</Link>
-            </li>
-            <li>
-              <Link to="/service/Veterinarian_Registration">Veterinarian Registration</Link>
-            </li>
-          </ul>
-        </li>
-        <li><Link to="/about" style={styles.link}>About</Link></li>
-        <li><Link to="/contact" style={styles.link}>Contact</Link></li>
-        <li><Link to="/job" style={styles.link}>Job</Link></li>
-        <li><Link to="/auth/login" style={styles.link}>Login</Link></li>
-      </ul>
+    <nav className="navbar">
+      <div className="container-fluid">
+        <div className="row w-100 align-items-center">
+          <div className="col-md-6">
+            <Link to="/">
+              <img src="/imgs/logo-petcare.png" alt="Logo" className="logo-image" />
+            </Link>
+          </div>
+          <div className="col-md-6">
+            <div className="menu">
+              <div className="menu-item">
+                <Link to="/" className="nav-link">Home</Link>
+              </div>
+              <div 
+                className="menu-item dropdown"
+                onMouseEnter={() => setServiceOpen(true)}
+                onMouseLeave={() => setServiceOpen(false)}
+              >
+                <span className="nav-link">Service</span>
+                {serviceOpen && (
+                  <div className="dropdown-menu">
+                    <Link to="/service/store" className="dropdown-item">Store</Link>
+                  </div>
+                )}
+              </div>
+              <div className="menu-item">
+                <Link to="/about" className="nav-link">About</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/contact" className="nav-link">Contact</Link>
+              </div>
+              <div 
+                className="menu-item dropdown"
+                onMouseEnter={() => setJobOpen(true)}
+                onMouseLeave={() => setJobOpen(false)}
+              >
+                <span className="nav-link">Job</span>
+                {jobOpen && (
+                  <div className="dropdown-menu">
+                    <Link to="/job/Veterinarian_Registration" className="dropdown-item">
+                      Veterinarian Registration
+                    </Link>
+                    <Link to="/job/HealthRecord" className="dropdown-item">
+                      Health Record
+                    </Link>
+                  </div>
+                )}
+              </div>
+              <div className="menu-item">
+                <Link to="/auth/login" className="nav-link">Login</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
   );
-};
-
-const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "10px 20px",
-    background: "#333",
-    color: "#fff",
-  },
-  logo: {
-    margin: 0,
-  },
-  menu: {
-    listStyle: "none",
-    display: "flex",
-    gap: "15px",
-    margin: 0,
-    padding: 0,
-  },
-  link: {
-    color: "#fff",
-    textDecoration: "none",
-  },
 };
 
 export default Navbar;
