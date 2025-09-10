@@ -14,6 +14,7 @@ function App() {
           <Route path="/contact" element={<h1>Contact Page</h1>} />
           <Route path="/job" element={<h1>Job Page</h1>} />
           <Route path="/login" element={<h1>Login Page</h1>} />
+          <Route path="/login1" element={<h1>Login Page</h1>} />
         </Routes>
       </div>
     </Router>
