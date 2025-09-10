@@ -14,6 +14,19 @@ function App() {
       <Navbar />
       <div style={{ padding: "20px" }}>
         <Routes>
+          <Route path="/" element={<h1>Home Page</h1>} />
+          <Route path="/service" element={<h1>Service Page</h1>} />
+          <Route path="/service/store" element={
+            <div>
+              <h1>Store Page</h1>
+              <ul>
+                <li><a href="/service/dog-products">Dog Products</a></li>
+                <li><a href="/service/cat-products">Cat Products</a></li>
+              </ul>
+            </div>
+          } />
+          <Route path="/service/dog-products" element={<h1>Dog Products Page</h1>} />
+          <Route path="/service/cat-products" element={<h1>Cat Products Page</h1>} />    
           <Route path="/" element={<Home/>} />
           <Route path="/service" element={<Service/>} />
           <Route path="/about" element={<About/>} />
