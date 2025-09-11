@@ -13,7 +13,7 @@ const appointmentSchema = new mongoose.Schema({
   },
   vet_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Owner'
+    ref: 'Veterinarian',
   },
   appointment_time: {
     type: Date,

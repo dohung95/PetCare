@@ -6,5 +6,4 @@ router.post('/signup', signup);
 router.post('/signin', signin);
 router.get('/me', verifyToken, me);
 
-
 module.exports = router;
