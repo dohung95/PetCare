@@ -8,6 +8,14 @@ import About from "./components/about";
 import Contact from "./components/contact";
 import VeterinarianRegistration from "./components/Veterinarian_Registration";
 import Forgotpw from "./components/auth/Forgotpw";
+// =================NGƯỜI BẢO HỘ=============
+import AdoptionPage from "./components/Adoption";
+import PetDetail from "./components/adop/PetDetail";
+import FormAdop from "./components/adop/Fromadop";
+import ThankYou from "./components/adop/ThankYou";
+import AdopDashboard from "./components/AdminAdop/AdopDashboard";
+import AdopPets from "./components/AdminAdop/AdopPets";
+import Adoptions from "./components/AdminAdop/Adoptions";
 
 function Layout() {
   const location = useLocation();
@@ -36,6 +44,18 @@ function Layout() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          {/* =============NGƯỜI BẢO HỘ USER============= */}
+          <Route path="/adoption" element={<AdoptionPage />} />
+          <Route path="/pets/:id" element={<PetDetail />} />
+          <Route path="/formadop" element={<FormAdop />} />
+          <Route path="/thankyou" element={<ThankYou />} />
+          {/* =========ADMIN NGƯỜI BẢO HỘ =========== */}
+          <Route path="/AdopDashboard" element={<AdopDashboard />} />
+          <Route index element={<AdopOverview />} />
+          <Route path="/adopPets" element={<AdopPets />} />
+          <Route path="/adopAdoptions" element={<Adoptions />} />
+        {/* </Route> */}
+
           <Route path="/job/Veterinarian_Registration" element={<VeterinarianRegistration />} />
           <Route path="/job/HealthRecord" element={<HealthRecord />} />
           
