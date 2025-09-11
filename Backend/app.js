@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+const AuthRouter = require('./routes/AuthRoutes');
 require('dotenv').config();
 const AuthRouter = require('./routes/AuthRoutes');
 
@@ -9,48 +10,45 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
+// Import the new ShelterPet routes
+const shelterPetRoutes = require('./routes/shelterPetRoutes'); 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
+
 const AppointmentRouter = require('./routes/AppointmentRoutes');
+
+const ShelterRoutes = require('./routes/ShelterRoutes');
+
 
 const ShelterRoutes = require('./routes/ShelterRoutes');
 
 var app = express();
 
-
-// app.use(cors());
-// Sử dụng CORS với cấu hình cụ thể
 const corsOptions = {
     origin: process.env.CORS_ORIGIN,
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 
-// mongoose.connect('mongodb://127.0.0.1:27017/PetCare') //nhớ check kỹ nha mấy a mấy chị 😁
-//   .then(() => console.log('Connected to MongoDB...'))
-//   .catch(err => console.error(`Could not connect to MongoDB... ${err}`));
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/PetCare';
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(err => console.error(`Could not connect to MongoDB... ${err}`));
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error(`Could not connect to MongoDB... ${err}`));
 
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-
-//Middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-//Routes
+// Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/vets', veterinarianRouter);
@@ -59,6 +57,10 @@ app.use('/api/health-records', HealthRecordRouter);
 app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
+
+
+// Add the ShelterPet routes
+app.use('/api/shelter-pets', shelterPetRoutes);
 
 
 // catch 404 and forward to error handler
