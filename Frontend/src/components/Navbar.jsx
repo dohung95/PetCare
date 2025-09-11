@@ -85,7 +85,7 @@ const Navbar = () => {
               
               <div 
 
-              <div
+      
 
                 className="menu-item dropdown"
                 onMouseEnter={() => setJobOpen(true)}
