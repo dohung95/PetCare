@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const HealthRecord = () => {
   const [records, setRecords] = useState([]);
@@ -19,15 +20,16 @@ const HealthRecord = () => {
 
   const fetchHealthRecords = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/health-records');
-      const result = await response.json();
-      if (result.success) {
-        setRecords(result.data);
+      const response = await axios.get('http://localhost:5000/api/health-records');
+      console.log('Fetch response:', response.data);
+      if (response.data.success) {
+        setRecords(response.data.data);
         setError(null);
       } else {
-        setError(result.message);
+        setError(response.data.message);
       }
     } catch (err) {
+      console.error('Fetch error:', err.response ? err.response.data : err.message);
       setError('Failed to fetch health records');
     }
   };
@@ -45,29 +47,22 @@ const HealthRecord = () => {
       let response;
       if (editingId) {
         // Update existing record
-        response = await fetch(`http://localhost:3000/api/health-records/${editingId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
+        response = await axios.put(`http://localhost:5000/api/health-records/${editingId}`, formData);
       } else {
         // Create new record
-        response = await fetch('http://localhost:3000/api/health-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
+        response = await axios.post('http://localhost:5000/api/health-records', formData);
       }
-      const result = await response.json();
-      if (result.success) {
+      console.log('Submit response:', response.data);
+      if (response.data.success) {
         fetchHealthRecords(); // Refresh the list
         setFormData({ pet_id: '', vet_id: '', visit_date: '', diagnosis: '', treatment: '' });
         setEditingId(null);
         setError(null);
       } else {
-        setError(result.message);
+        setError(response.data.message);
       }
     } catch (err) {
+      console.error('Submit error:', err.response ? err.response.data : err.message);
       setError('Operation failed');
     }
   };
@@ -88,17 +83,16 @@ const HealthRecord = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this record?')) {
       try {
-        const response = await fetch(`http://localhost:3000/api/health-records/${id}`, {
-          method: 'DELETE'
-        });
-        const result = await response.json();
-        if (result.success) {
+        const response = await axios.delete(`http://localhost:5000/api/health-records/${id}`);
+        console.log('Delete response:', response.data);
+        if (response.data.success) {
           fetchHealthRecords(); // Refresh the list
           setError(null);
         } else {
-          setError(result.message);
+          setError(response.data.message);
         }
       } catch (err) {
+        console.error('Delete error:', err.response ? err.response.data : err.message);
         setError('Failed to delete record');
       }
     }

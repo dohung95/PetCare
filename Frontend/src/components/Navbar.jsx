@@ -97,6 +97,9 @@ const Navbar = () => {
                     <Link to="/job/HealthRecord" className="dropdown-item">
                       Health Record
                     </Link>
+                    <Link to="/job/AppointmentManagement" className="dropdown-item">
+                      Appointment Management
+                    </Link>
                   </div>
                 )}
               </div>

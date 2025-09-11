@@ -1,6 +1,6 @@
 /* ======= Forgot Password – Minimal Email Validation Page ======= */
 :root{
-  --fp-bg: #f6f7fb;
+  /* --fp-bg: #f6f7fb; */
   --fp-card-bg: #ffffff;
   --fp-border: #eef0f5;
   --fp-text: #1d2433;
@@ -10,10 +10,10 @@
 
 .fp-wrap {
   min-height: 100vh;
-  background:
+  /* background:
     radial-gradient(1000px 600px at 10% 0%, #e6fbff 0%, transparent 60%),
     radial-gradient(900px 500px at 100% 100%, #f9e6ff 0%, transparent 55%),
-    var(--fp-bg);
+    var(--fp-bg); */
   display: flex;
   align-items: center;
   justify-content: center;

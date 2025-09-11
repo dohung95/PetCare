@@ -10,9 +10,9 @@ function signAccessToken(user) {
   );
 }
 
-// @desc    Register (Owner)
-// @route   POST /api/auth/signup
-// @access  Public
+// @desc    Register (Owner)
+// @route   POST /api/auth/signup
+// @access  Public
 exports.signup = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
@@ -66,9 +66,9 @@ exports.signup = async (req, res) => {
   }
 };
 
-// @desc    Login (Owner)
-// @route   POST /api/auth/signin
-// @access  Public
+// @desc    Login (Owner)
+// @route   POST /api/auth/signin
+// @access  Public
 exports.signin = async (req, res) => {
   try {
     const { email, password } = req.body; // FE gửi plain password
@@ -101,9 +101,9 @@ exports.signin = async (req, res) => {
   }
 };
 
-// @desc    Get current user (JWT required)
-// @route   GET /api/auth/me
-// @access  Private
+// @desc    Get current user (JWT required)
+// @route   GET /api/auth/me
+// @access  Private
 exports.me = async (req, res) => {
   try {
     const user = await Owner.findById(req.user.sub).lean();
