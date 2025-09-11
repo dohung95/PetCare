@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const Pets = () => {
+
+const AdopPets = () => {
   const [pets, setPets] = useState([]);
 
   useEffect(() => {

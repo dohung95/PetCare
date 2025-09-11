@@ -82,9 +82,6 @@ const Navbar = () => {
                <div className="menu-item">
                 <Link to="/adoption" className="nav-link">adoption</Link>
               </div>
-              
-              <div 
-
               <div
 
                 className="menu-item dropdown"

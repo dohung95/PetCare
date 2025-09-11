@@ -17,6 +17,7 @@ import AdopDashboard from "./components/AdminAdop/AdopDashboard";
 import AdopPets from "./components/AdminAdop/AdopPets";
 import Adoptions from "./components/AdminAdop/Adoptions";
 
+import Overview from "./components/AdminAdop/Overview";
 function Layout() {
   const location = useLocation();
   const hideNavbar = location.pathname === "/auth/login" || location.pathname === "/auth/forgot_password";
@@ -51,7 +52,8 @@ function Layout() {
           <Route path="/thankyou" element={<ThankYou />} />
           {/* =========ADMIN NGƯỜI BẢO HỘ =========== */}
           <Route path="/AdopDashboard" element={<AdopDashboard />} />
-          <Route index element={<AdopOverview />} />
+          <Route path="/Overview" element={<Overview />} />
+
           <Route path="/adopPets" element={<AdopPets />} />
           <Route path="/adopAdoptions" element={<Adoptions />} />
         {/* </Route> */}
