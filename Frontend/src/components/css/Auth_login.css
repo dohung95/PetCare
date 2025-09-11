@@ -10,7 +10,6 @@
 
 /* wrap toàn bộ login trong .body_login để tránh ảnh hưởng trang khác */
 .body_login{
-  background: var(--bg);
   min-height: 100vh;
   display: flex;
   align-items: center;

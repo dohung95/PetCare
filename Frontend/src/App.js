@@ -8,6 +8,9 @@ import About from "./components/about";
 import Contact from "./components/contact";
 import VeterinarianRegistration from "./components/Veterinarian_Registration";
 import Forgotpw from "./components/auth/Forgotpw";
+
+import Footer from "./components/Footer.jsx";
+
 // =================NGƯỜI BẢO HỘ=============
 import AdoptionPage from "./components/Adoption";
 import PetDetail from "./components/adop/PetDetail";
@@ -65,6 +68,7 @@ function Layout() {
           <Route path="/auth/forgot_password" element={<Forgotpw />} />
         </Routes>
       </div>
+      {!hideNavbar && <Footer />}
     </>
   );
 }
