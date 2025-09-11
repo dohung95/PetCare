@@ -7,11 +7,11 @@ const mongoose = require('mongoose');
 
 const cors = require('cors');
 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
+const AppointmentRouter = require('./routes/AppointmentRoutes');
 
 var app = express();
 
@@ -36,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/vets', veterinarianRouter);
 app.use('/api/health-records', HealthRecordRouter);
+app.use('/api/appointments', AppointmentRouter);
 
 
 // catch 404 and forward to error handler
