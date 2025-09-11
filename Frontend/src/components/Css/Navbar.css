@@ -76,3 +76,26 @@
   width: 85px;
 
 }
+
+
+
+/* === USER MENU === */
+.user-menu .user-name {
+  font-weight: 600;
+}
+
+.dropdown-item.btn-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dropdown-item.btn-link:hover {
+  background: rgba(0,0,0,0.06);
+}
