@@ -2,9 +2,23 @@ import React from 'react';
 
 function About() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600 mb-4">About Us</h1>
-      <p className="text-lg text-gray-700">Learn more about our mission and values.</p>
+    <div className="container my-5">
+      <h2 className="text-center mb-4">About Us</h2>
+      <p className="lead text-center">
+        Welcome to <strong>Petcare Veterinary Hospital & Pet Shop</strong>.
+      </p>
+      <p>
+        We are a dedicated team of veterinarians, pet lovers, and staff who care
+        deeply about the health and happiness of your pets.
+      </p>
+      <ul>
+        <li>Professional veterinary services (check-ups, surgeries, vaccinations).</li>
+        <li>Safe and comfortable adoption programs.</li>
+        <li>High-quality products for pets: food, toys, and accessories.</li>
+      </ul>
+      <p className="fw-bold text-center">
+        Our mission: <em>“Healthy Pets, Happy Families.”</em>
+      </p>
     </div>
   );
 }
