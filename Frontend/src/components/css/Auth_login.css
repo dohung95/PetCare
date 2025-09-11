@@ -79,7 +79,7 @@
   overflow: hidden;
   width: 850px;
   max-width: 100%;
-  min-height: 500px;
+  min-height: 600px;
 }
 
 /* Panels */
@@ -141,7 +141,7 @@
 @media (max-width: 768px){
   .body_login .container{
     width: 95%;
-    min-height: 560px;
+    min-height: 600px;
   }
   .body_login form{ padding: 0 30px; }
 }
