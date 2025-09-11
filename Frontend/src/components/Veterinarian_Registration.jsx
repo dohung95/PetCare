@@ -47,7 +47,7 @@ const VeterinarianRegistration = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/vets/register', {
+      const response = await axios.post('http://localhost:5000/api/vets/register', {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
