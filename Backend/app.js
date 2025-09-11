@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 require('dotenv').config();
+const AuthRouter = require('./routes/AuthRoutes');
 
 var express = require('express');
 var path = require('path');
@@ -13,8 +14,8 @@ var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
-const authRouter = require('./routes/AuthRoutes');
-const shelterRoutes = require('./routes/ShelterRoutes');
+
+const ShelterRoutes = require('./routes/ShelterRoutes');
 
 var app = express();
 
