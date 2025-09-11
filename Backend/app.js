@@ -1,5 +1,4 @@
 var createError = require('http-errors');
-const AuthRouter = require('./routes/AuthRoutes');
 require('dotenv').config();
 var express = require('express');
 var path = require('path');
@@ -8,6 +7,7 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const AuthRouter = require('./routes/AuthRoutes');
 
 // Import the new ShelterPet routes
 const shelterPetRoutes = require('./routes/shelterPetRoutes'); 
@@ -17,6 +17,7 @@ const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
 const ShelterRoutes = require('./routes/ShelterRoutes');
+const feedbackRouter = require('./routes/Feedback.Route'); 
 
 
 
@@ -51,6 +52,7 @@ app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
 app.use('/api/shelter-pets', shelterPetRoutes);
+app.use('/api/feedbacks', feedbackRouter);
 
 
 // catch 404 and forward to error handler
