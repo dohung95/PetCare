@@ -1,5 +1,285 @@
-.about_page{
-    background-color: aliceblue;
+.about_page .container{
+    background-color: rgba(240, 248, 255, 0.95);
     height: 100%;
-    /* width: 70%; */
+    width: 70%;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 50px;
+}
+
+.about_page .about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  margin-bottom: 40px;
+  padding-top: 40px;
+}
+
+.about_page .about-col {
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr; /* Mobile: stack dọc */
+  }
+}
+
+
+.about_page .about-story p {
+    font-size: 1.1rem;
+    line-height: 1.3;
+    text-align: justify;
+
+}
+
+.about-story-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.about-story-section .about-col {
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr; /* Mobile: stack dọc */
+  }
+}
+
+
+.about_page .team-section {
+  margin-top: 30px;
+}
+
+.about_page .team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cột */
+  gap: 24px; /* khoảng cách giữa các ô */
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+.about_page  .team-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.about_page .team-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.about_page .team-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.about_page .team-card p {
+  margin: 4px 0;
+  color: #666;
+}
+
+.about_page .team-card p.italic {
+  font-style: italic;
+  color: #999;
+}
+
+/* Responsive: mobile 1 cột, tablet 2 cột */
+@media (max-width: 991px) {
+  .about_page .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .about_page .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* Core Values Section */
+.about_page .core-values-section {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.about_page .core-values-section .section-title {
+  text-align: center;
+  font-size: 2.875rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.about_page .values-list {
+  display: grid;
+  gap: 5px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about_page .values-list p {
+  font-size: 1.3rem;
+  color: #64748b;
+  line-height: 1.3;
+}
+
+.about_page .values-list strong {
+  color: #1e293b;
+}
+
+.about_page .values-conclusion {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-top: 15px;
+}
+
+
+
+
+/* Why Choose Us Section */
+.about_page .why-choose-us-section {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.about_page .why-choose-us-section .section-title {
+  text-align: center;
+  font-size: 2.875rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.about_page .choose-us-list {
+  display: grid;
+  gap: 5px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about_page .choose-us-list p {
+  font-size: 1.3rem;
+  color: #64748b;
+  line-height: 1.3;
+}
+
+.about_page .choose-us-list strong {
+  color: #1e293b;
+}
+
+.about_page .choose-us-conclusion {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-top: 15px;
+}
+
+/* core values & why choose us */
+.about-core-why-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin: 40px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.about-core-why-section, .about-story-section .about-col {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.about-core-why-section .about-col h3 {
+  color: #333;
+}
+
+.about-core-why-section .about-col p {
+  line-height: 1.6;
+  color: #555;
+}
+
+@media (max-width: 900px) {
+  .about-core-why-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.testimonials-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.testimonials-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.testimonials-list p {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.testimonials-list p:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Quote style */
+.testimonials-list p::before {
+  content: "“";
+  font-size: 36px;
+  color: #0d6efd;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  opacity: 0.3;
+}
+
+/* Responsive text */
+@media (max-width: 600px) {
+  .testimonials-list p {
+    font-size: 15px;
+    padding: 16px;
+  }
 }

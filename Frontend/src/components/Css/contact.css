@@ -112,3 +112,58 @@
   }
   .map-wrap { height: 320px; }
 }
+
+
+.contact_page {
+  margin-top: 30px;
+  padding: 20px;
+  background: #ffffffdd;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.contact_page .form-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.contact_page form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact_page input,
+.contact_page select,
+.contact_page textarea {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.contact_page input:focus,
+.contact_page select:focus,
+.contact_page textarea:focus {
+  border-color: #05F2DB; /* màu chủ đạo */
+}
+
+.contact_page button {
+  background: linear-gradient(to right, #05F2DB, #EF4BF2);
+  color: white;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.contact_page button:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
