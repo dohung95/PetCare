@@ -80,7 +80,7 @@ const Navbar = () => {
               </div>
 
                <div className="menu-item">
-                <Link to="/adoption" className="nav-link">adoption</Link>
+                <Link to="/adoption" className="nav-link">Adoption</Link>
               </div>
               <div
 
@@ -99,6 +99,9 @@ const Navbar = () => {
                     </Link>
                     <Link to="/job/AppointmentManagement" className="dropdown-item">
                       Appointment Management
+                    </Link>
+                    <Link to="/job/LPO" className="dropdown-item">
+                      Log processing and observation
                     </Link>
                   </div>
                 )}
