@@ -105,7 +105,9 @@ const HealthRecord = () => {
       {/* Form for creating/updating records */}
       <div className="card mb-4">
         <div className="card-body">
-          <h2 className="card-title">{editingId ? 'Edit' : 'Add'} Health Record</h2>
+          <div align="center">
+            <h2 className="card-title">{editingId ? 'Edit' : 'Add'} Health Record</h2>
+          </div>
           {error && <div className="alert alert-danger">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -186,7 +188,9 @@ const HealthRecord = () => {
       {/* List of records */}
       <div className="card">
         <div className="card-body">
-          <h2 className="card-title">Health Records List</h2>
+          <div align="center">
+            <h2 className="card-title">Health Records List</h2>
+          </div>
           {records.length === 0 ? (
             <p>No records found.</p>
           ) : (

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const VeterinarianRegistration = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +16,8 @@ const VeterinarianRegistration = () => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
 
   // Validation logic
   const validateForm = () => {
@@ -44,7 +48,6 @@ const VeterinarianRegistration = () => {
     }
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
 
     try {
       const response = await axios.post('http://localhost:5000/api/vets/register', {
@@ -56,107 +59,112 @@ const VeterinarianRegistration = () => {
         experience: formData.experience ? parseInt(formData.experience) : 0
       });
 
-      setSubmitStatus({ type: 'success', message: response.data.message || 'Registration successful!' });
+      setShowSuccessModal(true);
     } catch (error) {
-      setSubmitStatus({ 
-        type: 'error', 
-        message: error.response?.data?.error || error.message || 'Registration failed' 
+      setErrors({ 
+        submit: error.response?.data?.error || error.message || 'Registration failed' 
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+    navigate('/');
+  };
+
   return (
-    <div className="container mt-5">
+    <div className="container mt-4">
       <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card shadow">
-            <div className="card-body">
-              <h2 className="card-title text-center mb-4">Veterinarian Registration</h2>
-              
-              {submitStatus && (
-                <div className={`alert alert-${submitStatus.type} mb-3`}>
-                  {submitStatus.message}
+        <div className="col-md-5">
+          <div className="card shadow-sm">
+            <div className="card-body p-3">
+              <h4 className="card-title text-center mb-3 fs-5">Veterinarian Registration</h4>
+
+              {errors.submit && (
+                <div className="alert alert-danger alert-dismissible mb-2">
+                  {errors.submit}
+                  <button type="button" className="btn-close" onClick={() => setErrors({})}></button>
                 </div>
               )}
 
               <form onSubmit={handleSubmit}>
-                <div className="form-group mb-3">
-                  <label htmlFor="name" className="form-label">Name</label>
+                <div className="form-group mb-2">
+                  <label htmlFor="name" className="form-label fs-6">Name</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-sm ${errors.name ? 'is-invalid' : ''}`}
                     required
                   />
                   {errors.name && <div className="invalid-feedback">{errors.name}</div>}
                 </div>
 
-                <div className="form-group mb-3">
-                  <label htmlFor="email" className="form-label">Email</label>
+                <div className="form-group mb-2">
+                  <label htmlFor="email" className="form-label fs-6">Email</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-sm ${errors.email ? 'is-invalid' : ''}`}
                     required
                   />
                   {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 </div>
 
-                <div className="form-group mb-3">
-                  <label htmlFor="phone" className="form-label">Phone Number</label>
+                <div className="form-group mb-2">
+                  <label htmlFor="phone" className="form-label fs-6">Phone Number</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-sm ${errors.phone ? 'is-invalid' : ''}`}
                     required
                   />
                   {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
                 </div>
 
-                <div className="form-group mb-3">
-                  <label htmlFor="address" className="form-label">Address</label>
+                <div className="form-group mb-2">
+                  <label htmlFor="address" className="form-label fs-6">Address</label>
                   <textarea
                     id="address"
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="form-control"
-                    rows="4"
+                    className="form-control form-control-sm"
+                    rows="2"
                   />
                 </div>
 
-                <div className="form-group mb-3">
-                  <label htmlFor="specialization" className="form-label">Specialization</label>
+                <div className="form-group mb-2">
+                  <label htmlFor="specialization" className="form-label fs-6">Specialization</label>
                   <input
                     type="text"
                     id="specialization"
                     name="specialization"
                     value={formData.specialization}
                     onChange={handleChange}
-                    className="form-control"
+                    className="form-control form-control-sm"
                   />
                 </div>
 
-                <div className="form-group mb-3">
-                  <label htmlFor="experience" className="form-label">Years of Experience</label>
+                <div className="form-group mb-2">
+                  <label htmlFor="experience" className="form-label fs-6">Years of Experience</label>
                   <input
                     type="number"
                     id="experience"
                     name="experience"
                     value={formData.experience}
                     onChange={handleChange}
-                    className={`form-control ${errors.experience ? 'is-invalid' : ''}`}
+                    className={`form-control form-control-sm ${errors.experience ? 'is-invalid' : ''}`}
                     min="0"
                   />
                   {errors.experience && <div className="invalid-feedback">{errors.experience}</div>}
@@ -164,7 +172,7 @@ const VeterinarianRegistration = () => {
 
                 <button
                   type="submit"
-                  className="btn btn-primary w-100"
+                  className="btn btn-primary btn-sm w-100"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Submitting...' : 'Register'}
@@ -174,6 +182,20 @@ const VeterinarianRegistration = () => {
           </div>
         </div>
       </div>
+
+      <Modal show={showSuccessModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Registration Successful</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Vet registration successful! Please check your registered email! Click "Close" to return to the home page.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
