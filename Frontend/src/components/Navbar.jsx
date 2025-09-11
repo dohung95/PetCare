@@ -38,7 +38,14 @@ const Navbar = () => {
               <div className="menu-item">
                 <Link to="/contact" className="nav-link">Contact</Link>
               </div>
-              <div 
+
+               <div className="menu-item">
+                <Link to="/adoption" className="nav-link">adoption</Link>
+              </div>
+             
+
+              <div
+
                 className="menu-item dropdown"
                 onMouseEnter={() => setJobOpen(true)}
                 onMouseLeave={() => setJobOpen(false)}
