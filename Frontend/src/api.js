@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api"; // đổi lại nếu backend chạy port khác
+const API_URL = "http://localhost:5000/api"; // đổi lại nếu backend chạy port khác
 
 // Tạo instance axios
 const api = axios.create({
