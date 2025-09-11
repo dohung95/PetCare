@@ -1,8 +1,6 @@
 var createError = require('http-errors');
 const AuthRouter = require('./routes/AuthRoutes');
 require('dotenv').config();
-const AuthRouter = require('./routes/AuthRoutes');
-
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -13,21 +11,17 @@ const cors = require('cors');
 
 // Import the new ShelterPet routes
 const shelterPetRoutes = require('./routes/shelterPetRoutes'); 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
-
 const AppointmentRouter = require('./routes/AppointmentRoutes');
-
 const ShelterRoutes = require('./routes/ShelterRoutes');
 
 
-const ShelterRoutes = require('./routes/ShelterRoutes');
+
 
 var app = express();
-
 const corsOptions = {
     origin: process.env.CORS_ORIGIN,
     optionsSuccessStatus: 200
@@ -53,13 +47,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/vets', veterinarianRouter);
 app.use('/api/health-records', HealthRecordRouter);
-
 app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
-
-
-// Add the ShelterPet routes
 app.use('/api/shelter-pets', shelterPetRoutes);
 
 
