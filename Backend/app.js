@@ -9,6 +9,10 @@ const cors = require('cors');
 
 const AuthRouter = require('./routes/AuthRoutes');
 
+require('./models/Owner');
+require('./models/Pet');
+require('./models/Appointment');
+
 // Import the new ShelterPet routes
 const shelterPetRoutes = require('./routes/shelterPetRoutes'); 
 var indexRouter = require('./routes/index');
@@ -18,6 +22,7 @@ const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
 const ShelterRoutes = require('./routes/ShelterRoutes');
 const feedbackRouter = require('./routes/Feedback.Route'); 
+const LPO = require('./routes/LPORoutes');
 
 
 
@@ -51,8 +56,10 @@ app.use('/api/health-records', HealthRecordRouter);
 app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
+
 app.use('/api/shelter-pets', shelterPetRoutes);
 app.use('/api/feedbacks', feedbackRouter);
+app.use('/api/lpos', LPO);
 
 
 // catch 404 and forward to error handler
