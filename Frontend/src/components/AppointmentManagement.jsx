@@ -23,7 +23,7 @@ const AppointmentManagement = () => {
     });
   };
 
-  // Fetch appointments
+  // Fetch appointments with populated pet_id and owner_id
   const fetchAppointments = async () => {
     try {
       setLoading(true);
@@ -46,10 +46,11 @@ const AppointmentManagement = () => {
     fetchAppointments();
   }, []);
 
-  // Filter appointments
+  // Filter appointments by pet name, owner name, status, or date
   useEffect(() => {
     const filtered = appointments.filter(appointment =>
-      appointment.pet_id?.toString().includes(searchTerm) ||
+      (appointment.pet_id?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (appointment.owner_id?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       appointment.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
       new Date(appointment.appointment_time).toLocaleDateString('en-GB').includes(searchTerm)
     );
@@ -60,10 +61,8 @@ const AppointmentManagement = () => {
   const tableRows = useMemo(() => 
     filteredAppointments.map((appointment) => (
       <tr key={appointment._id}>
-        <td className="px-3 py-2">{appointment._id.slice(-8)}</td>
-        <td className="px-3 py-2">{appointment.pet_id?._id || appointment.pet_id || 'N/A'}</td>
-        <td className="px-3 py-2">{appointment.owner_id?._id || appointment.owner_id || 'N/A'}</td>
-        <td className="px-3 py-2">{appointment.vet_id?._id || appointment.vet_id || 'N/A'}</td>
+        <td className="px-3 py-2">{appointment.pet_id?.name || 'N/A'}</td>
+        <td className="px-3 py-2">{appointment.owner_id?.name || 'N/A'}</td>
         <td className="px-3 py-2">{formatDateTime(appointment.appointment_time)}</td>
         <td className="px-3 py-2">
           <span className={`badge ${
@@ -80,14 +79,14 @@ const AppointmentManagement = () => {
           <button
             onClick={() => handleEdit(appointment)}
             className="btn btn-link text-primary p-0 me-2"
-            aria-label={`Edit appointment ${appointment._id}`}
+            aria-label={`Edit appointment for ${appointment.pet_id?.name || 'N/A'}`}
           >
             Edit
           </button>
           <button
             onClick={() => handleDelete(appointment._id)}
             className="btn btn-link text-danger p-0"
-            aria-label={`Delete appointment ${appointment._id}`}
+            aria-label={`Delete appointment for ${appointment.pet_id?.name || 'N/A'}`}
           >
             Delete
           </button>
@@ -157,7 +156,7 @@ const AppointmentManagement = () => {
         <input
           type="text"
           className="form-control"
-          placeholder="Search by Pet ID, status, or date..."
+          placeholder="Search by Pet Name, Owner Name, status, or date..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -191,10 +190,8 @@ const AppointmentManagement = () => {
           <table className="table table-hover">
             <thead className="table-light">
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Pet ID</th>
-                <th scope="col">Owner ID</th>
-                <th scope="col">Vet ID</th>
+                <th scope="col">Pet Name</th>
+                <th scope="col">Owner Name</th>
                 <th scope="col">Time</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created At</th>
@@ -204,7 +201,7 @@ const AppointmentManagement = () => {
             <tbody>
               {tableRows.length > 0 ? tableRows : (
                 <tr>
-                  <td colSpan="8" className="text-center">
+                  <td colSpan="6" className="text-center">
                     {searchTerm ? 'No results found' : 'No appointments available'}
                   </td>
                 </tr>
@@ -234,9 +231,9 @@ const AppointmentManagement = () => {
             <div className="modal-body">
               <AppointmentForm
                 initialData={editingId ? {
-                  pet_id: appointments.find(a => a._id === editingId)?.pet_id || '',
-                  owner_id: appointments.find(a => a._id === editingId)?.owner_id || '',
-                  vet_id: appointments.find(a => a._id === editingId)?.vet_id || '',
+                  pet_id: appointments.find(a => a._id === editingId)?.pet_id?._id || '',
+                  owner_id: appointments.find(a => a._id === editingId)?.owner_id?._id || '',
+                  vet_id: appointments.find(a => a._id === editingId)?.vet_id?._id || '',
                   appointment_time: appointments.find(a => a._id === editingId)?.appointment_time 
                     ? new Date(appointments.find(a => a._id === editingId).appointment_time).toISOString().slice(0, 16) 
                     : '',

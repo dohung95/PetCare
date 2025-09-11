@@ -7,7 +7,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+require('./models/Owner');
+require('./models/Pet');
+require('./models/Appointment');
 
 // Import the new ShelterPet routes
 const shelterPetRoutes = require('./routes/shelterPetRoutes'); 
