@@ -16,6 +16,7 @@ const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
 
 const ShelterRoutes = require('./routes/ShelterRoutes');
+const LPO = require('./routes/LPORoutes');
 
 var app = express();
 
@@ -59,6 +60,11 @@ app.use('/api/health-records', HealthRecordRouter);
 app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
+<<<<<<< Updated upstream
+=======
+app.use('/api/shelter-pets', shelterPetRoutes);
+app.use('/api/lpos', LPO);
+>>>>>>> Stashed changes
 
 
 // catch 404 and forward to error handler
