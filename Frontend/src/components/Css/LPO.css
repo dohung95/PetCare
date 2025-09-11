@@ -1,0 +1,187 @@
+
+/* Title chính */
+.LPO .lpo-title {
+  color: #0c5460; /* Xanh dương đậm */
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.LPO .lpo-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(to right, #17a2b8, #6c757d);
+  margin: 10px 0 0 auto;
+  border-radius: 2px;
+}
+
+/* Cards */
+.LPO .lpo-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.LPO .lpo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Headers */
+.LPO .lpo-header {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+  border-bottom: none;
+  padding: 1.25rem;
+}
+
+.LPO .lpo-header-list {
+  border-bottom: 1px solid #dee2e6;
+  padding: 1rem 1.25rem;
+}
+
+/* Labels và Inputs */
+.LPO .lpo-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.LPO .lpo-input,
+.LPO .lpo-textarea {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  padding: 12px 14px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.LPO .lpo-input:focus,
+.LPO .lpo-textarea:focus {
+  border-color: #17a2b8;
+  box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+  outline: none;
+}
+
+.LPO .lpo-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Alerts */
+.LPO .lpo-alert {
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons */
+.LPO .lpo-button,
+.LPO .lpo-button-secondary,
+.LPO .lpo-action-btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.LPO .lpo-button:hover:not(:disabled),
+.LPO .lpo-button-secondary:hover,
+.LPO .lpo-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.LPO .lpo-button:disabled {
+  opacity: 0.7;
+}
+
+/* Table */
+.LPO .lpo-table {
+  margin-bottom: 0;
+}
+
+.LPO .lpo-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.LPO .lpo-table-row:hover {
+  background-color: rgba(23, 162, 184, 0.05);
+}
+
+.LPO .lpo-text-truncate {
+  max-width: 200px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Empty state */
+.LPO .lpo-empty-state {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animation fade-in cho cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.LPO .lpo-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .LPO .lpo-card {
+    margin: 0 5px;
+  }
+  
+  .LPO .lpo-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .LPO .lpo-input,
+  .LPO .lpo-button {
+    font-size: 16px; /* Tăng cho mobile touch */
+  }
+  
+  .LPO .lpo-table th,
+  .LPO .lpo-table td {
+    padding: 8px 4px;
+    font-size: 14px;
+  }
+  
+  .LPO .btn-group-sm .btn {
+    padding: 4px 8px;
+  }
+}

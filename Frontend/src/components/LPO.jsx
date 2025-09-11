@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Css/LPO.css'; // Thêm import CSS custom
 
 const LPO = () => {
   const [lpos, setLpos] = useState([]);
@@ -125,10 +126,10 @@ const LPO = () => {
   };
 
   return (
-    <div className="container-fluid py-4">
+    <div className="container-fluid py-4 LPO">
       <div className="row">
         <div className="col-12">
-          <h1 className="h2 mb-4 text-dark">LPO Management</h1>
+          <h1 className="h2 mb-4 text-dark lpo-title">LPO Management</h1> {/* Thêm class */}
         </div>
       </div>
 
@@ -136,7 +137,7 @@ const LPO = () => {
       {error && (
         <div className="row mb-4">
           <div className="col-12">
-            <div className="alert alert-danger alert-dismissible fade show" role="alert">
+            <div className="alert alert-danger alert-dismissible fade show lpo-alert" role="alert"> {/* Thêm class */}
               {error}
               <button type="button" className="btn-close" onClick={() => setError('')} aria-label="Close"></button>
             </div>
@@ -146,7 +147,7 @@ const LPO = () => {
       {success && (
         <div className="row mb-4">
           <div className="col-12">
-            <div className="alert alert-success alert-dismissible fade show" role="alert">
+            <div className="alert alert-success alert-dismissible fade show lpo-alert" role="alert"> {/* Thêm class */}
               {success}
               <button type="button" className="btn-close" onClick={() => setSuccess('')} aria-label="Close"></button>
             </div>
@@ -157,8 +158,8 @@ const LPO = () => {
       {/* Form to create/update LPO */}
       <div className="row mb-4">
         <div className="col-12">
-          <div className="card shadow-sm">
-            <div className="card-header bg-primary text-white">
+          <div className="card lpo-card"> {/* Thêm class */}
+            <div className="card-header bg-info text-white lpo-header"> {/* Đổi bg-primary sang bg-info và thêm class */}
               <h2 className="card-title mb-0 h5">
                 {editingId ? 'Update LPO' : 'Create New LPO'}
               </h2>
@@ -167,84 +168,84 @@ const LPO = () => {
               <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label className="form-label fw-medium text-dark">
-                      Pet ID <span className="text-danger">*</span>
+                    <label className="form-label fw-medium text-dark lpo-label"> {/* Thêm class */}
+                      <i className="fas fa-paw me-1"></i>Pet ID <span className="text-danger">*</span> {/* Thêm icon */}
                     </label>
                     <input
                       type="text"
                       name="pet_id"
                       value={formData.pet_id}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className="form-control lpo-input" 
                       placeholder="Enter Pet ID"
                       required
                     />
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label className="form-label fw-medium text-dark">
-                      Diagnosis <span className="text-danger">*</span>
+                    <label className="form-label fw-medium text-dark lpo-label">
+                      <i className="fas fa-notes-medical me-1"></i>Diagnosis <span className="text-danger">*</span> {/* Thêm icon */}
                     </label>
                     <input
                       type="text"
                       name="diagnosis"
                       value={formData.diagnosis}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className="form-control lpo-input"
                       placeholder="Enter diagnosis"
                       required
                     />
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label className="form-label fw-medium text-dark">
-                      Prescription <span className="text-danger">*</span>
+                    <label className="form-label fw-medium text-dark lpo-label">
+                      <i className="fas fa-pills me-1"></i>Prescription <span className="text-danger">*</span> {/* Thêm icon */}
                     </label>
                     <input
                       type="text"
                       name="prescription"
                       value={formData.prescription}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className="form-control lpo-input"
                       placeholder="Enter prescription"
                       required
                     />
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label className="form-label fw-medium text-dark">
-                      Symptoms <span className="text-danger">*</span>
+                    <label className="form-label fw-medium text-dark lpo-label">
+                      <i className="fas fa-head-side-cough me-1"></i>Symptoms <span className="text-danger">*</span> {/* Thêm icon */}
                     </label>
                     <input
                       type="text"
                       name="symptoms"
                       value={formData.symptoms}
                       onChange={handleInputChange}
-                      className="form-control"
+                      className="form-control lpo-input"
                       placeholder="Enter symptoms"
                       required
                     />
                   </div>
                   <div className="col-12 mb-3">
-                    <label className="form-label fw-medium text-dark">
-                      Past Treatments
+                    <label className="form-label fw-medium text-dark lpo-label">
+                      <i className="fas fa-history me-1"></i>Past Treatments {/* Thêm icon */}
                     </label>
                     <textarea
                       name="past_treatments"
                       value={formData.past_treatments}
                       onChange={handleInputChange}
                       rows={3}
-                      className="form-control"
+                      className="form-control lpo-textarea" 
                       placeholder="Enter previous treatment information (optional)"
                     />
                   </div>
                   <div className="col-12 mb-4">
-                    <label className="form-label fw-medium text-dark">
-                      Lab Results
+                    <label className="form-label fw-medium text-dark lpo-label">
+                      <i className="fas fa-flask me-1"></i>Lab Results {/* Thêm icon */}
                     </label>
                     <textarea
                       name="lab_results"
                       value={formData.lab_results}
                       onChange={handleInputChange}
                       rows={3}
-                      className="form-control"
+                      className="form-control lpo-textarea"
                       placeholder="Enter lab results (optional)"
                     />
                   </div>
@@ -254,7 +255,7 @@ const LPO = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn btn-primary"
+                    className="btn btn-info lpo-button" 
                   >
                     {loading ? (
                       <>
@@ -269,7 +270,7 @@ const LPO = () => {
                     <button
                       type="button"
                       onClick={resetForm}
-                      className="btn btn-secondary"
+                      className="btn btn-secondary lpo-button-secondary" 
                     >
                       Cancel
                     </button>
@@ -284,12 +285,12 @@ const LPO = () => {
       {/* LPO List */}
       <div className="row">
         <div className="col-12">
-          <div className="card shadow-sm">
-            <div className="card-header bg-light">
+          <div className="card lpo-card">
+            <div className="card-header bg-light lpo-header-list"> {/* Thêm class */}
               <div className="d-flex justify-content-between align-items-center">
                 <h2 className="card-title mb-0 h5 text-dark">LPO List</h2>
                 {loading && (
-                  <div className="spinner-border spinner-border-sm text-primary" role="status">
+                  <div className="spinner-border spinner-border-sm text-info" role="status"> {/* Đổi text-primary */}
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 )}
@@ -298,15 +299,15 @@ const LPO = () => {
             
             <div className="card-body p-0">
               {lpos.length === 0 && !loading ? (
-                <div className="text-center py-5">
+                <div className="text-center py-5 lpo-empty-state"> {/* Thêm class */}
                   <div className="text-muted">
-                    <i className="fas fa-inbox fa-3x mb-3 opacity-75"></i>
+                    <i className="fas fa-file-medical fa-3x mb-3 opacity-75 text-info"></i> {/* Đổi icon */}
                     <p className="mb-0">No LPOs yet. Create your first LPO!</p>
                   </div>
                 </div>
               ) : (
                 <div className="table-responsive">
-                  <table className="table table-hover mb-0">
+                  <table className="table table-hover table-striped mb-0 lpo-table"> {/* Thêm table-striped và class */}
                     <thead className="table-light">
                       <tr>
                         <th scope="col">Pet</th>
@@ -319,27 +320,22 @@ const LPO = () => {
                     </thead>
                     <tbody>
                       {lpos.map((lpo) => (
-                        <tr key={lpo._id}>
-                          <td>
-                            <div className="fw-medium text-dark">
-                              {lpo.pet_id?._id || lpo.pet_id || 'N/A'}
-                            </div>
-                            {lpo.pet_id?.name && (
-                              <small className="text-muted">{lpo.pet_id.name}</small>
-                            )}
+                        <tr key={lpo._id} className="lpo-table-row"> {/* Thêm class */}
+                          <td className="align-middle">
+                            <i className="fas fa-paw me-1 text-info"></i>{lpo.pet_id.name} {/* Thêm icon */}
                           </td>
                           <td className="align-middle">
-                            <span className="text-dark" style={{ maxWidth: '200px', display: 'inline-block' }} title={lpo.diagnosis}>
+                            <span className="text-dark lpo-text-truncate" title={lpo.diagnosis}> {/* Thêm class cho truncate */}
                               {lpo.diagnosis}
                             </span>
                           </td>
                           <td className="align-middle">
-                            <span className="text-dark" style={{ maxWidth: '200px', display: 'inline-block' }} title={lpo.symptoms}>
+                            <span className="text-dark lpo-text-truncate" title={lpo.symptoms}>
                               {lpo.symptoms}
                             </span>
                           </td>
                           <td className="align-middle">
-                            <span className="text-dark" style={{ maxWidth: '200px', display: 'inline-block' }} title={lpo.prescription}>
+                            <span className="text-dark lpo-text-truncate" title={lpo.prescription}>
                               {lpo.prescription}
                             </span>
                           </td>
@@ -353,7 +349,7 @@ const LPO = () => {
                               <button
                                 type="button"
                                 onClick={() => handleEdit(lpo)}
-                                className="btn btn-outline-primary"
+                                className="btn btn-outline-info lpo-action-btn" 
                                 title="Edit"
                               >
                                 <i className="fas fa-edit"></i>
@@ -361,7 +357,7 @@ const LPO = () => {
                               <button
                                 type="button"
                                 onClick={() => handleDelete(lpo._id)}
-                                className="btn btn-outline-danger"
+                                className="btn btn-outline-danger lpo-action-btn"
                                 title="Delete"
                               >
                                 <i className="fas fa-trash"></i>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Css/AppointmentForm.css'; // Import custom CSS
 
 const AppointmentForm = ({ 
   initialData = {}, 
@@ -29,7 +30,6 @@ const AppointmentForm = ({
     setErrors({});
   }, [initialData]);
 
-  // Validate form inputs
   const validateForm = () => {
     const newErrors = {};
     if (!formData.pet_id) newErrors.pet_id = 'Pet ID is required';
@@ -54,11 +54,12 @@ const AppointmentForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="row g-3">
-        <div className="col-md-6">
+    <div className='AppointmentForm'>
+      <form onSubmit={handleSubmit} className="appointment-form">
+      <div className="form-row " >
+        <div className="form-group">
           <label htmlFor="pet_id" className="form-label">
-            Pet ID <span className="text-danger">*</span>
+            <i className="fas fa-paw"></i> Pet ID <span className="required">*</span>
           </label>
           <input
             id="pet_id"
@@ -67,15 +68,14 @@ const AppointmentForm = ({
             value={formData.pet_id}
             onChange={handleChange}
             className={`form-control ${errors.pet_id ? 'is-invalid' : ''}`}
-            placeholder="Enter pet ID"
-            aria-required="true"
+            placeholder="Enter Pet ID"
           />
-          {errors.pet_id && <div className="invalid-feedback">{errors.pet_id}</div>}
+          {errors.pet_id && <div className="error-message">{errors.pet_id}</div>}
         </div>
 
-        <div className="col-md-6">
+        <div className="form-group">
           <label htmlFor="owner_id" className="form-label">
-            Owner ID <span className="text-danger">*</span>
+            <i className="fas fa-user"></i> Owner ID <span className="required">*</span>
           </label>
           <input
             id="owner_id"
@@ -84,14 +84,15 @@ const AppointmentForm = ({
             value={formData.owner_id}
             onChange={handleChange}
             className={`form-control ${errors.owner_id ? 'is-invalid' : ''}`}
-            placeholder="Enter owner ID"
-            aria-required="true"
+            placeholder="Enter Owner ID"
           />
-          {errors.owner_id && <div className="invalid-feedback">{errors.owner_id}</div>}
+          {errors.owner_id && <div className="error-message">{errors.owner_id}</div>}
         </div>
 
-        <div className="col-md-6">
-          <label htmlFor="vet_id" className="form-label">Vet ID</label>
+        <div className="form-group">
+          <label htmlFor="vet_id" className="form-label">
+            <i className="fas fa-user-md"></i> Vet ID
+          </label>
           <input
             id="vet_id"
             name="vet_id"
@@ -99,13 +100,13 @@ const AppointmentForm = ({
             value={formData.vet_id}
             onChange={handleChange}
             className="form-control"
-            placeholder="Enter vet ID (optional)"
+            placeholder="Enter Vet ID (optional)"
           />
         </div>
 
-        <div className="col-md-6">
+        <div className="form-group">
           <label htmlFor="appointment_time" className="form-label">
-            Appointment Time <span className="text-danger">*</span>
+            <i className="fas fa-calendar-alt"></i> Visit Time <span className="required">*</span>
           </label>
           <input
             id="appointment_time"
@@ -114,19 +115,20 @@ const AppointmentForm = ({
             value={formData.appointment_time}
             onChange={handleChange}
             className={`form-control ${errors.appointment_time ? 'is-invalid' : ''}`}
-            aria-required="true"
           />
-          {errors.appointment_time && <div className="invalid-feedback">{errors.appointment_time}</div>}
+          {errors.appointment_time && <div className="error-message">{errors.appointment_time}</div>}
         </div>
 
-        <div className="col-12">
-          <label htmlFor="status" className="form-label">Status</label>
+        <div className="form-group">
+          <label htmlFor="status" className="form-label">
+            <i className="fas fa-info-circle"></i> Status
+          </label>
           <select
             id="status"
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="form-select"
+            className="form-control"
           >
             <option value="pending">Pending</option>
             <option value="confirmed">Confirmed</option>
@@ -136,29 +138,30 @@ const AppointmentForm = ({
         </div>
       </div>
 
-      <div className="mt-4 d-flex justify-content-end gap-2">
+      <div className="form-actions">
         <button
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="btn btn-secondary"
+          className="btn btn-cancel"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="btn btn-primary"
+          className="btn btn-submit"
         >
           {loading ? (
             <>
-              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              <span className="spinner" role="status" aria-hidden="true"></span>
               Saving...
             </>
           ) : isEditing ? 'Update' : 'Create'}
         </button>
       </div>
     </form>
+    </div>
   );
 };
 

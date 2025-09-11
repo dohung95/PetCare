@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import AppointmentForm from './AppointmentForm';
+import './Css/AppointmentManagement.css'; // Import CSS custom
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -139,7 +140,7 @@ const AppointmentManagement = () => {
   };
 
   return (
-    <div className="container py-4">
+    <div className="container py-4 AppointmentManagement">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3">Appointment Management</h1>
         <button
