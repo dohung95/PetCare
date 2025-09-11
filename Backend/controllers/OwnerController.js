@@ -1,8 +1,8 @@
 const Owner = require('../models/Owner');
 
-// @desc    Get all owners
-// @route   GET /api/owners
-// @access  Public
+// @desc    Get all owners
+// @route   GET /api/owners
+// @access  Public
 exports.getOwners = async (req, res) => {
   try {
     const owners = await Owner.find();
@@ -12,9 +12,9 @@ exports.getOwners = async (req, res) => {
   }
 };
 
-// @desc    Get single owner
-// @route   GET /api/owners/:id
-// @access  Public
+// @desc    Get single owner
+// @route   GET /api/owners/:id
+// @access  Public
 exports.getOwnerById = async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);
@@ -27,9 +27,9 @@ exports.getOwnerById = async (req, res) => {
   }
 };
 
-// @desc    Create new owner
-// @route   POST /api/owners
-// @access  Private
+// @desc    Create new owner
+// @route   POST /api/owners
+// @access  Private
 exports.createOwner = async (req, res) => {
   try {
     const newOwner = await Owner.create(req.body);
@@ -39,9 +39,9 @@ exports.createOwner = async (req, res) => {
   }
 };
 
-// @desc    Update owner
-// @route   PUT /api/owners/:id
-// @access  Private
+// @desc    Update owner
+// @route   PUT /api/owners/:id
+// @access  Private
 exports.updateOwner = async (req, res) => {
   try {
     const updatedOwner = await Owner.findByIdAndUpdate(req.params.id, req.body, {
@@ -57,9 +57,9 @@ exports.updateOwner = async (req, res) => {
   }
 };
 
-// @desc    Delete owner
-// @route   DELETE /api/owners/:id
-// @access  Private
+// @desc    Delete owner
+// @route   DELETE /api/owners/:id
+// @access  Private
 exports.deleteOwner = async (req, res) => {
   try {
     const deletedOwner = await Owner.findByIdAndDelete(req.params.id);

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const ownerSchema = new mongoose.Schema(
+const shelterSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -21,7 +21,7 @@ const ownerSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 8,
-      select: false, // không trả về mặc định
+      select: false,
       match: [
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/
       ]
@@ -39,24 +39,22 @@ const ownerSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["owner", "admin", "vet", "shelter"],
-      default: "owner",
+      enum: ['owner', 'admin', 'vet', 'shelter'],
+      default: 'shelter',
     },
   },
   { timestamps: true }
 );
 
-
-ownerSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+shelterSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-
-ownerSchema.methods.comparePassword = function (plainPassword) {
-  return bcrypt.compare(plainPassword, this.password);
+shelterSchema.methods.comparePassword = async function (plainPassword) {
+  return await bcrypt.compare(plainPassword, this.password);
 };
 
-module.exports = mongoose.model("Owner", ownerSchema);
+module.exports = mongoose.model('Shelter', shelterSchema);
