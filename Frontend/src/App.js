@@ -7,6 +7,7 @@ import HealthRecord from "./components/HealthRecord";
 import About from "./components/about";
 import Contact from "./components/contact";
 import VeterinarianRegistration from "./components/Veterinarian_Registration";
+import AppointmentManagement from "./components/AppointmentManagement";
 import Forgotpw from "./components/auth/Forgotpw";
 
 import Footer from "./components/Footer.jsx";
@@ -63,6 +64,7 @@ function Layout() {
 
           <Route path="/job/Veterinarian_Registration" element={<VeterinarianRegistration />} />
           <Route path="/job/HealthRecord" element={<HealthRecord />} />
+          {<Route path="/job/AppointmentManagement" element={<AppointmentManagement />} />}
           
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/forgot_password" element={<Forgotpw />} />
