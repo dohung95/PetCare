@@ -8,11 +8,11 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
+const AppointmentRouter = require('./routes/AppointmentRoutes');
 const authRouter = require('./routes/AuthRoutes');
 const shelterRoutes = require('./routes/ShelterRoutes');
 
@@ -54,8 +54,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/vets', veterinarianRouter);
 app.use('/api/health-records', HealthRecordRouter);
+
+app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
