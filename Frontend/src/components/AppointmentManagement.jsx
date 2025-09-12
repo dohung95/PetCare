@@ -152,9 +152,6 @@ const AppointmentManagement = () => {
         </button>
       </div>
     
-
-
-    
       {/* Search bar */}
       <div className="mb-4">
         <input
