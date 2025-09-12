@@ -45,7 +45,6 @@ const Navbar = () => {
 
   const LastName = user?.name?.split(" ")?.pop() || user?.fullName?.split(" ")?.pop() || user?.email;
 
-
   return (
     <nav className="navbar">
       <div className="container-fluid">
@@ -78,22 +77,17 @@ const Navbar = () => {
               <div className="menu-item">
                 <Link to="/contact" className="nav-link">Contact</Link>
               </div>
-
-               <div className="menu-item">
+              <div className="menu-item">
                 <Link to="/adoption" className="nav-link">Adoption</Link>
               </div>
               <div
-
                 className="menu-item dropdown"
                 onMouseEnter={() => setJobOpen(true)}
                 onMouseLeave={() => setJobOpen(false)}
               >
-                <span className="nav-link">Job</span>
+                <Link to="/job" className="nav-link">Job</Link>
                 {jobOpen && (
                   <div className="dropdown-menu">
-                    <Link to="/job/Veterinarian_Registration" className="dropdown-item">
-                      Veterinarian Registration
-                    </Link>
                     <Link to="/job/HealthRecord" className="dropdown-item">
                       Health Record
                     </Link>
