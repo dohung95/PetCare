@@ -59,19 +59,18 @@ const AppointmentManagement = () => {
   }, [searchTerm, appointments]);
 
   // Memoized table rows
-  const tableRows = useMemo(() => 
+  const tableRows = useMemo(() =>
     filteredAppointments.map((appointment) => (
       <tr key={appointment._id}>
         <td className="px-3 py-2">{appointment.pet_id?.name || 'N/A'}</td>
         <td className="px-3 py-2">{appointment.owner_id?.name || 'N/A'}</td>
         <td className="px-3 py-2">{formatDateTime(appointment.appointment_time)}</td>
         <td className="px-3 py-2">
-          <span className={`badge ${
-            appointment.status === 'pending' ? 'bg-warning text-dark' :
-            appointment.status === 'confirmed' ? 'bg-success' :
-            appointment.status === 'cancelled' ? 'bg-danger' :
-            'bg-primary'
-          }`}>
+          <span className={`badge ${appointment.status === 'pending' ? 'bg-warning text-dark' :
+              appointment.status === 'confirmed' ? 'bg-success' :
+                appointment.status === 'cancelled' ? 'bg-danger' :
+                  'bg-primary'
+            }`}>
             {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
           </span>
         </td>
@@ -141,7 +140,8 @@ const AppointmentManagement = () => {
 
   return (
     <div className="container py-4 AppointmentManagement">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div style={{ backgroundColor: '#f8f9fab2', padding: '2%', borderRadius: '10px' }}>
+        <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h3">Appointment Management</h1>
         <button
           onClick={() => setShowModal(true)}
@@ -235,8 +235,8 @@ const AppointmentManagement = () => {
                   pet_id: appointments.find(a => a._id === editingId)?.pet_id?._id || '',
                   owner_id: appointments.find(a => a._id === editingId)?.owner_id?._id || '',
                   vet_id: appointments.find(a => a._id === editingId)?.vet_id?._id || '',
-                  appointment_time: appointments.find(a => a._id === editingId)?.appointment_time 
-                    ? new Date(appointments.find(a => a._id === editingId).appointment_time).toISOString().slice(0, 16) 
+                  appointment_time: appointments.find(a => a._id === editingId)?.appointment_time
+                    ? new Date(appointments.find(a => a._id === editingId).appointment_time).toISOString().slice(0, 16)
                     : '',
                   status: appointments.find(a => a._id === editingId)?.status || 'pending'
                 } : {}}
@@ -250,6 +250,7 @@ const AppointmentManagement = () => {
         </div>
       </div>
       {showModal && <div className="modal-backdrop fade show"></div>}
+      </div>
     </div>
   );
 };

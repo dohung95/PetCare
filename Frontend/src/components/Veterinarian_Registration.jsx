@@ -99,7 +99,7 @@ const VeterinarianRegistration = () => {
           <Row className="mb-4">
             <Col>
               <Card.Text style={{ fontSize: '1.5rem', color: '#555' }}>
-                FurShield is looking for veterinarians who are passionate about caring for pets. The FurShield web app provides a platform for you to manage your appointments, record treatments, and support pet owners. This is your chance to contribute to the pet-loving community and grow your career.
+                PetCare is looking for veterinarians who are passionate about caring for pets. The PetCare web app provides a platform for you to manage your appointments, record treatments, and support pet owners. This is your chance to contribute to the pet-loving community and grow your career.
               </Card.Text>
             </Col>
           </Row>
@@ -108,7 +108,7 @@ const VeterinarianRegistration = () => {
             <Col>
               <Card.Text style={{ fontSize: '1.5rem', color: '#555' }}>
                 <b>Benefits of joining</b><br />
-                Work in a professional environment, supporting the pet-loving community. Opportunities to develop skills and participate in additional training courses. Support modern management tools through the FurShield application.
+                Work in a professional environment, supporting the pet-loving community. Opportunities to develop skills and participate in additional training courses. Support modern management tools through the PetCare application.
               </Card.Text>
             </Col>
           </Row>
@@ -245,7 +245,7 @@ const VeterinarianRegistration = () => {
                         />
                         <label htmlFor="terms" className="form-check-label vet-label">
                           Terms and Conditions<br />
-                          By submitting your application, you agree to FurShield's terms of use and allow us to store your personal information to process your application. Please read carefully before submitting.
+                          By submitting your application, you agree to PetCare's terms of use and allow us to store your personal information to process your application. Please read carefully before submitting.
                         </label>
                         {errors.terms && <div className="invalid-feedback">{errors.terms}</div>}
                       </div>
@@ -276,7 +276,7 @@ const VeterinarianRegistration = () => {
             <Col>
               <Card.Text>
                 <b>Contact Information</b><br />
-                <i>If you need further information, please contact us via email or phone number provided in the "Contact Us" section on the home page. We will respond within 48 hours.</i>
+                <i>If you need further information, please contact us via email or phone number provided in the "Contact" section on the home page. We will respond within 48 hours.</i>
               </Card.Text>
             </Col>
           </Row>
