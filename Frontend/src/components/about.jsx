@@ -95,7 +95,7 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/vHuy.webp"
                 alt="Phù Vĩnh Huy"
               />
               <h4>Phù Vĩnh Huy</h4>
@@ -107,7 +107,7 @@ function About() {
             {/* Hàng 2 */}
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/gia_huy.jpg"
                 alt="Lê Nguyễn Gia Huy"
               />
               <h4>Lê NguyễnGia Huy</h4>
@@ -118,7 +118,7 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/nhan.webp"
                 alt="Nguyễn Minh Nhân"
               />
               <h4>Nguyễn Minh Nhân</h4>
@@ -129,7 +129,7 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/thu.webp"
                 alt="Vũ Thị Hoài Thu"
               />
               <h4>Vũ Thị Hoài Thu</h4>
@@ -197,6 +197,8 @@ function About() {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

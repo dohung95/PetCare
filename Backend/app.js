@@ -25,8 +25,6 @@ const ShelterRoutes = require('./routes/ShelterRoutes');
 const feedbackRouter = require('./routes/Feedback.Route'); 
 const LPO = require('./routes/LPORoutes');
 
-const feedbackRouter = require('./routes/Feedback.Route'); 
-const LPO = require('./routes/LPORoutes');
 const apptOwnerRouter = require('./routes/Appointment_owner.routes');
 
 var app = express();

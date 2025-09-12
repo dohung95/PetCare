@@ -17,7 +17,7 @@
 /* ---------- Page layout ---------- */
 .profile-container {
   padding: 30px;
-  background: var(--bg);
+  /* background: var(--bg); */
   /* min-height: 100vh; */
   margin: 30px auto;
   border-radius: var(--radius);
@@ -145,7 +145,7 @@
     --border: #1f2a44;
     --ring: rgba(82, 123, 255, 0.2);
   }
-  .profile-container { background: var(--bg); }
+  /* .profile-container { background: var(--bg); } */
   .profile-card { background: var(--card); border-color: var(--border); }
   .profile-card .card-header { background: linear-gradient(180deg, #0f172a, #111a2f); border-color: var(--border); color: var(--text); }
   .form-control, .form-select, textarea.form-control { background: #0b152b; border-color: var(--border); color: var(--text); }
