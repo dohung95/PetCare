@@ -42,7 +42,9 @@ const AppointmentManagement = () => {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   useEffect(() => {
     fetchAppointments();
   }, []);
@@ -67,9 +69,9 @@ const AppointmentManagement = () => {
         <td className="px-3 py-2">{formatDateTime(appointment.appointment_time)}</td>
         <td className="px-3 py-2">
           <span className={`badge ${appointment.status === 'pending' ? 'bg-warning text-dark' :
-              appointment.status === 'confirmed' ? 'bg-success' :
-                appointment.status === 'cancelled' ? 'bg-danger' :
-                  'bg-primary'
+            appointment.status === 'confirmed' ? 'bg-success' :
+              appointment.status === 'cancelled' ? 'bg-danger' :
+                'bg-primary'
             }`}>
             {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
           </span>
@@ -142,114 +144,114 @@ const AppointmentManagement = () => {
     <div className="container py-4 AppointmentManagement">
       <div style={{ backgroundColor: '#f8f9fab2', padding: '2%', borderRadius: '10px' }}>
         <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="h3">Appointment Management</h1>
-        <button
-          onClick={() => setShowModal(true)}
-          className="btn btn-primary"
-          aria-label="Add new appointment"
-        >
-          Add New
-        </button>
-      </div>
-    
-      {/* Search bar */}
-      <div className="mb-4">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search by Pet Name, Owner Name, status, or date..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-
-      {/* Messages */}
-      {message.text && (
-        <div className={`alert alert-${message.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show mb-4`} role="alert">
-          {message.text}
+          <h1 className="h3">Appointment Management</h1>
           <button
-            type="button"
-            className="btn-close"
-            onClick={() => setMessage({ text: '', type: '' })}
-            aria-label="Close"
-          ></button>
+            onClick={() => setShowModal(true)}
+            className="btn btn-primary"
+            aria-label="Add new appointment"
+          >
+            Add New
+          </button>
         </div>
-      )}
 
-      {/* Loading spinner */}
-      {loading && (
-        <div className="text-center my-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
+        {/* Search bar */}
+        <div className="mb-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by Pet Name, Owner Name, status, or date..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        {/* Messages */}
+        {message.text && (
+          <div className={`alert alert-${message.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show mb-4`} role="alert">
+            {message.text}
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setMessage({ text: '', type: '' })}
+              aria-label="Close"
+            ></button>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Table */}
-      {!loading && (
-        <div className="table-responsive">
-          <table className="table table-hover">
-            <thead className="table-light">
-              <tr>
-                <th scope="col">Pet Name</th>
-                <th scope="col">Owner Name</th>
-                <th scope="col">Time</th>
-                <th scope="col">Status</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableRows.length > 0 ? tableRows : (
+        {/* Loading spinner */}
+        {loading && (
+          <div className="text-center my-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
+
+        {/* Table */}
+        {!loading && (
+          <div className="table-responsive">
+            <table className="table table-hover">
+              <thead className="table-light">
                 <tr>
-                  <td colSpan="6" className="text-center">
-                    {searchTerm ? 'No results found' : 'No appointments available'}
-                  </td>
+                  <th scope="col">Pet Name</th>
+                  <th scope="col">Owner Name</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {tableRows.length > 0 ? tableRows : (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      {searchTerm ? 'No results found' : 'No appointments available'}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-      {error && (
-        <div className="alert alert-danger mt-4" role="alert">{error}</div>
-      )}
+        {error && (
+          <div className="alert alert-danger mt-4" role="alert">{error}</div>
+        )}
 
-      {/* Modal */}
-      <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" aria-hidden={!showModal}>
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">{editingId ? 'Edit Appointment' : 'Add New Appointment'}</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={handleCancel}
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <AppointmentForm
-                initialData={editingId ? {
-                  pet_id: appointments.find(a => a._id === editingId)?.pet_id?._id || '',
-                  owner_id: appointments.find(a => a._id === editingId)?.owner_id?._id || '',
-                  vet_id: appointments.find(a => a._id === editingId)?.vet_id?._id || '',
-                  appointment_time: appointments.find(a => a._id === editingId)?.appointment_time
-                    ? new Date(appointments.find(a => a._id === editingId).appointment_time).toISOString().slice(0, 16)
-                    : '',
-                  status: appointments.find(a => a._id === editingId)?.status || 'pending'
-                } : {}}
-                onSubmit={handleSubmit}
-                onCancel={handleCancel}
-                isEditing={!!editingId}
-                loading={formLoading}
-              />
+        {/* Modal */}
+        <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" aria-hidden={!showModal}>
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{editingId ? 'Edit Appointment' : 'Add New Appointment'}</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleCancel}
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <AppointmentForm
+                  initialData={editingId ? {
+                    pet_id: appointments.find(a => a._id === editingId)?.pet_id?._id || '',
+                    owner_id: appointments.find(a => a._id === editingId)?.owner_id?._id || '',
+                    vet_id: appointments.find(a => a._id === editingId)?.vet_id?._id || '',
+                    appointment_time: appointments.find(a => a._id === editingId)?.appointment_time
+                      ? new Date(appointments.find(a => a._id === editingId).appointment_time).toISOString().slice(0, 16)
+                      : '',
+                    status: appointments.find(a => a._id === editingId)?.status || 'pending'
+                  } : {}}
+                  onSubmit={handleSubmit}
+                  onCancel={handleCancel}
+                  isEditing={!!editingId}
+                  loading={formLoading}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {showModal && <div className="modal-backdrop fade show"></div>}
+        {showModal && <div className="modal-backdrop fade show"></div>}
       </div>
     </div>
   );

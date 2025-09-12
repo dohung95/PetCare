@@ -17,7 +17,9 @@ const LPO = () => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   // Fetch LPO list when component mounts
   useEffect(() => {
     fetchLPOs();
@@ -56,7 +58,7 @@ const LPO = () => {
       setLoading(true);
       setError('');
       setSuccess('');
-      
+
       if (editingId) {
         // Update LPO
         const response = await axios.put(`/api/lpos/${editingId}`, formData);

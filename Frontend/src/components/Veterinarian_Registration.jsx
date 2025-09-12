@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,7 +25,9 @@ const VeterinarianRegistration = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
