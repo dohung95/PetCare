@@ -37,8 +37,7 @@ function App() {
           element={
             <>
               <Home />
-              <div style={{ height: "1200px", background: "#f5f5f5" }}></div>
-              <Footer />
+              
             </>
           }
         />
