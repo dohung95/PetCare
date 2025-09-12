@@ -60,7 +60,7 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/hung.jpg"
                 alt="Đỗ Thanh HÙng"
               />
               <h4>Đỗ Thanh Hùng</h4>
