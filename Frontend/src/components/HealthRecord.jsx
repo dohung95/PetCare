@@ -16,7 +16,9 @@ const HealthRecord = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   // Fetch all health records
   useEffect(() => {
     fetchHealthRecords();
@@ -125,9 +127,9 @@ const HealthRecord = () => {
 
       {/* Button to open modal for adding new record */}
       <div className="text-center mb-4">
-        <Button 
-          variant="success" 
-          className="health-button health-button-add" 
+        <Button
+          variant="success"
+          className="health-button health-button-add"
           onClick={handleAddNew}
         >
           <i className="fas fa-plus me-1"></i>Add New Record
@@ -279,16 +281,16 @@ const HealthRecord = () => {
               </div>
             </div>
             <div className="d-flex justify-content-end gap-2">
-              <Button 
-                variant="secondary" 
+              <Button
+                variant="secondary"
                 onClick={handleCloseModal}
                 className="health-button health-button-cancel"
               >
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
-                variant="success" 
+              <Button
+                type="submit"
+                variant="success"
                 className="health-button health-button-add"
               >
                 {editingId ? 'Update' : 'Add'}

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Css/VeterinarianRegistration.css'; // Thêm import CSS custom
+import './Css/VeterinarianRegistration.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -22,9 +22,12 @@ const VeterinarianRegistration = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -70,6 +73,7 @@ const VeterinarianRegistration = () => {
         experience: formData.experience ? parseInt(formData.experience) : 0
       });
 
+      setShowFormModal(false);
       setShowSuccessModal(true);
     } catch (error) {
       setErrors({
@@ -80,14 +84,28 @@ const VeterinarianRegistration = () => {
     }
   };
 
-  const handleCloseModal = () => {
+  const handleCloseFormModal = () => {
+    setShowFormModal(false);
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      specialization: '',
+      experience: ''
+    });
+    setErrors({});
+    setIsTermsAccepted(false);
+  };
+
+  const handleCloseSuccessModal = () => {
     setShowSuccessModal(false);
     navigate('/');
   };
 
   return (
     <Container className="mt-4 Veterinarian_Registration">
-      <Card className="vet-card p-4" >
+      <Card className="vet-card p-4">
         <Card.Body>
           <Row className="mb-4">
             <Col>
@@ -127,148 +145,15 @@ const VeterinarianRegistration = () => {
             </Col>
           </Row>
 
-          <Row className="justify-content-center">
-            <Col md={6} lg={5}>
-              <Card className="vet-card p-4">
-                <Card.Body>
-                  <h4 className="card-title text-center mb-4 fs-4 vet-title">Veterinarian Registration</h4>
-
-                  {errors.submit && (
-                    <div className="alert alert-danger alert-dismissible mb-3 vet-alert">
-                      {errors.submit}
-                      <button type="button" className="btn-close" onClick={() => setErrors({})}></button>
-                    </div>
-                  )}
-
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-group mb-3 vet-form-group">
-                      <label htmlFor="name" className="form-label fs-6 vet-label">
-                        <i className="bi bi-person me-1"></i>Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className={`form-control form-control-sm vet-input ${errors.name ? 'is-invalid' : ''}`}
-                        required
-                      />
-                      {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-                    </div>
-
-                    <div className="form-group mb-3 vet-form-group">
-                      <label htmlFor="email" className="form-label fs-6 vet-label">
-                        <i className="bi bi-envelope me-1"></i>Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`form-control form-control-sm vet-input ${errors.email ? 'is-invalid' : ''}`}
-                        required
-                      />
-                      {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-                    </div>
-
-                    <div className="form-group mb-3 vet-form-group">
-                      <label htmlFor="phone" className="form-label fs-6 vet-label">
-                        <i className="bi bi-telephone me-1"></i>Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={`form-control form-control-sm vet-input ${errors.phone ? 'is-invalid' : ''}`}
-                        required
-                      />
-                      {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
-                    </div>
-
-                    <div className="form-group mb-3 vet-form-group">
-                      <label htmlFor="address" className="form-label fs-6 vet-label">
-                        <i className="bi bi-geo-alt me-1"></i>Address
-                      </label>
-                      <textarea
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        className="form-control form-control-sm vet-input vet-textarea"
-                        rows="2"
-                      />
-                    </div>
-
-                    <div className="form-group mb-3 vet-form-group">
-                      <label htmlFor="specialization" className="form-label fs-6 vet-label">
-                        <i className="bi bi-award me-1"></i>Specialization
-                      </label>
-                      <input
-                        type="text"
-                        id="specialization"
-                        name="specialization"
-                        value={formData.specialization}
-                        onChange={handleChange}
-                        className="form-control form-control-sm vet-input"
-                      />
-                    </div>
-
-                    <div className="form-group mb-3 vet-form-group">
-                      <label htmlFor="experience" className="form-label fs-6 vet-label">
-                        <i className="bi bi-calendar-check me-1"></i>Years of Experience
-                      </label>
-                      <input
-                        type="number"
-                        id="experience"
-                        name="experience"
-                        value={formData.experience}
-                        onChange={handleChange}
-                        className={`form-control form-control-sm vet-input ${errors.experience ? 'is-invalid' : ''}`}
-                        min="0"
-                      />
-                      {errors.experience && <div className="invalid-feedback">{errors.experience}</div>}
-                    </div>
-
-                    <div className="form-group mb-4 vet-form-group">
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          id="terms"
-                          name="terms"
-                          checked={isTermsAccepted}
-                          onChange={handleTermsChange}
-                          className={`form-check-input ${errors.terms ? 'is-invalid' : ''}`}
-                        />
-                        <label htmlFor="terms" className="form-check-label vet-label">
-                          Terms and Conditions<br />
-                          By submitting your application, you agree to PetCare's terms of use and allow us to store your personal information to process your application. Please read carefully before submitting.
-                        </label>
-                        {errors.terms && <div className="invalid-feedback">{errors.terms}</div>}
-                      </div>
-                    </div>
-
-                    <Button
-                      type="submit"
-                      variant="success"
-                      className="w-100 vet-button"
-                      disabled={isSubmitting || !isTermsAccepted}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          Submitting...
-                        </>
-                      ) : (
-                        'Register'
-                      )}
-                    </Button>
-                  </form>
-                </Card.Body>
-              </Card>
+          <Row className="mb-4 justify-content-center">
+            <Col md={6} lg={5} className="text-center">
+              <Button
+                variant="success"
+                className="vet-button"
+                onClick={() => setShowFormModal(true)}
+              >
+                <i className="bi bi-person-plus me-1"></i> Register as Veterinarian
+              </Button>
             </Col>
           </Row>
 
@@ -281,7 +166,160 @@ const VeterinarianRegistration = () => {
             </Col>
           </Row>
 
-          <Modal show={showSuccessModal} onHide={handleCloseModal} centered className="vet-modal">
+          {/* Form Modal */}
+          <Modal show={showFormModal} onHide={handleCloseFormModal} centered className="vet-modal">
+            <Modal.Header closeButton className="bg-success text-white">
+              <Modal.Title>Veterinarian Registration</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="vet-modal-body">
+              {errors.submit && (
+                <div className="alert alert-danger alert-dismissible mb-3 vet-alert">
+                  {errors.submit}
+                  <button type="button" className="btn-close" onClick={() => setErrors({})}></button>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="name" className="form-label fs-6 vet-label">
+                    <i className="bi bi-person me-1"></i>Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`form-control form-control-sm vet-input ${errors.name ? 'is-invalid' : ''}`}
+                    required
+                  />
+                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                </div>
+
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="email" className="form-label fs-6 vet-label">
+                    <i className="bi bi-envelope me-1"></i>Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`form-control form-control-sm vet-input ${errors.email ? 'is-invalid' : ''}`}
+                    required
+                  />
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                </div>
+
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="phone" className="form-label fs-6 vet-label">
+                    <i className="bi bi-telephone me-1"></i>Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`form-control form-control-sm vet-input ${errors.phone ? 'is-invalid' : ''}`}
+                    required
+                  />
+                  {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
+                </div>
+
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="address" className="form-label fs-6 vet-label">
+                    <i className="bi bi-geo-alt me-1"></i>Address
+                  </label>
+                  <textarea
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="form-control form-control-sm vet-input vet-textarea"
+                    rows="2"
+                  />
+                </div>
+
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="specialization" className="form-label fs-6 vet-label">
+                    <i className="bi bi-award me-1"></i>Specialization
+                  </label>
+                  <input
+                    type="text"
+                    id="specialization"
+                    name="specialization"
+                    value={formData.specialization}
+                    onChange={handleChange}
+                    className="form-control form-control-sm vet-input"
+                  />
+                </div>
+
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="experience" className="form-label fs-6 vet-label">
+                    <i className="bi bi-calendar-check me-1"></i>Years of Experience
+                  </label>
+                  <input
+                    type="number"
+                    id="experience"
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleChange}
+                    className={`form-control form-control-sm vet-input ${errors.experience ? 'is-invalid' : ''}`}
+                    min="0"
+                  />
+                  {errors.experience && <div className="invalid-feedback">{errors.experience}</div>}
+                </div>
+
+                <div className="form-group mb-4 vet-form-group">
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      id="terms"
+                      name="terms"
+                      checked={isTermsAccepted}
+                      onChange={handleTermsChange}
+                      className={`form-check-input ${errors.terms ? 'is-invalid' : ''}`}
+                    />
+                    <label htmlFor="terms" className="form-check-label vet-label">
+                      Terms and Conditions<br />
+                      By submitting your application, you agree to PetCare's terms of use and allow us to store your personal information to process your application. Please read carefully before submitting.
+                    </label>
+                    {errors.terms && <div className="invalid-feedback">{errors.terms}</div>}
+                  </div>
+                </div>
+
+                <div className="d-flex gap-2">
+                  <Button
+                    type="submit"
+                    variant="success"
+                    className="vet-button"
+                    disabled={isSubmitting || !isTermsAccepted}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Submitting...
+                      </>
+                    ) : (
+                      'Register'
+                    )}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    className="vet-button"
+                    onClick={handleCloseFormModal}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </Modal.Body>
+          </Modal>
+
+          {/* Success Modal */}
+          <Modal show={showSuccessModal} onHide={handleCloseSuccessModal} centered className="vet-modal">
             <Modal.Header closeButton className="bg-success text-white">
               <Modal.Title>Registration Successful</Modal.Title>
             </Modal.Header>
@@ -290,7 +328,7 @@ const VeterinarianRegistration = () => {
               Vet registration successful! Please check your registered email! Click "Close" to return to the home page.
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="success" onClick={handleCloseModal} className="vet-button">
+              <Button variant="success" onClick={handleCloseSuccessModal} className="vet-button">
                 Close
               </Button>
             </Modal.Footer>
