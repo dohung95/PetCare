@@ -2,6 +2,7 @@
   background: #333;
   color: #fff;
   padding: 10px 20px;
+  border: 1px black;
 }
 
 .logo {
@@ -76,6 +77,25 @@
   width: 85px;
 
 }
+.navbar {
+  position: fixed;      /* luôn cố định trên cùng */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;        /* nổi lên trên ảnh */
+  background: transparent; 
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-scrolled {
+  background: #fff !important;  /* khi scroll xuống đổi sang trắng */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.navbar-scrolled .nav-link {
+  color: #000 !important;
+}
+
 
 
 
