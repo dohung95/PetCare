@@ -63,7 +63,8 @@ function App() {
 
         {/* NGƯỜI BẢO HỘ USER */}
         <Route path="/adoptionPage" element={<AdoptionPage />} />
-        <Route path="/pets/:id" element={<PetDetail />} />
+        {/* ========================================== */}
+<Route path="/shelter-pets/:id" element={<PetDetail />} />
         <Route path="/formadop" element={<FormAdop />} />
         <Route path="/thankyou" element={<ThankYou />} />
 

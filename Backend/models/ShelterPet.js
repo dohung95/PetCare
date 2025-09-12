@@ -19,7 +19,7 @@ const ShelterPetSchema = new mongoose.Schema({
   age: Number,
   ageCategory: String,
   image: String,
-  gender: Boolean
+  gender: Boolean,
 }, { timestamps: true });
 
 module.exports = mongoose.model('ShelterPet', ShelterPetSchema);

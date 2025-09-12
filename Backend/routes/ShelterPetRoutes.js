@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const shelterPetController = require('../controllers/shelterPetController');
+const shelterPetController = require('../controllers/ShelterPetController');
 
 // Route to create a new pet
-router.post('/shelter-pets', shelterPetController.createShelterPet);
+router.post('/', shelterPetController.createShelterPet);
 
 // Route to get all pets
-router.get('/shelter-pets', shelterPetController.getAllShelterPets);
+router.get('/', shelterPetController.getAllShelterPets);
 
 // Route to get a single pet by ID
-router.get('/shelter-pets/:id', shelterPetController.getShelterPetById);
+router.get('/:id', shelterPetController.getShelterPetById);
 
 // Route to update a pet by ID
-router.put('/shelter-pets/:id', shelterPetController.updateShelterPet);
+router.put('/:id', shelterPetController.updateShelterPet);
 
 // Route to delete a pet by ID
-router.delete('/shelter-pets/:id', shelterPetController.deleteShelterPet);
+router.delete('/:id', shelterPetController.deleteShelterPet);
 
 module.exports = router;

@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 // Swiper import
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
+// Function to scroll to top
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
 
 const Home = () => {
+   useEffect(() => {
+    scrollToTop();
+  }, []); 
   return (
-    <>
+    <div>
+     
       {/* HERO SECTION */}
       <section
         className="min-vh-100 d-flex align-items-center justify-content-center text-center text-white"
@@ -39,8 +52,7 @@ const Home = () => {
             data-aos-delay="150"
             style={{ fontFamily: "'Nunito', sans-serif", fontSize: "50px" }}
           >
-            Care for your <br />
-            friend <br />
+            Care for your friend <br />
             We provide the best care <br />
           </h2>
 
@@ -232,7 +244,46 @@ const Home = () => {
           <p className="fw-bold mt-2">Eric & Haku</p>
         </div>
       </section>
-    </>
+       {/* FOOTER VIDEO SECTION */}
+        <section className="position-relative" style={{ height: "300px", overflow: "hidden" }}>
+          {/* Video background */}
+          <video
+            className="w-100 h-100"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ objectFit: "cover" }}
+          >
+            <source src="/videos/footer-banner.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          {/* Overlay */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundColor: "rgba(0,0,0,0.4)",
+            }}
+          ></div>
+
+          {/* Text content */}
+          <div
+            className="position-absolute top-50 start-50 translate-middle text-center text-white"
+            style={{ zIndex: 2 }}
+          >
+            <h2
+              className="fw-bold"
+              style={{ fontSize: "36px", fontFamily: "'Nunito', sans-serif", lineHeight: "1.5" }}
+            >
+              We listen to you.
+              <br />
+              We talk to your pet.
+            </h2>
+          </div>
+        </section>
+    </div>
   );
 };
 
