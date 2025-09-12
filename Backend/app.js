@@ -1,5 +1,4 @@
 var createError = require('http-errors');
-const AuthRouter = require('./routes/AuthRoutes');
 require('dotenv').config();
 var express = require('express');
 var path = require('path');
@@ -7,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+const AuthRouter = require('./routes/AuthRoutes');
+
 require('./models/Owner');
 require('./models/Pet');
 require('./models/Appointment');
@@ -19,6 +21,7 @@ const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
 const ShelterRoutes = require('./routes/ShelterRoutes');
+const feedbackRouter = require('./routes/Feedback.Route'); 
 const LPO = require('./routes/LPORoutes');
 
 
@@ -55,8 +58,8 @@ app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
 
 app.use('/api/shelter-pets', shelterPetRoutes);
+app.use('/api/feedbacks', feedbackRouter);
 app.use('/api/lpos', LPO);
-
 
 
 // catch 404 and forward to error handler

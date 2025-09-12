@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
+import Home from "./components/Home.jsx";
 import Login from "./components/auth/Login";
 import HealthRecord from "./components/HealthRecord";
 import About from "./components/about";
@@ -11,10 +11,9 @@ import VeterinarianRegistration from "./components/Veterinarian_Registration";
 import AppointmentManagement from "./components/AppointmentManagement";
 import LPO from "./components/LPO";
 import Forgotpw from "./components/auth/Forgotpw";
-
 import Footer from "./components/Footer.jsx";
 
-// =================NGƯỜI BẢO HỘ=============
+// NGƯỜI BẢO HỘ
 import AdoptionPage from "./components/AdoptionPage.jsx";
 import PetDetail from "./components/adop/PetDetail";
 import FormAdop from "./components/adop/Fromadop";
@@ -22,13 +21,15 @@ import ThankYou from "./components/adop/ThankYou";
 import Dashboard from "./components/Admin/Dashboard.jsx";
 import AdopPets from "./components/Admin/AdopPets";
 import AdopRequest from "./components/Admin/AdopRequest.jsx";
-import Overview from "./components/Admin/Overview";
+import Overview from "./components/Admin/Overview"; 
 
-export default function App() {
+function App() {
+  const location = useLocation();
+  const hideNavbar = location.pathname === "/auth/login" || location.pathname === "/auth/forgot_password";
+
   return (
-    <Router>
-      <Navbar />
-
+    <div>
+      {!hideNavbar && <Navbar />}
       <Routes>
         {/* Trang chủ */}
         <Route
@@ -36,7 +37,6 @@ export default function App() {
           element={
             <>
               <Home />
-              {/* thêm đoạn dài để test scroll */}
               <div style={{ height: "1200px", background: "#f5f5f5" }}></div>
               <Footer />
             </>
@@ -57,26 +57,25 @@ export default function App() {
             </div>
           }
         />
-        <Route path="/Veterinarian_Registration" element={<VeterinarianRegistration />} />
         <Route path="/service/dog-products" element={<h1>Dog Products Page</h1>} />
         <Route path="/service/cat-products" element={<h1>Cat Products Page</h1>} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-        {/* =============NGƯỜI BẢO HỘ USER============= */}
+        {/* NGƯỜI BẢO HỘ USER */}
         <Route path="/adoptionPage" element={<AdoptionPage />} />
         <Route path="/pets/:id" element={<PetDetail />} />
         <Route path="/formadop" element={<FormAdop />} />
         <Route path="/thankyou" element={<ThankYou />} />
 
-        {/* =========ADMIN NGƯỜI BẢO HỘ =========== */}
+        {/* ADMIN NGƯỜI BẢO HỘ */}
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Overview" element={<Overview />} />
-        <Route path="/adopPets" element={<AdopPets />} />
+        <Route path="/AdopPets" element={<AdopPets />} />
         <Route path="/AdopRequest" element={<AdopRequest />} />
 
         {/* JOB */}
-        <Route path="/job/Veterinarian_Registration" element={<VeterinarianRegistration />} />
+        <Route path="/job" element={<VeterinarianRegistration />} />
         <Route path="/job/HealthRecord" element={<HealthRecord />} />
         <Route path="/job/AppointmentManagement" element={<AppointmentManagement />} />
         <Route path="/job/LPO" element={<LPO />} />
@@ -85,6 +84,15 @@ export default function App() {
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/forgot_password" element={<Forgotpw />} />
       </Routes>
+      {!hideNavbar && <Footer />}
+    </div>
+  );
+}
+
+export default function RootApp() {
+  return (
+    <Router>
+      <App />
     </Router>
   );
 }
