@@ -2,26 +2,40 @@ const HealthRecord = require('../models/HealthRecord');
 
 exports.getHealthRecords = async (req, res) => {
   try {
+    const HealthRecords = await HealthRecord.find()
+      .populate('pet_id', 'name') // Lấy name từ Pet
+      .populate('vet_id', 'name'); // Lấy name từ Veterinarian
 
-    const HealthRecords = await HealthRecord.find();
+    // Transform data to include pet_name and vet_name for frontend
+    const transformedRecords = HealthRecords.map(record => ({
+      ...record._doc,
+      pet_name: record.pet_id ? record.pet_id.name : null,
+      vet_name: record.vet_id ? record.vet_id.name : null
+    }));
 
-    res.status(200).json({success: true, data: HealthRecords});
-
+    res.status(200).json({ success: true, data: transformedRecords });
   } catch (error) {
-    res.status(500).json({success: false, message: error.message});
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
+// Sửa lỗi trong getHealthRecordById
 exports.getHealthRecordById = async (req, res) => {
   try {
-    const HealthRecord = await HealthRecord.findById(req.params.id);
-
-    if (!record){
-      return res.status(404).json({success: true, data: record})
-
+    const record = await HealthRecord.findById(req.params.id)
+      .populate('pet_id', 'name')
+      .populate('vet_id', 'name');
+    if (!record) {
+      return res.status(404).json({ success: false, message: 'Health record not found' });
     }
+    const transformedRecord = {
+      ...record._doc,
+      pet_name: record.pet_id ? record.pet_id.name : null,
+      vet_name: record.vet_id ? record.vet_id.name : null
+    };
+    res.status(200).json({ success: true, data: transformedRecord });
   } catch (error) {
-    res.status(500).json({success: false, message: error.message}); 
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

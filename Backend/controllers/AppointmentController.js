@@ -6,10 +6,12 @@ const Appointment = require('../models/Appointment');
 // @access  Public
 exports.getAppointments = async (req, res) => {
   try {
-    // Corrected variable name for clarity and consistency
-    const appointments = await Appointment.find();
-    res.status(200).json({ success: true, data: appointments });
+    // Populate để lấy name từ Pet và Owner
+    const appointments = await Appointment.find()
+      .populate('pet_id', 'name species breed')  // Lấy name, species, breed từ Pet (bạn có thể chọn trường cần)
+      .populate('owner_id', 'name email');      // Lấy name, email từ Owner (giả định Owner có các trường này)
 
+    res.status(200).json({ success: true, data: appointments });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -20,20 +22,16 @@ exports.getAppointments = async (req, res) => {
 // @access  Public
 exports.getAppointmentById = async (req, res) => {
   try {
-    // Use a lowercase variable name to avoid shadowing the model
-    const appointment = await Appointment.findById(req.params.id);
+    const appointment = await Appointment.findById(req.params.id)
+      .populate('pet_id', 'name species breed')
+      .populate('owner_id', 'name email');
 
-    // If no appointment is found, return a 404 response
     if (!appointment) {
-      // It's important to set success to false for a "not found" response
       return res.status(404).json({ success: false, message: 'Appointment not found' });
     }
 
-    // If an appointment is found, send a successful response with the data
     res.status(200).json({ success: true, data: appointment });
-
   } catch (error) {
-    // Send a 500 error for server-side issues (e.g., invalid ID format)
     res.status(500).json({ success: false, message: error.message });
   }
 };
