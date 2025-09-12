@@ -45,6 +45,9 @@ const Navbar = () => {
 
   const LastName = user?.name?.split(" ")?.pop() || user?.fullName?.split(" ")?.pop() || user?.email;
 
+  // Kiểm tra role của người dùng
+  const isVet = user?.role === "vet";
+
   return (
     <nav className="navbar">
       <div className="container-fluid">
@@ -80,25 +83,8 @@ const Navbar = () => {
               <div className="menu-item">
                 <Link to="/adoption" className="nav-link">Adoption</Link>
               </div>
-              <div
-                className="menu-item dropdown"
-                onMouseEnter={() => setJobOpen(true)}
-                onMouseLeave={() => setJobOpen(false)}
-              >
+              <div>
                 <Link to="/job" className="nav-link">Job</Link>
-                {jobOpen && (
-                  <div className="dropdown-menu">
-                    <Link to="/job/HealthRecord" className="dropdown-item">
-                      Health Record
-                    </Link>
-                    <Link to="/job/AppointmentManagement" className="dropdown-item">
-                      Appointment Management
-                    </Link>
-                    <Link to="/job/LPO" className="dropdown-item">
-                      Log processing and observation
-                    </Link>
-                  </div>
-                )}
               </div>
               {!user ? (
                 <div className="menu-item">
@@ -114,10 +100,19 @@ const Navbar = () => {
                   {accountOpen && (
                     <div className="dropdown-menu">
                       <Link to="/account/profile" className="dropdown-item">Profile</Link>
-                      <Link to="/account/pets" className="dropdown-item">My Pets</Link>
-                      <Link to="/account/family" className="dropdown-item">Family</Link>
-                      <Link to="/account/health-records" className="dropdown-item">My Pets Health</Link>
-                      <Link to="/service/store" className="dropdown-item">Shopping</Link>
+                      {isVet ? (
+                        <>
+                          <Link to="/job/HealthRecord" className="dropdown-item">Health Record</Link>
+                          <Link to="/job/AppointmentManagement" className="dropdown-item">Appointment Management</Link>
+                          <Link to="/job/LPO" className="dropdown-item">Log processing and observation</Link>
+                        </>
+                      ) : (
+                        <>
+                          <Link to="/account/pets" className="dropdown-item">My Pets</Link>
+                          <Link to="/account/family" className="dropdown-item">Family</Link>
+                          <Link to="/service/store" className="dropdown-item">Shopping</Link>
+                        </>
+                      )}
                       <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
                         Logout
                       </button>
