@@ -3,6 +3,27 @@ import "./Css/About.css";
 
 function About() {
   return (
+
+    <div className="about_page">
+      <div className="container">
+        <h2 className="text-center mb-4">About Us</h2>
+        <p className="lead text-center">
+          <strong>
+            PetCare - Where the Love for Pets Flourishes!
+          </strong>
+        </p>
+        <p>
+          Are you looking for a trustworthy place to entrust your "four-legged friend"? Welcome to PetCare, a comprehensive pet care website with a mission to provide the best for the special members of your family. We are proud to be a one-stop destination that meets all your pet's needs, from health care to providing daily essentials.
+        </p>
+        <p>
+          At PetCare's professional veterinary service, our team of experienced and dedicated doctors is always ready to examine, treat, and fully vaccinate your pets, ensuring they stay healthy. We also offer animal protection services with a safe, clean living environment, helping your pets feel comfortable and loved while you are away.
+        </p>
+        <p>
+          What's more, PetCare's online store is a shopping paradise with thousands of high-quality products. From nutritious food and fun toys to fashionable clothes and accessories, everything is carefully selected from reputable brands. Let PetCare accompany you on your journey of caring for and loving your pets, making every day of their lives happier and more complete.
+        </p>
+        <p className="fw-bold text-center">
+          Our mission: <em>“Healthy Pets, Happy Families.”</em>
+        </p>
     <div className="about_page bg-gray-100 py-10">
       <div className="container mx-auto px-4">
 
@@ -11,6 +32,7 @@ function About() {
           <div className="about-col">
             <h3 className="text-2xl font-semibold mb-4">About Us</h3>
             <p className="lead text-center text-xl mb-6">
+
               <strong>PetCare - Where the Love for Pets Flourishes!</strong>
             </p>
             <p className="text-lg mb-4">
@@ -23,6 +45,7 @@ function About() {
 
           <div className="about-col">
             <p className="text-lg mb-4">
+
               At PetCare's professional veterinary service, our team of experienced and dedicated doctors is always ready to examine, treat, and fully vaccinate your pets, ensuring they stay healthy. Meet our team: Dr. Jane Doe, our lead veterinarian with over 10 years of experience specializing in canine health; Dr. Mark Lee, an expert in feline care with 8 years in the field; and our support staff, trained in animal behavior and welfare, ensuring every pet receives personalized attention.
             </p>
             <p className="text-lg mb-4">
@@ -30,6 +53,7 @@ function About() {
             </p>
             <p className="text-lg mb-4">
               What's more, PetCare's online store is a shopping paradise with thousands of high-quality products. From nutritious food and fun toys to fashionable clothes and accessories, everything is carefully selected from reputable brands. Let PetCare accompany you on your journey of caring for and loving your pets, making every day of their lives happier and more complete.
+
             </p>
           </div>
         </div>
@@ -157,6 +181,7 @@ function About() {
           <h3 className="text-2xl font-semibold mb-4">Testimonials</h3>
           <div className="testimonials-section">
             <div className="testimonials-list">
+
               <p>"PetCare saved my dog’s life with their expert care! Dr. Jane was amazing and so compassionate." - Sarah K.</p>
               <p>"The online store has the best selection of pet toys. My cat loves them!" - John D.</p>
               <p>"I left my puppy at their protection service, and he came back happier than ever. Highly recommend!" - Emily N.</p>
@@ -166,6 +191,7 @@ function About() {
               <p>"Their protection facility is clean and safe. I felt at ease while I was away." - Anna P.</p>
               <p>"Dr. Mark Lee’s expertise with my cat’s illness was incredible. I’m so grateful!" - David H.</p>
               <p>"The personalized attention my parrot received was beyond expectations. Great team!" - Sophie R.</p>
+
               <p>"PetCare’s customer service is excellent. They helped me choose the perfect accessories!" - James B.</p>
             </div>
           </div>

@@ -4,7 +4,8 @@ import "./Css/Footer.css";
 
 function Footer() {
   return (
-    <footer className="bg-dark text-light pt-5 pb-3 mt-5 footer">
+
+    <footer className="bg-dark text-light footer">
       <div className="container_footer">
         <div className="row">
           {/* logo */}
@@ -16,6 +17,13 @@ function Footer() {
           {/* slogan & Quick Links */}
           {/* slogan */}
           <div className="col-md-4 mb-4">
+
+            <h5 className="fw-bold">Quick Links</h5>
+            <ul className="list-unstyled">
+              <li><Link to="/" className="text-light text-decoration-none">Home</Link></li>
+              <li><Link to="/service" className="text-light 
+              text-decoration-none">Service</Link></li>
+              <li><Link to="/about" className="text-light 
             <div>
               <h4 className="fw-bold">🐾 Petcare</h4>
               <p style={{ width: "90%" }}>
@@ -34,9 +42,13 @@ function Footer() {
                   </Link>
                   <ul className="dropdown-menu">
                     <li><Link to="/service/store" className="dropdown-item">Store</Link></li>
+                    <li>
+                      <Link to="/Appointment_owner" className="dropdown-item">Appointment</Link>
+                    </li>
                   </ul>
                 </li>
                 <li><Link to="/about" className="text-light 
+
               text-decoration-none">About Us</Link></li>
                 <li><Link to="/contact" className="text-light text-decoration-none">Contact</Link></li>
                 <li><Link to="/adoption" className="text-light text-decoration-none">Adoption</Link></li>

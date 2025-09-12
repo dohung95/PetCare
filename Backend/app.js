@@ -21,11 +21,13 @@ const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
 const ShelterRoutes = require('./routes/ShelterRoutes');
+
 const feedbackRouter = require('./routes/Feedback.Route'); 
 const LPO = require('./routes/LPORoutes');
 
-
-
+const feedbackRouter = require('./routes/Feedback.Route'); 
+const LPO = require('./routes/LPORoutes');
+const apptOwnerRouter = require('./routes/Appointment_owner.routes');
 
 var app = express();
 const corsOptions = {
@@ -56,6 +58,8 @@ app.use('/api/health-records', HealthRecordRouter);
 app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
+
+app.use('/api/appointments_owner', apptOwnerRouter);
 
 app.use('/api/shelter-pets', shelterPetRoutes);
 app.use('/api/feedbacks', feedbackRouter);

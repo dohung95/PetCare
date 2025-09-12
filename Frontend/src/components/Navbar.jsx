@@ -36,6 +36,11 @@ const Navbar = () => {
   /* === LOGOUT === */
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("ownerId");
+    localStorage.removeItem("ownerName");
+    localStorage.removeItem("ownerPhone");
+    localStorage.removeItem("ownerEmail");
+    localStorage.removeItem("ownerRole");
     setUser(null);
     setAccountOpen(false);
     navigate("/");
@@ -65,9 +70,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`navbar fixed-top ${
-        scrolled ? "navbar-scrolled" : "navbar-top"
-      }`}
+      className={`navbar fixed-top ${scrolled ? "navbar-scrolled" : "navbar-top"
+        }`}
     >
       <div className="container-fluid d-flex justify-content-between align-items-center">
         {/* Logo */}
@@ -77,74 +81,75 @@ const Navbar = () => {
 
         <div className="col-md-6">
           {/* Menu */}
-        <div className="menu d-flex align-items-center">
-          <div className="menu-item">
-            <Link to="/" className="nav-link">Home</Link>
-          </div>
-          {/* Service dropdown */}
-          <div
-            className="menu-item dropdown"
-            onMouseEnter={() => setServiceOpen(true)}
-            onMouseLeave={() => setServiceOpen(false)}
-          >
-            <span className="nav-link">Service</span>
-            {serviceOpen && (
-              <div className="dropdown-menu show-anim">
-                <Link to="/service/store" className="dropdown-item">Store</Link>
-              </div>
-            )}
-          </div>
-
-          <div className="menu-item">
-            <Link to="/about" className="nav-link">About</Link>
-          </div>
-          <div className="menu-item">
-            <Link to="/contact" className="nav-link">Contact</Link>
-          </div>
-          <div className="menu-item">
-            <Link to="/adoptionPage" className="nav-link">Adoption</Link>
-          </div>
-          <div>
-             <Link to="/job" className="nav-link">Job</Link>
-           </div>
-
-          {/* User login/account */}
-          {!user ? (
-                <div className="menu-item">
-                  <Link to="/auth/login" className="nav-link">Login</Link>
-                </div>
-              ) : (
-                <div
-                  className="menu-item dropdown user-menu"
-                  onMouseEnter={() => setAccountOpen(true)}
-                  onMouseLeave={() => setAccountOpen(false)}
-                >
-                  <span className="nav-link user-name">{LastName}</span>
-                  {accountOpen && (
-                    <div className="dropdown-menu">
-                      <Link to="/account/profile" className="dropdown-item">Profile</Link>
-                      {isVet ? (
-                        <>
-                          <Link to="/job/HealthRecord" className="dropdown-item">Health Record</Link>
-                          <Link to="/job/AppointmentManagement" className="dropdown-item">Appointment Management</Link>
-                          <Link to="/job/LPO" className="dropdown-item">Log processing and observation</Link>
-                        </>
-                      ) : (
-                        <>
-                          <Link to="/account/pets" className="dropdown-item">My Pets</Link>
-                          <Link to="/account/family" className="dropdown-item">Family</Link>
-                          <Link to="/service/store" className="dropdown-item">Shopping</Link>
-                        </>
-                      )}
-                      <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
-                        Logout
-                      </button>
-                    </div>
-                  )}
-
+          <div className="menu d-flex align-items-center">
+            <div className="menu-item">
+              <Link to="/" className="nav-link">Home</Link>
+            </div>
+            {/* Service dropdown */}
+            <div
+              className="menu-item dropdown"
+              onMouseEnter={() => setServiceOpen(true)}
+              onMouseLeave={() => setServiceOpen(false)}
+            >
+              <span className="nav-link">Service</span>
+              {serviceOpen && (
+                <div className="dropdown-menu">
+                  <Link to="/service/store" className="dropdown-item">Store</Link>
+                  <Link to="/Appointment_owner" className="dropdown-item">Appointment</Link>
                 </div>
               )}
             </div>
+
+            <div className="menu-item">
+              <Link to="/about" className="nav-link">About</Link>
+            </div>
+            <div className="menu-item">
+              <Link to="/contact" className="nav-link">Contact</Link>
+            </div>
+            <div className="menu-item">
+              <Link to="/adoptionPage" className="nav-link">Adoption</Link>
+            </div>
+            <div>
+              <Link to="/job" className="nav-link">Job</Link>
+            </div>
+
+            {/* User login/account */}
+            {!user ? (
+              <div className="menu-item">
+                <Link to="/auth/login" className="nav-link">Login</Link>
+              </div>
+            ) : (
+              <div
+                className="menu-item dropdown user-menu"
+                onMouseEnter={() => setAccountOpen(true)}
+                onMouseLeave={() => setAccountOpen(false)}
+              >
+                <span className="nav-link user-name">{LastName}</span>
+                {accountOpen && (
+                  <div className="dropdown-menu">
+                    <Link to="/account/profile" className="dropdown-item">Profile</Link>
+                    {isVet ? (
+                      <>
+                        <Link to="/job/HealthRecord" className="dropdown-item">Health Record</Link>
+                        <Link to="/job/AppointmentManagement" className="dropdown-item">Appointment Management</Link>
+                        <Link to="/job/LPO" className="dropdown-item">Log processing and observation</Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link to="/account/pets" className="dropdown-item">My Pets</Link>
+                        <Link to="/account/family" className="dropdown-item">Family</Link>
+                        <Link to="/service/store" className="dropdown-item">Shopping</Link>
+                      </>
+                    )}
+                    <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>
