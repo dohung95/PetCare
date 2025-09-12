@@ -4,8 +4,7 @@ import "./Css/Footer.css";
 
 function Footer() {
   return (
-
-    <footer className="bg-dark text-light footer">
+    <footer className="bg-dark text-light  footer">
       <div className="container_footer">
         <div className="row">
           {/* logo */}
@@ -24,12 +23,13 @@ function Footer() {
               <li><Link to="/service" className="text-light 
               text-decoration-none">Service</Link></li>
               <li><Link to="/about" className="text-light 
-            <div>
+              text-decoration-none">About Us</Link></li>
               <h4 className="fw-bold">🐾 Petcare</h4>
               <p style={{ width: "90%" }}>
                 Healthy Pets, Happy Families.
                 Trusted veterinary services & pet products.
               </p>
+            </ul>
             </div>
             {/* Quick Links */}
             <div style={{ textAlign: "left" }}>
@@ -85,7 +85,6 @@ function Footer() {
         <div className="text-center">
           <small>© {new Date().getFullYear()} Petcare. All rights reserved.</small>
         </div>
-      </div>
     </footer>
   );
 }

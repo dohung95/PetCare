@@ -31,7 +31,6 @@ import Overview from "./components/Admin/Overview";
 
 import Appointment_owner from "./components/Appointment_owner.jsx";
 import ResetPassword from "./components/auth/ResetPassword";
-import Forgotpw from "./components/auth/Forgotpw";
 
 function Layout() {
   const location = useLocation();
@@ -105,7 +104,7 @@ function Layout() {
 export default function RootApp() {
   return (
     <Router>
-      <App />
+      <Layout />
     </Router>
   );
 }
