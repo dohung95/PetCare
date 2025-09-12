@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
+<<<<<<< Updated upstream
     <footer className="bg-dark text-light pt-5 pb-3 mt-5">
       <div className="container">
+=======
+    <footer className="bg-dark text-light footer">
+      <div className="container_footer">
+>>>>>>> Stashed changes
         <div className="row">
           {/* Logo + slogan */}
           <div className="col-md-4 mb-4">
@@ -17,12 +22,39 @@ function Footer() {
 
           {/* Quick Links */}
           <div className="col-md-4 mb-4">
+<<<<<<< Updated upstream
             <h5 className="fw-bold">Quick Links</h5>
             <ul className="list-unstyled">
               <li><Link to="/" className="text-light text-decoration-none">Home</Link></li>
               <li><Link to="/service" className="text-light 
               text-decoration-none">Service</Link></li>
               <li><Link to="/about" className="text-light 
+=======
+            <div>
+              <h4 className="fw-bold">🐾 FurShield</h4>
+              <p style={{ width: "90%" }}>
+                Healthy Pets, Happy Families.
+                Trusted veterinary services & pet products.
+              </p>
+            </div>
+            {/* Quick Links */}
+            <div style={{ textAlign: "left" }}>
+              <h5 className="fw-bold">Quick Links</h5>
+              <ul className="list-unstyled">
+                <li><Link to="/" className="text-light text-decoration-none">Home</Link></li>
+                <li className="nav-item dropdown">
+                  <Link to="/service" className="nav-link text-light text-decoration-none">
+                    Service
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li><Link to="/service/store" className="dropdown-item">Store</Link></li>
+                    <li>
+                      <Link to="/Appointment_owner" className="dropdown-item">Appointment</Link>
+                    </li>
+                  </ul>
+                </li>
+                <li><Link to="/about" className="text-light 
+>>>>>>> Stashed changes
               text-decoration-none">About Us</Link></li>
               <li><Link to="/contact" className="text-light text-decoration-none">Contact</Link></li>
               <li><Link to="/job" className="text-light 

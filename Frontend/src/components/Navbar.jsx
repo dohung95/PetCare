@@ -38,6 +38,11 @@ const Navbar = () => {
   /* === LOGOUT === */
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("ownerId");
+    localStorage.removeItem("ownerName");
+    localStorage.removeItem("ownerPhone");
+    localStorage.removeItem("ownerEmail");
+    localStorage.removeItem("ownerRole");
     setUser(null);
     setAccountOpen(false);
     navigate("/"); // tuỳ bạn chuyển về đâu
@@ -69,6 +74,7 @@ const Navbar = () => {
                 {serviceOpen && (
                   <div className="dropdown-menu">
                     <Link to="/service/store" className="dropdown-item">Store</Link>
+                    <Link to="/Appointment_owner" className="dropdown-item">Appointment</Link>
                   </div>
                 )}
               </div>
@@ -113,9 +119,8 @@ const Navbar = () => {
                   <span className="nav-link user-name">{LastName}</span>
                   {accountOpen && (
                     <div className="dropdown-menu">
-                      <Link to="/account/profile" className="dropdown-item">Profile</Link>
+                      <Link to="/profile_owner" className="dropdown-item">Profile</Link>
                       <Link to="/account/pets" className="dropdown-item">My Pets</Link>
-                      <Link to="/account/family" className="dropdown-item">Family</Link>
                       <Link to="/account/health-records" className="dropdown-item">My Pets Health</Link>
                       <Link to="/service/store" className="dropdown-item">Shopping</Link>
                       <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
