@@ -28,9 +28,8 @@ const lpoSchema = new mongoose.Schema({
         default: ''  // Giá trị mặc định nếu không cung cấp
     },
     lab_results: {
-        type: String,
-        trim: true,
-        default: ''
+        type: [{ type: String }], // Mảng chứa các đường dẫn đến hình ảnh
+        default: [] // Mặc định là mảng rỗng
     }
 }, { 
     timestamps: true  // Tự động thêm createdAt và updatedAt
@@ -40,7 +39,7 @@ const lpoSchema = new mongoose.Schema({
 lpoSchema.index({ diagnosis: 'text', symptoms: 'text' });  // Text index cho tìm kiếm full-text
 
 // Compile schema thành model
-const LPO = mongoose.model('LPO', lpoSchema);  // Tên model là 'LPOS' (số nhiều mặc định)
+const LPO = mongoose.model('LPO', lpoSchema);  // Tên model là 'LPO'
 
 // Export model để sử dụng ở nơi khác
 module.exports = LPO;

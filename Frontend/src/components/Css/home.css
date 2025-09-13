@@ -1,0 +1,60 @@
+/* Slider reviews */
+.reviews-slider .swiper-pagination-bullet {
+  width: 8px; height: 8px; opacity: .5;
+}
+.reviews-slider .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Card */
+.review-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Header */
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Avatar với chữ cái */
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 48px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15) inset;
+}
+
+.review-name {
+  font-weight: 700;
+  color: #0D1B2A;
+  line-height: 1.2;
+}
+
+.review-stars {
+  color: #f5b301; /* vàng */
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+/* Nội dung */
+.review-message {
+  margin: 0;
+  color: #444;
+  line-height: 1.6;
+  font-style: italic;
+}
