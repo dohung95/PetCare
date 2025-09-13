@@ -4,8 +4,7 @@ import "./Css/Footer.css";
 
 function Footer() {
   return (
-
-    <footer className="bg-dark text-light footer">
+    <footer className="bg-dark text-light  footer">
       <div className="container_footer">
         <div className="row">
           {/* logo */}
@@ -47,6 +46,7 @@ function Footer() {
                   <ul className="footer-submenu">
                     <li><Link to="/job/Veterinarian_Registration" className="footer-sublink">Veterinarian Registration</Link></li>
                     <li><Link to="/job/HealthRecord" className="footer-sublink">Health Record</Link></li>
+
                   </ul>
                 </li>
               </ul>
