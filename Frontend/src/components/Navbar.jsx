@@ -204,8 +204,7 @@ export default function Navbar() {
               </button>
               <div className="dropdown-menu">
                 <Link to="/profile_owner" className="dropdown-item">Profile</Link>
-                <Link to="/mypets" className="dropdown-item">My Pets</Link>
-                <Link to="/service/store" className="dropdown-item">Shopping</Link>
+                
 
                 {(isVet || isAdmin) && (
                   <>
