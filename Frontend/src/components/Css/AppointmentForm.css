@@ -1,0 +1,110 @@
+.AppointmentForm .appointment-form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.AppointmentForm .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.AppointmentForm .form-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.AppointmentForm .form-label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.AppointmentForm .form-label .fas {
+  color: #f7931e;
+  margin-right: 5px;
+}
+
+.AppointmentForm .required {
+  color: #dc3545;
+}
+
+.AppointmentForm .form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.AppointmentForm .form-control:focus {
+  outline: none;
+  border-color: #f7931e;
+  box-shadow: 0 0 5px rgba(247, 147, 30, 0.5);
+}
+
+.AppointmentForm .is-invalid {
+  border-color: #dc3545;
+}
+
+.AppointmentForm .error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.AppointmentForm .form-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.AppointmentForm .btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.AppointmentForm .btn-cancel {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.AppointmentForm .btn-cancel:hover {
+  background-color: #5a6268;
+}
+
+.AppointmentForm .btn-submit {
+  background-color: #f7931e;
+  color: #fff;
+}
+
+.AppointmentForm .btn-submit:hover {
+  background-color: #e68a1a;
+}
+
+.AppointmentForm .spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 5px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

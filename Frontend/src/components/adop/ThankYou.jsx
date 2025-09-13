@@ -16,15 +16,15 @@ const ThankYou = () => {
           rel="noopener noreferrer"
           className="btn btn-primary"
         >
-          <i className="bi bi-facebook me-2"></i> X
+          <i className="bi bi-facebook me-2"></i> Facebook
         </a>
         <a
-          href="https://twitter.com/intent/tweet?text=I%20just%20submitted%20an%20adoption%20enquiry!%20https://yourwebsite.com"
+          href="https://X.com/intent/tweet?text=I%20just%20submitted%20an%20adoption%20enquiry!%20https://yourwebsite.com"
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-info text-white"
         >
-          <i className="bi bi-twitter me-2"></i> Facebook
+          <i className="bi bi-twitter me-2"></i> X
         </a>
       </div>
 
