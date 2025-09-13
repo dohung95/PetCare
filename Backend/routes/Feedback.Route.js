@@ -2,6 +2,9 @@ const express = require('express');
 const ctrl = require('../controllers/Feedback.controller');
 const router = express.Router();
 
+// Công khai cho trang testimonials (không cần login)
+router.get('/public', ctrl.publicList);
+
 router.get('/', ctrl.list);
 router.get('/summary', ctrl.summary);
 router.post('/', ctrl.create);

@@ -128,14 +128,52 @@ const Navbar = () => {
               <div className="menu-item">
                 <Link to="/auth/login" className="nav-link">Login</Link>
               </div>
-            ) : (
-              <div
-                className="menu-item dropdown user-menu"
-                onMouseEnter={() => setAccountOpen(true)}
-                onMouseLeave={() => setAccountOpen(false)}
-              >
-                <span className="nav-link user-name">{LastName}</span>
-                {accountOpen && (
+
+//             ) : (
+//               <div
+//                 className="menu-item dropdown user-menu"
+//                 onMouseEnter={() => setAccountOpen(true)}
+//                 onMouseLeave={() => setAccountOpen(false)}
+//               >
+//                 <span className="nav-link user-name">{LastName}</span>
+//                 {accountOpen && (
+
+
+              <div className="menu-item">
+                <Link to="/about" className="nav-link">About</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/contact" className="nav-link">Contact</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/adoption" className="nav-link">Adoption</Link>
+              </div>
+              <div>
+                <Link to="/job" className="nav-link">Job</Link>
+              </div>
+
+              {/* User/Login */}
+              {!user ? (
+                <div className="menu-item">
+                  <Link to="/auth/login" className="nav-link">Login</Link>
+                </div>
+              ) : (
+                <div
+                  className={`menu-item dropdown user-menu ${accountOpen ? "show" : ""}`}
+                  {...(!isTouch && {
+                    onMouseEnter: () => setAccountOpen(true),
+                    onMouseLeave: () => setAccountOpen(false),
+                  })}
+                >
+                  <button
+                    type="button"
+                    className="nav-link user-name btn-reset"
+                    onClick={onAccountTriggerClick}
+                    aria-haspopup="true"
+                    aria-expanded={accountOpen}
+                  >
+                    {LastName}
+                  </button>
                   <div className="dropdown-menu">
                     <Link to="/account/profile" className="dropdown-item">Profile</Link>
                     {role === "admin" && (
@@ -156,9 +194,9 @@ const Navbar = () => {
                       </>
                     ) : (
                       <>
-                        <Link to="/account/mypets" className="dropdown-item">My Pets</Link>
-                        <Link to="/account/family" className="dropdown-item">Family</Link>
-                        <Link to="/service/productlist" className="dropdown-item">Shopping</Link>
+
+                        <Link to="/account/pets" className="dropdown-item">My Pets</Link>
+                        <Link to="/service/store" className="dropdown-item">Shopping</Link>
                       </>
                     )}
                     <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>

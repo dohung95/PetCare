@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Css/HealthRecord.css'; // Thêm import CSS custom
+import './Css/HealthRecord.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 const HealthRecord = () => {
   const [records, setRecords] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(''); // New state for search query
+  const [displayedRecords, setDisplayedRecords] = useState([]); // New state for search-filtered records
   const [formData, setFormData] = useState({
-    pet_id: '',
-    vet_id: '',
     visit_date: '',
     diagnosis: '',
     treatment: ''
@@ -16,17 +17,55 @@ const HealthRecord = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [ownerId, setOwnerId] = useState('');
+
+  // Get ownerId from localStorage and scroll to top
   useEffect(() => {
+    const storedOwnerId = localStorage.getItem('ownerId');
+    setOwnerId(storedOwnerId || '');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-  // Fetch all health records
+
+  // Fetch health records based on ownerId
   useEffect(() => {
-    fetchHealthRecords();
-  }, []);
+    if (ownerId) {
+      fetchHealthRecords();
+    }
+  }, [ownerId]);
+
+  // Filter records based on vet_id matching ownerId
+  useEffect(() => {
+    if (ownerId && records.length > 0) {
+      const matchedRecords = records.filter(record => record.vet_id === ownerId);
+      setFilteredRecords(matchedRecords);
+    } else {
+      setFilteredRecords([]);
+    }
+  }, [records, ownerId]);
+
+  // Filter records based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setDisplayedRecords(filteredRecords);
+    } else {
+      const lowerQuery = searchQuery.toLowerCase().trim();
+      const searchedRecords = filteredRecords.filter(record => {
+        const petName = record.pet_id?.name || record.pet_name || '';
+        return (
+          petName.toLowerCase().includes(lowerQuery) ||
+          (record.diagnosis || '').toLowerCase().includes(lowerQuery) ||
+          (record.treatment || '').toLowerCase().includes(lowerQuery)
+        );
+      });
+      setDisplayedRecords(searchedRecords);
+    }
+  }, [filteredRecords, searchQuery]);
 
   const fetchHealthRecords = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/health-records');
+      const response = await axios.get('http://localhost:5000/api/health-records', {
+        params: { ownerId }
+      });
       console.log('Fetch response:', response.data);
       if (response.data.success) {
         setRecords(response.data.data);
@@ -36,37 +75,43 @@ const HealthRecord = () => {
       }
     } catch (err) {
       console.error('Fetch error:', err.response ? err.response.data : err.message);
-      setError('Failed to fetch health records');
+      setError('Unable to load health records');
     }
   };
 
-  // Handle form input changes
+  // Handle input change in form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission for create/update
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Clear search query
+  const handleClearSearch = () => {
+    setSearchQuery('');
+  };
+
+  // Handle form submission for updates
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       let response;
       if (editingId) {
-        // Update existing record
         response = await axios.put(`http://localhost:5000/api/health-records/${editingId}`, formData);
-      } else {
-        // Create new record
-        response = await axios.post('http://localhost:5000/api/health-records', formData);
-      }
-      console.log('Submit response:', response.data);
-      if (response.data.success) {
-        fetchHealthRecords(); // Refresh the list
-        setFormData({ pet_id: '', vet_id: '', visit_date: '', diagnosis: '', treatment: '' });
-        setEditingId(null);
-        setShowModal(false);
-        setError(null);
-      } else {
-        setError(response.data.message);
+        console.log('Submit response:', response.data);
+        if (response.data.success) {
+          fetchHealthRecords();
+          setFormData({ visit_date: '', diagnosis: '', treatment: '' });
+          setEditingId(null);
+          setShowModal(false);
+          setError(null);
+        } else {
+          setError(response.data.message);
+        }
       }
     } catch (err) {
       console.error('Submit error:', err.response ? err.response.data : err.message);
@@ -74,11 +119,9 @@ const HealthRecord = () => {
     }
   };
 
-  // Handle edit button click
+  // Handle edit button
   const handleEdit = (record) => {
     setFormData({
-      pet_id: record.pet_id._id || record.pet_id, // Use ObjectId for form submission
-      vet_id: record.vet_id._id || record.vet_id, // Use ObjectId for form submission
       visit_date: record.visit_date ? record.visit_date.split('T')[0] : '',
       diagnosis: record.diagnosis || '',
       treatment: record.treatment || ''
@@ -87,66 +130,53 @@ const HealthRecord = () => {
     setShowModal(true);
   };
 
-  // Handle delete button click
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this record?')) {
-      try {
-        const response = await axios.delete(`http://localhost:5000/api/health-records/${id}`);
-        console.log('Delete response:', response.data);
-        if (response.data.success) {
-          fetchHealthRecords(); // Refresh the list
-          setError(null);
-        } else {
-          setError(response.data.message);
-        }
-      } catch (err) {
-        console.error('Delete error:', err.response ? err.response.data : err.message);
-        setError('Failed to delete record');
-      }
-    }
-  };
-
   // Handle modal close
   const handleCloseModal = () => {
     setShowModal(false);
-    setFormData({ pet_id: '', vet_id: '', visit_date: '', diagnosis: '', treatment: '' });
+    setFormData({ visit_date: '', diagnosis: '', treatment: '' });
     setEditingId(null);
     setError(null);
   };
 
-  // Handle add new record button
-  const handleAddNew = () => {
-    setFormData({ pet_id: '', vet_id: '', visit_date: '', diagnosis: '', treatment: '' });
-    setEditingId(null);
-    setShowModal(true);
-  };
-
   return (
     <div className="container mt-4 HealthRecord" style={{ backgroundColor: '#f8f9fab2', padding: '2%', borderRadius: '10px' }}>
-      <h1 className="text-center mb-4 health-title">Health Records Management</h1>
+      <h1 className="text-center mb-4 health-title">Health Record Management</h1>
 
-      {/* Button to open modal for adding new record */}
-      <div className="text-center mb-4">
-        <Button
-          variant="success"
-          className="health-button health-button-add"
-          onClick={handleAddNew}
-        >
-          <i className="fas fa-plus me-1"></i>Add New Record
-        </Button>
+      {/* Search Input */}
+      <div className="mb-4">
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control health-input"
+            placeholder="Search by Pet Name, Diagnosis, or Treatment"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          {searchQuery && (
+            <button
+              className="btn btn-outline-secondary health-button"
+              type="button"
+              onClick={handleClearSearch}
+            >
+              <i className="fas fa-times"></i> Clear
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* List of records */}
+      {/* Record List */}
       <div className="card health-table-card">
         <div className="card-body">
           <div className="text-center mb-4">
-            <h2 className="card-title health-card-title">Health Records List</h2>
+            <h2 className="card-title health-card-title">Health Record List</h2>
           </div>
           {error && <div className="alert alert-danger health-alert">{error}</div>}
-          {records.length === 0 ? (
+          {displayedRecords.length === 0 ? (
             <div className="text-center py-5 health-empty-state">
               <i className="fas fa-file-medical fa-3x mb-3 text-muted opacity-75"></i>
-              <p className="text-muted mb-0">No records found. Add your first health record!</p>
+              <p className="text-muted mb-0">
+                {searchQuery ? 'No health records match your search.' : 'No matching health records found.'}
+              </p>
             </div>
           ) : (
             <div className="table-responsive">
@@ -154,7 +184,6 @@ const HealthRecord = () => {
                 <thead className="table-light">
                   <tr>
                     <th>Pet Name</th>
-                    <th>Veterinarian Name</th>
                     <th>Visit Date</th>
                     <th>Diagnosis</th>
                     <th>Treatment</th>
@@ -162,13 +191,10 @@ const HealthRecord = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {records.map((record) => (
+                  {displayedRecords.map((record) => (
                     <tr key={record._id} className="health-table-row">
                       <td className="align-middle">
                         <i className="fas fa-paw me-1 text-info"></i>{record.pet_id?.name || record.pet_name || '-'}
-                      </td>
-                      <td className="align-middle">
-                        <i className="fas fa-user-md me-1 text-success"></i>{record.vet_id?.name || record.vet_name || '-'}
                       </td>
                       <td className="align-middle">
                         {record.visit_date ? new Date(record.visit_date).toLocaleDateString('en-US') : '-'}
@@ -181,18 +207,11 @@ const HealthRecord = () => {
                       </td>
                       <td className="align-middle text-center">
                         <button
-                          className="btn btn-warning btn-sm me-2 health-action-btn"
+                          className="btn btn-warning btn-sm health-action-btn"
                           style={{ borderRadius: '8px' }}
                           onClick={() => handleEdit(record)}
                         >
                           <i className="fas fa-edit me-1"></i>Edit
-                        </button>
-                        <button
-                          className="btn btn-danger btn-sm health-action-btn"
-                          style={{ borderRadius: '8px' }}
-                          onClick={() => handleDelete(record._id)}
-                        >
-                          <i className="fas fa-trash me-1"></i>Delete
                         </button>
                       </td>
                     </tr>
@@ -204,43 +223,15 @@ const HealthRecord = () => {
         </div>
       </div>
 
-      {/* Modal for form */}
+      {/* Modal for edit form */}
       <Modal show={showModal} onHide={handleCloseModal} centered className="health-modal">
         <Modal.Header closeButton>
-          <Modal.Title className="health-modal-title">{editingId ? 'Edit' : 'Add'} Health Record</Modal.Title>
+          <Modal.Title className="health-modal-title">Edit Health Record</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {error && <div className="alert alert-danger health-alert">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-md-6 mb-3">
-                <label className="form-label health-label">
-                  <i className="fas fa-paw me-1"></i>Pet ID
-                </label>
-                <input
-                  type="text"
-                  name="pet_id"
-                  value={formData.pet_id}
-                  onChange={handleInputChange}
-                  className="form-control health-input"
-                  placeholder="Enter Pet ID"
-                  required
-                />
-              </div>
-              <div className="col-md-6 mb-3">
-                <label className="form-label health-label">
-                  <i className="fas fa-user-md me-1"></i>Vet ID
-                </label>
-                <input
-                  type="text"
-                  name="vet_id"
-                  value={formData.vet_id}
-                  onChange={handleInputChange}
-                  className="form-control health-input"
-                  placeholder="Enter Vet ID"
-                  required
-                />
-              </div>
               <div className="col-md-6 mb-3">
                 <label className="form-label health-label">
                   <i className="fas fa-calendar-alt me-1"></i>Visit Date
@@ -293,7 +284,7 @@ const HealthRecord = () => {
                 variant="success"
                 className="health-button health-button-add"
               >
-                {editingId ? 'Update' : 'Add'}
+                Update
               </Button>
             </div>
           </form>

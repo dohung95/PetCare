@@ -25,3 +25,25 @@ exports.checkRole = (requiredRole) => (req, res, next) => {
   }
   next();
 };
+
+exports.authRequired = (req, res, next) => {
+  const raw = req.headers.authorization || '';
+  const token = raw.startsWith('Bearer ') ? raw.slice(7) : null;
+  if (!token) return res.status(401).json({ success:false, message:'Unauthorized' });
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    // payload: { sub: <ownerId>, role: <role>, iat, exp }
+    req.user = { id: payload.sub, role: payload.role };
+    return next();
+  } catch (e) {
+    return res.status(401).json({ success:false, message:'Invalid token' });
+  }
+};
+
+exports.adminOnly = (req, res, next) => {
+  if (req.user?.role !== 'admin') {
+    return res.status(403).json({ success:false, message:'Forbidden' });
+  }
+  next();
+};
