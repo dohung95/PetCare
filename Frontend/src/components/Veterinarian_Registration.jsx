@@ -25,6 +25,13 @@ const VeterinarianRegistration = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const navigate = useNavigate();
+<<<<<<< Updated upstream
+=======
+  const [cvFile, setCvFile] = useState(null);
+  const [certificateFiles, setCertificateFiles] = useState([]);
+
+
+>>>>>>> Stashed changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -55,34 +62,43 @@ const VeterinarianRegistration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
-
+  
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
+  
     setIsSubmitting(true);
-
+  
     try {
-      const response = await axios.post('http://localhost:5000/api/vets/register', {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        specialization: formData.specialization,
-        experience: formData.experience ? parseInt(formData.experience) : 0
+      const data = new FormData();
+      data.append("name", formData.name);
+      data.append("email", formData.email);
+      data.append("phone", formData.phone);
+      data.append("address", formData.address);
+      data.append("specialization", formData.specialization);
+      data.append("experience", formData.experience ? parseInt(formData.experience) : 0);
+  
+      if (cvFile) data.append("cv", cvFile);
+      certificateFiles.forEach((file) => {
+        data.append("certificates", file);
       });
-
+  
+      await axios.post("http://localhost:5000/api/vets/register", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+  
       setShowFormModal(false);
       setShowSuccessModal(true);
     } catch (error) {
       setErrors({
-        submit: error.response?.data?.error || error.message || 'Registration failed'
+        submit: error.response?.data?.error || error.message || "Registration failed",
       });
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   const handleCloseFormModal = () => {
     setShowFormModal(false);
@@ -172,14 +188,8 @@ const VeterinarianRegistration = () => {
               <Modal.Title>Veterinarian Registration</Modal.Title>
             </Modal.Header>
             <Modal.Body className="vet-modal-body">
-              {errors.submit && (
-                <div className="alert alert-danger alert-dismissible mb-3 vet-alert">
-                  {errors.submit}
-                  <button type="button" className="btn-close" onClick={() => setErrors({})}></button>
-                </div>
-              )}
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} >
                 <div className="form-group mb-3 vet-form-group">
                   <label htmlFor="name" className="form-label fs-6 vet-label">
                     <i className="bi bi-person me-1"></i>Name
@@ -272,6 +282,35 @@ const VeterinarianRegistration = () => {
                   {errors.experience && <div className="invalid-feedback">{errors.experience}</div>}
                 </div>
 
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="cv" className="form-label fs-6 vet-label">
+                    <i className="bi bi-file-earmark-pdf me-1"></i> Upload CV (PDF)
+                  </label>
+                  <input
+                    type="file"
+                    id="cv"
+                    name="cv"
+                    accept="application/pdf"
+                    className="form-control form-control-sm vet-input"
+                    onChange={(e) => setCvFile(e.target.files[0])}
+                  />
+                </div>
+
+                <div className="form-group mb-3 vet-form-group">
+                  <label htmlFor="certificates" className="form-label fs-6 vet-label">
+                    <i className="bi bi-image me-1"></i> Upload Certificates (JPEG/PNG)
+                  </label>
+                  <input
+                    type="file"
+                    id="certificates"
+                    name="certificates"
+                    accept="image/jpeg,image/png"
+                    multiple
+                    className="form-control form-control-sm vet-input"
+                    onChange={(e) => setCertificateFiles([...e.target.files])}
+                  />
+                </div>
+
                 <div className="form-group mb-4 vet-form-group">
                   <div className="form-check">
                     <input
@@ -289,6 +328,13 @@ const VeterinarianRegistration = () => {
                     {errors.terms && <div className="invalid-feedback">{errors.terms}</div>}
                   </div>
                 </div>
+
+                {errors.submit && (
+                <div className="alert alert-danger alert-dismissible mb-3 vet-alert">
+                  {errors.submit}
+                  <button type="button" className="btn-close" onClick={() => setErrors({})}></button>
+                </div>
+              )}
 
                 <div className="d-flex gap-2">
                   <Button
@@ -315,6 +361,7 @@ const VeterinarianRegistration = () => {
                   </Button>
                 </div>
               </form>
+
             </Modal.Body>
           </Modal>
 
