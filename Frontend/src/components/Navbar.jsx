@@ -188,35 +188,6 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* Job Dropdown */}
-              <div
-                className={`menu-item dropdown ${jobOpen ? "show" : ""}`}
-                {...(!isTouch && {
-                  onMouseEnter: () => setJobOpen(true),
-                  onMouseLeave: () => setJobOpen(false),
-                })}
-              >
-                <button
-                  type="button"
-                  className="nav-link btn-reset"
-                  onClick={onJobTriggerClick}
-                  aria-haspopup="true"
-                  aria-expanded={jobOpen}
-                >
-                  Job
-                </button>
-                <div className="dropdown-menu">
-                  <Link to="/job/Veterinarian_Registration" className="dropdown-item">
-                    Veterinarian Registration
-                  </Link>
-                  <Link to="/job/HealthRecord" className="dropdown-item">Health Record</Link>
-                  <Link to="/job/AppointmentManagement" className="dropdown-item">
-                    Appointment Management
-                  </Link>
-                  <Link to="/job/LPO" className="dropdown-item">Log Processing & Observation</Link>
-                </div>
-              </div>
-
               <div className="menu-item">
                 <Link to="/about" className="nav-link">About</Link>
               </div>
@@ -225,6 +196,9 @@ export default function Navbar() {
               </div>
               <div className="menu-item">
                 <Link to="/adoption" className="nav-link">Adoption</Link>
+              </div>
+              <div>
+                <Link to="/job" className="nav-link">Job</Link>
               </div>
 
               {/* User/Login */}

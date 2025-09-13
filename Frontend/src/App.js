@@ -14,8 +14,8 @@ import VeterinarianRegistration from "./components/Veterinarian_Registration";
 import Forgotpw from "./components/auth/Forgotpw";
 import AppointmentManagement from "./components/AppointmentManagement";
 import LPO from "./components/LPO";
-import ProductList from "./components/ProductList";
-import AdminProductList from "./components/AdminProductList";
+// import ProductList from "./components/ProductList";
+// import AdminProductList from "./components/AdminProductList";
 import DogProducts from "./components/DogProducts";
 import CatProducts from "./components/CatProducts";
 import ProfileOwner from "./components/menu_login/profile_owner.jsx";
@@ -72,10 +72,10 @@ function Layout() {
             <Route path="/service/cat-products" element={<CatProducts />} /> {/* Dùng component thực thay vì h1 */}
             
             {/* Nested ProductList nếu cần */}
-            <Route path="/service/productlist" element={<ProductList />}>
+            {/* <Route path="/service/productlist" element={<ProductList />}>
               <Route path="dog" element={<DogProducts />} />
               <Route path="cat" element={<CatProducts />} />
-            </Route>
+            </Route> */}
 
             {/* About & Contact */}
             <Route path="/about" element={<About />} />
@@ -92,7 +92,7 @@ function Layout() {
             <Route path="/Overview" element={<Overview />} />
             <Route path="/AdopPets" element={<AdopPets />} />
             <Route path="/AdopRequest" element={<AdopRequest />} />
-            <Route path="/adminproductlist" element={<AdminProductList />} />
+            {/* <Route path="/adminproductlist" element={<AdminProductList />} /> */}
 
             {/* Job/Veterinarian */}
             <Route path="/job" element={<VeterinarianRegistration />} />
