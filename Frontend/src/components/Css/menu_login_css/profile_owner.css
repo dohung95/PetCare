@@ -1,0 +1,248 @@
+/* ---------- Design tokens ---------- */
+.user-profile {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-600: #1d4ed8;
+  --ring: rgba(37, 99, 235, 0.15);
+  --border: #e5e7eb;
+  --success: #16a34a;
+  --danger: #ef4444;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* ---------- Page layout ---------- */
+.user-profile.profile-container {
+  padding: 30px;
+  margin: 30px auto;
+  border-radius: var(--radius);
+}
+
+.user-profile.profile-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.user-profile.profile-card .user-profile.card-header {
+  background: linear-gradient(180deg, #f9fafb, #f3f4f6);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 24px !important;
+  color: var(--text);
+  letter-spacing: .2px;
+}
+
+.user-profile.profile-card .user-profile.card-body {
+  padding: clamp(18px, 2.4vw, 28px);
+}
+
+/* ---------- Avatar row ---------- */
+.user-profile.profile-card .user-profile.d-flex.align-items-center.mb-3 {
+  margin-bottom: 18px !important;
+}
+
+.user-profile.profile-card .user-profile.rounded-circle {
+  border: 2px solid #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ---------- Form ---------- */
+.user-profile .user-profile.form-label {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: 8px;
+}
+
+.user-profile .user-profile.form-control,
+.user-profile .user-profile.form-select,
+.user-profile textarea.user-profile.form-control {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--text);
+  background-color: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.user-profile .user-profile.form-control:focus,
+.user-profile .user-profile.form-select:focus,
+.user-profile textarea.user-profile.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 6px var(--ring);
+  outline: none;
+}
+
+.user-profile .user-profile.form-control:disabled,
+.user-profile .user-profile.form-select:disabled,
+.user-profile textarea.user-profile.form-control:disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  border-color: #eef0f4;
+}
+
+/* group spacing */
+.user-profile.mb-3 {
+  margin-bottom: 16px !important;
+}
+.user-profile.row.mb-3 {
+  margin-bottom: 12px !important;
+}
+
+/* ---------- Buttons ---------- */
+.user-profile .user-profile.btn {
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.user-profile .user-profile.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+}
+.user-profile .user-profile.btn-primary:hover {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  transform: translateY(-1px);
+}
+
+.user-profile .user-profile.btn-success {
+  background: var(--success);
+  border-color: var(--success);
+  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.25);
+}
+.user-profile .user-profile.btn-success:hover {
+  filter: brightness(.95);
+  transform: translateY(-1px);
+}
+
+.user-profile .user-profile.btn-secondary {
+  background: #111827;
+  border-color: #111827;
+}
+.user-profile .user-profile.btn-secondary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* ---------- Alerts ---------- */
+.user-profile .user-profile.alert {
+  border-radius: 12px;
+  border: 1px solid transparent;
+  padding: 12px 14px;
+}
+.user-profile .user-profile.alert-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+.user-profile .user-profile.alert-danger {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+/* ---------- Readonly fields look nicer ---------- */
+.user-profile .user-profile.form-control[disabled] {
+  background: linear-gradient(180deg, #f9fafb, #f3f4f6);
+}
+
+/* ---------- Utilities ---------- */
+.user-profile .user-profile.text-muted {
+  color: var(--muted) !important;
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 768px) {
+  .user-profile.profile-card .user-profile.card-body {
+    padding: 16px;
+  }
+  .user-profile .user-profile.btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .user-profile .user-profile.me-2 {
+    margin-right: 0 !important;
+  }
+}
+
+/* ---------- Optional dark mode (auto) ---------- */
+@media (prefers-color-scheme: dark) {
+  .user-profile {
+    --bg: #0b1220;
+    --card: #0f172a;
+    --text: #e5e7eb;
+    --muted: #9aa1b1;
+    --border: #1f2a44;
+    --ring: rgba(82, 123, 255, 0.2);
+  }
+  .user-profile.profile-card {
+    background: var(--card);
+    border-color: var(--border);
+  }
+  .user-profile.profile-card .user-profile.card-header {
+    background: linear-gradient(180deg, #0f172a, #111a2f);
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .user-profile .user-profile.form-control,
+  .user-profile .user-profile.form-select,
+  .user-profile textarea.user-profile.form-control {
+    background: #0b152b;
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .user-profile .user-profile.form-control[disabled] {
+    background: #0f1b34;
+  }
+  .user-profile .user-profile.alert-success {
+    background: rgba(34,197,94,0.12);
+    color: #86efac;
+    border-color: rgba(134,239,172,0.35);
+  }
+  .user-profile .user-profile.alert-danger {
+    background: rgba(239,68,68,0.12);
+    color: #fca5a5;
+    border-color: rgba(252,165,165,0.35);
+  }
+}
+
+/* ----- Grid layout cho form ----- */
+.user-profile.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
+}
+
+.user-profile.profile-form-grid .user-profile.form-group {
+  margin-bottom: 0;
+}
+
+.user-profile.profile-form-grid .user-profile.form-group.col-2,
+.user-profile.profile-form-grid textarea,
+.user-profile.profile-form-grid .user-profile.alert,
+.user-profile.profile-form-grid .user-profile.actions,
+.user-profile.profile-form-grid .user-profile.text-center {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .user-profile.profile-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .user-profile.profile-form-grid .user-profile.form-group.col-2,
+  .user-profile.profile-form-grid textarea,
+  .user-profile.profile-form-grid .user-profile.alert,
+  .user-profile.profile-form-grid .user-profile.actions,
+  .user-profile.profile-form-grid .user-profile.text-center {
+    grid-column: span 1;
+  }
+}
