@@ -2,6 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
+const Home = () => {
+   useEffect(() => {
+    scrollToTop();
+  }, []); 
+}
+
 const adoptionSteps = [
   { step: 1, title: "Initial enquiry", description: "Submit an adoption enquiry, answering some initial questions about your family, lifestyle and ideal companion.", icon: "📋" },
   { step: 2, title: "Interview", description: "Join a video call with one of our adoption coordinators to help find your perfect match.", icon: "💬" },
