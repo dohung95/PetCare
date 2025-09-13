@@ -1,11 +1,60 @@
 const Veterinarian = require("../models/veterinarian.model");
-// const Appointment = require("../model/Appointment");
-// const HealthRecord = require("../model/HealthRecord");
+const path = require("path");
+const fs = require("fs");
 
-// 1. Đăng ký bác sĩ
+// Ensure upload directories exist
+const cvDir = path.join(__dirname, "../uploads/cvs");
+const certDir = path.join(__dirname, "../uploads/certificates");
+if (!fs.existsSync(cvDir)) fs.mkdirSync(cvDir, { recursive: true });
+if (!fs.existsSync(certDir)) fs.mkdirSync(certDir, { recursive: true });
+
+// 1. Đăng ký bác sĩ with file uploads
 exports.registerVet = async (req, res) => {
   try {
-    const vet = new Veterinarian(req.body);
+    const { name, email, phone, address, specialization, experience, available_slots } = req.body;
+    
+    // Handle CV file
+    let cvPath = null;
+    if (req.files?.cv) {
+      const cvFile = req.files.cv;
+      if (cvFile.mimetype !== "application/pdf") {
+        return res.status(400).json({ error: "CV must be a PDF file" });
+      }
+      const cvFileName = `${Date.now()}_${cvFile.name}`;
+      cvPath = path.join("uploads/cvs", cvFileName);
+      await cvFile.mv(path.join(__dirname, "../", cvPath));
+    }
+
+    // Handle certificate files
+    const certificatePaths = [];
+    if (req.files?.certificates) {
+      const certFiles = Array.isArray(req.files.certificates) 
+        ? req.files.certificates 
+        : [req.files.certificates];
+      
+      for (const certFile of certFiles) {
+        if (!["image/jpeg", "image/png"].includes(certFile.mimetype)) {
+          return res.status(400).json({ error: "Certificates must be JPEG or PNG images" });
+        }
+        const certFileName = `${Date.now()}_${certFile.name}`;
+        const certPath = path.join("uploads/certificates", certFileName);
+        await certFile.mv(path.join(__dirname, "../", certPath));
+        certificatePaths.push(certPath);
+      }
+    }
+
+    const vet = new Veterinarian({
+      name,
+      email,
+      phone,
+      address,
+      specialization,
+      experience,
+      available_slots: available_slots ? JSON.parse(available_slots) : [],
+      cv_path: cvPath,
+      certificate_paths: certificatePaths
+    });
+
     await vet.save();
     res.status(201).json(vet);
   } catch (err) {
