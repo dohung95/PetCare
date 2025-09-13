@@ -11,18 +11,13 @@ const scrollToTop = () => {
   });
 };
 
-const Home = () => {
-  useEffect(() => {
-    scrollToTop();
-  }, []);
-};
-
 const AdoptionPage = () => {
   const navigate = useNavigate();
   const [initialPets, setInitialPets] = useState([]);
   const [filteredPets, setFilteredPets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const [filters, setFilters] = useState({
     type: "all",
     gender: "all",
@@ -32,6 +27,20 @@ const AdoptionPage = () => {
     name: "",
   });
 
+  const buttonStyle = {
+    minWidth: "90px",
+    border: "none",
+    backgroundColor: "#ffc107",
+    color: "#fff", // chữ trắng mặc định
+    transition: "all 0.3s ease",
+  };
+
+  // Scroll lên đầu khi load page
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
+  // Lấy danh sách pets
   useEffect(() => {
     const fetchPets = async () => {
       try {
@@ -49,205 +58,220 @@ const AdoptionPage = () => {
     fetchPets();
   }, []);
 
+  // Cập nhật bộ lọc
   const handleChange = (e) => setFilters({ ...filters, [e.target.name]: e.target.value });
   const handleTypeClick = (type) => setFilters({ ...filters, type });
 
+  // Xử lý lọc
   const handleSearch = (e) => {
     e.preventDefault();
     let result = [...initialPets];
-    if (filters.type !== "all") result = result.filter((p) => p.type === filters.type);
-    if (filters.gender !== "all") result = result.filter((p) => p.gender === filters.gender);
-    if (filters.age !== "all") result = result.filter((p) => p.ageCategory === filters.age);
+
+    if (filters.type !== "all") result = result.filter((p) => p.type?.toLowerCase() === filters.type.toLowerCase());
+    if (filters.gender !== "all") result = result.filter((p) => p.gender?.toLowerCase() === filters.gender.toLowerCase());
+    if (filters.age !== "all") result = result.filter((p) => p.ageCategory?.toLowerCase() === filters.age.toLowerCase());
     if (filters.neutered !== "all")
       result = result.filter((p) => (filters.neutered === "yes" ? p.neutered : !p.neutered));
-    if (filters.color !== "all") result = result.filter((p) => p.color === filters.color);
+    if (filters.color !== "all") result = result.filter((p) => p.color?.toLowerCase() === filters.color.toLowerCase());
     if (filters.name.trim() !== "")
       result = result.filter((p) => p.name.toLowerCase().includes(filters.name.toLowerCase()));
+
     setFilteredPets(result);
   };
 
   return (
-    <div >
-      <div className="adoption-page" >
-        <motion.img
-        src="/imgs/adop.jpg"
-        alt="Pet"
-        initial={{ opacity: 0, scale: 1.1 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        style={{ width: "100%", minHeight: "150px", maxHeight: "250px", objectFit: "cover" ,marginBottom:"2%"}}
-      />
-      <div style={{ backgroundColor: "#f8f9fad5",borderRadius:"2%"}} className="container">
+    <div>
+      <div className="adoption-page">
         {/* Banner */}
-      
+        <motion.img
+          src="/imgs/adop.jpg"
+          alt="Pet"
+          initial={{ opacity: 0, scale: 1.1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          style={{ width: "100%", minHeight: "150px", maxHeight: "250px", objectFit: "cover", marginBottom: "2%" }}
+        />
 
-      {/* Filter section */}
-      <motion.div
-        className="container py-5"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-center mb-4 fw-bold text-dark">
-          FIND YOUR PET
-          <div style={{ fontSize: "1.2rem", color: "#3ec6e0" }}>
-            <img src="/imgs/pet_foot.jpg" alt="Pet foot" style={{ width: 30, height: 30 }} />
-          </div>
-        </h2>
-
-        {/* Type buttons */}
-        <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap" >
-          {["all", "dog", "cat", "other"].map((type) => (
-            <button
-              key={type}
-              type="button"
-              className={`btn rounded-pill px-4 fw-bold ${
-                filters.type === type
-                  ? type === "all"
-                    ? "btn-primary text-white"
-                    : "btn-warning "
-                  : "btn-outline-warning text-dark"
-              }`}
-              style={{ minWidth: "90px", border: "none", backgroundColor:"#ffc107"}}
-              onClick={() => handleTypeClick(type)}
-            >
-              {type === "all" ? "All" : type === "dog" ? "Dog" : type === "cat" ? "Cat" : "Other"}
-            </button>
-          ))}
-        </div>
-
-        {/* Filter form */}
-        <form onSubmit={handleSearch} className="row g-3 mb-5">
-          {/* Gender */}
-          <div className="col-md-4">
-            <label className="form-label fw-bold">Gender</label>
-            <select
-              className="form-select border border-danger"
-              name="gender"
-              value={filters.gender}
-              onChange={handleChange}
-            >
-              <option value="all">All</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          {/* Age */}
-          <div className="col-md-4">
-            <label className="form-label fw-bold">Age</label>
-            <select
-              className="form-select border border-danger"
-              name="age"
-              value={filters.age}
-              onChange={handleChange}
-            >
-              <option value="all">All</option>
-              <option value="puppy">Under 1 year</option>
-              <option value="young">1-3 years</option>
-              <option value="adult">Over 3 years</option>
-            </select>
-          </div>
-          {/* Neutered */}
-          <div className="col-md-4">
-            <label className="form-label fw-bold">Neutered</label>
-            <select
-              className="form-select border border-danger"
-              name="neutered"
-              value={filters.neutered}
-              onChange={handleChange}
-            >
-              <option value="all">All</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-          {/* Color */}
-          <div className="col-md-4">
-            <label className="form-label fw-bold">Color</label>
-            <select
-              className="form-select border border-danger"
-              name="color"
-              value={filters.color}
-              onChange={handleChange}
-            >
-              <option value="all">All</option>
-              <option value="white">White</option>
-              <option value="black">Black</option>
-              <option value="brown">Brown</option>
-              <option value="mixed">Mixed</option>
-            </select>
-          </div>
-          {/* Name */}
-          <div className="col-md-4">
-            <label className="form-label fw-bold">Name</label>
-            <input
-              type="text"
-              className="form-control border border-danger"
-              placeholder="Enter pet's name..."
-              name="name"
-              value={filters.name}
-              onChange={handleChange}
-            />
-          </div>
-          {/* Search button */}
-          <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-danger w-100 rounded-pill fw-bold">
-              SEARCH
-            </button>
-          </div>
-        </form>
-
-        {/* Pet list */}
-        <motion.div
-          className="row g-4"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-        >
-          <AnimatePresence mode="sync">
-            {loading ? (
-              <div key="loading" className="text-center text-muted">
-                Loading pets...
+        <div style={{ backgroundColor: "#f8f9fad5", borderRadius: "2%" }} className="container">
+          <motion.div
+            className="container py-5"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-center mb-4 fw-bold text-dark">
+              FIND YOUR PET
+              <div style={{ fontSize: "1.2rem", color: "#3ec6e0" }}>
+                <img src="/imgs/pet_foot.jpg" alt="Pet foot" style={{ width: 30, height: 30 }} />
               </div>
-            ) : error ? (
-              <div key="error" className="text-center text-danger">
-                {error}
-              </div>
-            ) : filteredPets.length > 0 ? (
-              filteredPets.map((pet, index) => (
-                <motion.div
-                  className="col-md-3 col-sm-6"
-                  key={pet._id ?? `${pet.name}-${index}`}
-                  onClick={() => navigate(`/shelter-pets/${pet._id}`)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.05 }}
-                  style={{ cursor: "pointer" }}
+            </h2>
+
+            {/* Type Filter Buttons */}
+            <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap">
+              {["all", "dog", "cat", "other"].map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  style={{
+                    ...buttonStyle,
+                    transform: filters.type === type ? "scale(1.08)" : "scale(1)",
+                    boxShadow: filters.type === type ? "0 6px 16px rgba(0, 0, 0, 0.25)" : "none",
+                  }}
+                  className="btn rounded-pill px-4 fw-bold"
+                  onClick={() => handleTypeClick(type)}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.08)";
+                    e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.25)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (filters.type !== type) {
+                      e.currentTarget.style.transform = "scale(1)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }
+                  }}
                 >
-                  <PetCard pet={pet} />
-                </motion.div>
-              ))
-            ) : (
-              <motion.div
-                className="text-center text-muted"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                No matching pets found.
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </motion.div>
+                  {type === "all" ? "All" : type === "dog" ? "Dog" : type === "cat" ? "Cat" : "Other"}
+                </button>
+              ))}
+            </div>
+
+            {/* Filter form */}
+            <form onSubmit={handleSearch} className="row g-3 mb-5">
+              {/* Gender */}
+              <div className="col-md-4">
+                <label className="form-label fw-bold">Gender</label>
+                <select
+                  className="form-select border border-danger"
+                  name="gender"
+                  value={filters.gender}
+                  onChange={handleChange}
+                >
+                  <option value="all">All</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+
+              {/* Age */}
+              <div className="col-md-4">
+                <label className="form-label fw-bold">Age</label>
+                <select
+                  className="form-select border border-danger"
+                  name="age"
+                  value={filters.age}
+                  onChange={handleChange}
+                >
+                  <option value="all">All</option>
+                  <option value="puppy">Under 1 year</option>
+                  <option value="young">1-3 years</option>
+                  <option value="adult">Over 3 years</option>
+                </select>
+              </div>
+
+              {/* Neutered */}
+              <div className="col-md-4">
+                <label className="form-label fw-bold">Neutered</label>
+                <select
+                  className="form-select border border-danger"
+                  name="neutered"
+                  value={filters.neutered}
+                  onChange={handleChange}
+                >
+                  <option value="all">All</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+
+              {/* Color */}
+              <div className="col-md-4">
+                <label className="form-label fw-bold">Color</label>
+                <select
+                  className="form-select border border-danger"
+                  name="color"
+                  value={filters.color}
+                  onChange={handleChange}
+                >
+                  <option value="all">All</option>
+                  <option value="white">White</option>
+                  <option value="black">Black</option>
+                  <option value="brown">Brown</option>
+                  <option value="mixed">Mixed</option>
+                </select>
+              </div>
+
+              {/* Name */}
+              <div className="col-md-4">
+                <label className="form-label fw-bold">Name</label>
+                <input
+                  type="text"
+                  className="form-control border border-danger"
+                  placeholder="Enter pet's name..."
+                  name="name"
+                  value={filters.name}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* Search button */}
+              <div className="col-md-4 d-flex align-items-end">
+                <button type="submit" className="btn btn-danger w-100 rounded-pill fw-bold">
+                  SEARCH
+                </button>
+              </div>
+            </form>
+
+            {/* Pet list */}
+            <motion.div
+              className="row g-4"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+            >
+              <AnimatePresence mode="sync">
+                {loading ? (
+                  <div key="loading" className="text-center text-muted">
+                    Loading pets...
+                  </div>
+                ) : error ? (
+                  <div key="error" className="text-center text-danger">
+                    {error}
+                  </div>
+                ) : filteredPets.length > 0 ? (
+                  filteredPets.map((pet, index) => (
+                    <motion.div
+                      className="col-md-3 col-sm-6"
+                      key={pet._id ?? `${pet.name}-${index}`}
+                      onClick={() => navigate(`/shelter-pets/${pet._id}`)}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -30 }}
+                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                      whileHover={{ scale: 1.05 }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <PetCard pet={pet} />
+                    </motion.div>
+                  ))
+                ) : (
+                  <motion.div
+                    className="text-center text-muted"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    No matching pets found.
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

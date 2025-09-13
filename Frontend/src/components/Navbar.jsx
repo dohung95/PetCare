@@ -235,7 +235,8 @@ export default function Navbar() {
                       </>
                     ) : (
                       <>
-                        <Link to="/account/pets" className="dropdown-item">My Pets</Link>
+                        {/* Comment out routes not in App.js */}
+                        {/* <Link to="/account/pets" className="dropdown-item">My Pets</Link> */}
                         <Link to="/service/store" className="dropdown-item">Shopping</Link>
                       </>
                     )}

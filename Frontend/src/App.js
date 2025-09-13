@@ -16,8 +16,6 @@ import AppointmentManagement from "./components/AppointmentManagement";
 import LPO from "./components/LPO";
 // import ProductList from "./components/ProductList";
 // import AdminProductList from "./components/AdminProductList";
-import DogProducts from "./components/DogProducts";
-import CatProducts from "./components/CatProducts";
 import ProfileOwner from "./components/menu_login/profile_owner.jsx";
 import Footer from "./components/Footer.jsx";
 import AdoptionPage from "./components/AdoptionPage.jsx";
@@ -30,6 +28,10 @@ import AdopRequest from "./components/Admin/AdopRequest.jsx";
 import Overview from "./components/Admin/Overview";
 import Appointment_owner from "./components/Appointment_owner.jsx";
 import ResetPassword from "./components/auth/ResetPassword";
+
+// import product
+import DogProducts from "./components/DogProducts";
+import CatProducts from "./components/CatProducts";
 
 function Layout() {
   const location = useLocation();
@@ -53,6 +55,9 @@ function Layout() {
           <Routes>
             {/* Trang chủ */}
             <Route path="/" element={<Home />} />
+            {/* =================STORE / PRODUCTS ==============*/}
+            {/* <Route path="/service/productlist" element={<ProductList />}> */}
+             {/* <Route index element={<DogProducts />} />  */}
 
             {/* Service & Store */}
             <Route path="/service" element={<h1>Service Page</h1>} /> {/* Thay bằng component thực nếu có */}
