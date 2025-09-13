@@ -6,7 +6,9 @@
     text-align: center;
     margin-top: 50px;
     margin-bottom: 30px;
+    padding: 20px;
 }
+
 .about_page .about-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
