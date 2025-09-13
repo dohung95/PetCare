@@ -4,13 +4,10 @@ exports.getHealthRecords = async (req, res) => {
   try {
     const HealthRecords = await HealthRecord.find()
       .populate('pet_id', 'name') // Lấy name từ Pet
-      .populate('vet_id', 'name'); // Lấy name từ Veterinarian
-
     // Transform data to include pet_name and vet_name for frontend
     const transformedRecords = HealthRecords.map(record => ({
       ...record._doc,
-      pet_name: record.pet_id ? record.pet_id.name : null,
-      vet_name: record.vet_id ? record.vet_id.name : null
+      pet_name: record.pet_id ? record.pet_id.name : null
     }));
 
     res.status(200).json({ success: true, data: transformedRecords });
