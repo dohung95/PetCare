@@ -176,7 +176,7 @@ const Home = ({ minRating = 4, limit = 15 }) => {
                 in their natural habitats.
               </p>
               <p>
-                Every visit to ADI supports our mission and efforts to help more animals receive the love and quality care
+                Every visit to SIGMA supports our mission and efforts to help more animals receive the love and quality care
                 they deserve from dedicated experts and veterinarians.
               </p>
 
@@ -241,7 +241,7 @@ const Home = ({ minRating = 4, limit = 15 }) => {
             “Transporting our dog internationally was challenging, but ADI handled everything smoothly
             and gave us peace of mind throughout the process. We truly trust ADI!”
           </p>
-          <p className="fw-bold mt-2">Eric &amp; Haku</p>
+          <p className="fw-bold mt-2">SIGMA</p>
         </div>
       </section>
 
