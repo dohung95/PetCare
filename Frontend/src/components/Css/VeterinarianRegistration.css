@@ -1,0 +1,162 @@
+/* Card chính */
+.Veterinarian_Registration .vet-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f8f9facd 0%, #e9ecef 100%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Veterinarian_Registration .vet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Title */
+.Veterinarian_Registration .vet-title {
+  color: #198754;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.Veterinarian_Registration .vet-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #198754;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Form groups và labels */
+.Veterinarian_Registration .vet-form-group {
+  position: relative;
+}
+
+.Veterinarian_Registration .vet-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.Veterinarian_Registration .vet-label i {
+  margin-right: 8px;
+}
+
+/* Inputs */
+.Veterinarian_Registration .vet-input,
+.Veterinarian_Registration .vet-textarea {
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  padding: 12px 15px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.Veterinarian_Registration .vet-input:focus,
+.Veterinarian_Registration .vet-textarea:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+  outline: none;
+}
+
+.Veterinarian_Registration .vet-input.is-invalid,
+.Veterinarian_Registration .vet-textarea.is-invalid {
+  border-color: #dc3545;
+}
+
+.Veterinarian_Registration .vet-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Alert */
+.Veterinarian_Registration .vet-alert {
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+}
+
+/* Button */
+.Veterinarian_Registration .vet-button {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 12px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: none;
+}
+
+.Veterinarian_Registration .vet-button:hover:not(:disabled) {
+  background-color: #157347;
+  transform: translateY(-2px);
+}
+
+.Veterinarian_Registration .vet-button:disabled {
+  opacity: 0.7;
+}
+
+/* Modal */
+.Veterinarian_Registration .vet-modal .modal-content {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.Veterinarian_Registration .vet-modal-body {
+  text-align: center;
+  font-size: 16px;
+  color: #495057;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .Veterinarian_Registration .vet-card {
+    margin: 0 10px;
+  }
+  
+  .Veterinarian_Registration .vet-title {
+    font-size: 1.25rem;
+  }
+  
+  .Veterinarian_Registration .vet-input,
+  .Veterinarian_Registration .vet-button {
+    font-size: 16px;
+  }
+}
+
+/* Animation cho fade-in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Veterinarian_Registration .vet-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Thêm style cho checkbox */
+.Veterinarian_Registration .form-check {
+  display: flex;
+  align-items: flex-start;
+}
+
+.Veterinarian_Registration .form-check-label {
+  margin-left: 10px;
+  line-height: 1.5;
+}
+
+.Veterinarian_Registration .form-check-input {
+  margin-top: 2px;
+  cursor: pointer;
+}

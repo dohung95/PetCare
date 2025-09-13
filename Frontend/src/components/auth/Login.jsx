@@ -2,10 +2,12 @@ import axios from "axios";
 import { useState } from "react";
 import "../Css/Auth_login.css";
 import { Link } from "react-router-dom";
-import api from "../../api"; 
+import api from "../../api";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
+  const navigate = useNavigate();
 
   // ========== SIGN IN state ==========
   const [loginEmail, setLoginEmail] = useState("");
@@ -37,6 +39,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError("");
+    setLoginShake(false); // Đặt lại hiệu ứng shake
 
     if (!isValidEmail(loginEmail)) {
       setLoginError("Please enter a valid email 🐾");
@@ -44,16 +47,32 @@ export default function Login() {
       return;
     }
 
-     try {
+    try {
       const res = await api.post("/auth/signin", {
         email: loginEmail,
         password: loginPassword,
       });
-      localStorage.setItem("token", res.data.token);
-      window.location.href = "/";
+      const { token, data } = res.data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('ownerId', data.id); 
+      localStorage.setItem('ownerName', data.name || '');
+      localStorage.setItem('ownerPhone', data.phone || '');
+      localStorage.setItem('ownerEmail', data.email || '');
+      localStorage.setItem('ownerRole', data.role || '');
+      if (res.data.success) {
+        localStorage.setItem("token", res.data.token);
+        console.log('Token saved:', res.data.token); // Debug
+        // Chuyển hướng đến trang profile thay vì trang chủ
+        window.location.href = "/";
+      } else {
+        setLoginError(res.data.message || "Login failed");
+        shake(setLoginShake);
+      }
     } catch (err) {
       setLoginError(err.response?.data?.message || "Login failed");
       shake(setLoginShake);
+      console.error('Login error:', err); // Debug
     }
   };
 

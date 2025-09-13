@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import "./Css/contact.css";
+import ContactReviewForm from "./ContactReviewForm";
 
 function Contact() {
+    useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   return (
     <section className="contact_page">
       <div className="contact-card">
-        {/* Cột trái: thông tin */}
+        {/* info */}
         <div className="contact-left">
           <h2 className="title" style={{ textAlign: "center" }}>Contact Us</h2>
-          
+
+          {/* form */}
+          <ContactReviewForm />
 
           <h4 className="section-heading">Our Contact Information</h4>
           <ul className="info-list">
@@ -29,13 +35,11 @@ function Contact() {
           <p className="socials">
             <a href="https://www.facebook.com/aptech.fpt" target="_blank" rel="noreferrer">Facebook</a>
             <span> · </span>
-            <a href="https://instagram.com/petcare.vn" target="_blank" rel="noreferrer">Instagram</a>
-            <span> · </span>
             <a href="https://www.youtube.com/@laptrinhfptaptech" target="_blank" rel="noreferrer">YouTube</a>
           </p>
         </div>
 
-        {/* Cột phải: bản đồ */}
+        {/* map */}
         <div className="contact-right">
           <h4 className="title align-right" style={{ textAlign: "center" }}>Find Us Here</h4>
           <div className="map-wrap">

@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const ShelterPetSchema = new mongoose.Schema({
-  shelter_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Shelter',
-    required: true
-  },
   name: {
     type: String,
     required: true
@@ -14,12 +9,27 @@ const ShelterPetSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  
+  breed: { 
+    type: String, 
+    default: "" 
+  }, 
+  
+  personality: [String], 
+  vaccinated: {
+    type: Boolean,
+    default: false
+  },
+  health: String,
   type: String,
   color: String,
   age: Number,
   ageCategory: String,
   image: String,
-  gender: Boolean
+  gender: Boolean,
+  // Thêm các trường còn thiếu từ dữ liệu mẫu
+  size: String,
+  story: String,
 }, { timestamps: true });
 
 module.exports = mongoose.model('ShelterPet', ShelterPetSchema);
