@@ -19,8 +19,8 @@ const HealthRecord = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Assume logged-in user's ID is available
-  const loggedInUserId = localStorage.getItem('userId'); // Replace with your auth mechanism (Redux, Context, etc.)
+  // Get logged-in user's ID from localStorage
+  const loggedInUserId = localStorage.getItem('userId');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

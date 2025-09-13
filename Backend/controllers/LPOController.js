@@ -247,5 +247,6 @@ module.exports = {
     getAllLPOs,
     getLPOById,
     updateLPO,
-    deleteLPO
+    deleteLPO,
+    deleteLabResultImage
 };
