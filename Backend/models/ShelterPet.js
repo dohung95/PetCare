@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const careLogSchema = require('./CareLogSchema');
 const ShelterPetSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,7 +9,7 @@ const ShelterPetSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  
+  logs: [careLogSchema],
   breed: { 
     type: String, 
     default: "" 
@@ -23,11 +23,11 @@ const ShelterPetSchema = new mongoose.Schema({
   health: String,
   type: String,
   color: String,
-  age: Number,
+  age: String,
   ageCategory: String,
   image: String,
   gender: Boolean,
-  // Thêm các trường còn thiếu từ dữ liệu mẫu
+
   size: String,
   story: String,
 }, { timestamps: true });
