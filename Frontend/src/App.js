@@ -14,8 +14,6 @@ import VeterinarianRegistration from "./components/Veterinarian_Registration";
 import Forgotpw from "./components/auth/Forgotpw";
 import AppointmentManagement from "./components/AppointmentManagement";
 import LPO from "./components/LPO";
-// import ProductList from "./components/ProductList";
-// import AdminProductList from "./components/AdminProductList";
 import ProfileOwner from "./components/menu_login/profile_owner.jsx";
 import Footer from "./components/Footer.jsx";
 import AdoptionPage from "./components/AdoptionPage.jsx";
@@ -28,10 +26,15 @@ import AdopRequest from "./components/Admin/AdopRequest.jsx";
 import Overview from "./components/Admin/Overview";
 import Appointment_owner from "./components/Appointment_owner.jsx";
 import ResetPassword from "./components/auth/ResetPassword";
+import VetManager from "./components/Admin/VetManager";
 
-// import product
+// products
+import ManageStore from "./components/Admin/ManageStore.jsx";
 import DogProducts from "./components/DogProducts";
 import CatProducts from "./components/CatProducts";
+import Store from "./components/Store.jsx";
+
+import MyPets from "./components/MyPets";
 
 function Layout() {
   const location = useLocation();
@@ -55,32 +58,11 @@ function Layout() {
           <Routes>
             {/* Trang chủ */}
             <Route path="/" element={<Home />} />
-            {/* =================STORE / PRODUCTS ==============*/}
-            {/* <Route path="/service/productlist" element={<ProductList />}> */}
-             {/* <Route index element={<DogProducts />} />  */}
 
             {/* Service & Store */}
-            <Route path="/service" element={<h1>Service Page</h1>} /> {/* Thay bằng component thực nếu có */}
-            <Route
-              path="/service/store"
-              element={
-                <div>
-                  <h1>Store Page</h1>
-                  <ul>
-                    <li><a href="/service/dog-products">Dog Products</a></li>
-                    <li><a href="/service/cat-products">Cat Products</a></li>
-                  </ul>
-                </div>
-              }
-            />
-            <Route path="/service/dog-products" element={<DogProducts />} /> {/* Dùng component thực thay vì h1 */}
-            <Route path="/service/cat-products" element={<CatProducts />} /> {/* Dùng component thực thay vì h1 */}
-            
-            {/* Nested ProductList nếu cần */}
-            {/* <Route path="/service/productlist" element={<ProductList />}>
-              <Route path="dog" element={<DogProducts />} />
-              <Route path="cat" element={<CatProducts />} />
-            </Route> */}
+            <Route path="/service/store" element={<Store />} />
+
+            <Route path="/mypets" element={<MyPets />} />
 
             {/* About & Contact */}
             <Route path="/about" element={<About />} />
@@ -97,6 +79,8 @@ function Layout() {
             <Route path="/Overview" element={<Overview />} />
             <Route path="/AdopPets" element={<AdopPets />} />
             <Route path="/AdopRequest" element={<AdopRequest />} />
+            <Route path="/VetManager_list" element={<VetManager />} />
+            <Route path="/ManageStore" element={<ManageStore />} />
             {/* <Route path="/adminproductlist" element={<AdminProductList />} /> */}
 
             {/* Job/Veterinarian */}

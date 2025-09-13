@@ -1,0 +1,375 @@
+/* ===== Palette ===== */
+:root {
+  --bg: #fffdf8;
+  --card: #ffffff;
+  --ink: #15212b;
+  --muted: #6b7280;
+  --brand: #ff8c42;
+  /* cam ấm */
+  --brand-2: #ffb86b;
+  /* cam nhạt */
+  --mint: #56d3b3;
+  --blue: #6aa9ff;
+  --rose: #ff6b81;
+  --ring: rgba(255, 140, 66, .35);
+  --shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+/* ===== Wrapper ===== */
+.mypets-container {
+  background: var(--bg);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  border: 2px solid #ffe7cf;
+  position: relative;
+  overflow: hidden;
+}
+
+/* chấm bi trang trí nhẹ */
+.mypets-container::after {
+  content: "";
+  position: absolute;
+  inset: -40px auto auto -40px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(#ffe7cf 2px, transparent 2px) 0 0/16px 16px;
+  opacity: .4;
+  transform: rotate(10deg);
+  pointer-events: none;
+}
+
+/* ===== Header ===== */
+.mypets-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.mypets-header h2 {
+  margin: 0;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+/* ===== Buttons ===== */
+.mypets-addButton {
+  appearance: none;
+  border: 0;
+  color: #fff;
+  background: linear-gradient(180deg, var(--brand), #ff7a24);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  box-shadow: 0 6px 0 #e46d25, 0 12px 24px rgba(255, 140, 66, .35);
+  transform: translateY(0);
+  transition: transform .15s, box-shadow .15s, filter .2s;
+}
+
+.mypets-addButton:hover {
+  filter: brightness(1.04);
+  transform: translateY(-2px);
+}
+
+.mypets-addButton:active {
+  transform: translateY(0);
+}
+
+.mypets-addButton:focus {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ===== List ===== */
+.mypets-petList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width:720px) {
+  .mypets-petList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width:1024px) {
+  .mypets-petList {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.mypets-petItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid #ffe7cf;
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .2s, border-color .2s;
+  position: relative;
+}
+
+/* “tai mèo” vui mắt */
+.mypets-petItem::before,
+.mypets-petItem::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 16px;
+  height: 16px;
+  background: var(--brand-2);
+  border: 2px solid #ffcf9f;
+  border-bottom: none;
+  border-right: none;
+  transform: rotate(45deg);
+  border-top-left-radius: 4px;
+}
+
+.mypets-petItem::before {
+  left: 16px;
+}
+
+.mypets-petItem::after {
+  left: 36px;
+}
+
+.mypets-petItem:hover {
+  transform: translateY(-2px);
+  border-color: #ffd4ab;
+}
+
+/* ===== Avatar & Info ===== */
+.mypets-petAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 64px;
+  border: 3px solid #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
+}
+
+.mypets-petInfo {
+  flex: 1 1 auto;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.mypets-petInfo b {
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+.mypets-petInfo .muted {
+  color: var(--muted);
+}
+
+/* ===== Actions ===== */
+.mypets-petActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mypets-actionButton {
+  appearance: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  transform: translateY(0);
+  transition: transform .12s, box-shadow .15s, filter .15s;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, .12);
+}
+
+.mypets-actionButton:hover {
+  transform: translateY(-1.5px);
+  filter: brightness(1.03);
+}
+
+.mypets-actionButton:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .18);
+}
+
+.mypets-actionButton:focus {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* variants */
+.mypets-updateButton {
+  background: linear-gradient(180deg, var(--mint), #3ec7a3);
+  box-shadow: 0 6px 0 #2aa585, 0 12px 22px rgba(86, 211, 179, .35);
+}
+
+.mypets-detailsButton {
+  background: linear-gradient(180deg, var(--blue), #4f95ff);
+  box-shadow: 0 6px 0 #3a7de0, 0 12px 22px rgba(106, 169, 255, .35);
+}
+
+.mypets-deleteButton {
+  background: linear-gradient(180deg, var(--rose), #ff5671);
+  box-shadow: 0 6px 0 #e0465e, 0 12px 22px rgba(255, 107, 129, .35);
+}
+
+/* ===== Forms / Details ===== */
+.mypets-formContainer,
+.mypets-detailsContainer {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 2px solid #ffe7cf;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.mypets-formInput {
+  width: 100%;
+  background: #fff;
+  border: 2px solid #ffdcca;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.mypets-formInput:focus {
+  border-color: #ffb77f;
+  box-shadow: 0 0 0 4px var(--ring);
+  outline: none;
+}
+
+.mypets-sectionTitle {
+  margin: 14px 0 8px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+/* gallery & docs */
+.mypets-galleryImage {
+  width: 92px;
+  height: 92px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 6px;
+  border: 2px solid #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
+}
+
+.mypets-documentLink {
+  display: inline-block;
+  margin: 6px 10px 6px 0;
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.mypets-documentLink:hover {
+  text-decoration: underline;
+}
+
+/* submit/cancel buttons (form) */
+.mypets-formButton {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-top: 4px;
+  transition: filter .15s, transform .12s;
+}
+
+.mypets-formButton:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+
+.mypets-submitButton {
+  background: linear-gradient(180deg, var(--brand), #ff7a24);
+  color: #fff;
+}
+
+.mypets-cancelButton {
+  background: #f1f5f9;
+  color: #111827;
+}
+
+
+
+/* ===== Responsive Grid helpers ===== */
+.mypets-grid {
+  display: grid;
+  gap: 12px;
+}
+
+/* 2 cột: 1 cột mobile, 2 cột >=768px */
+.mypets-grid-2 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .mypets-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 3 cột: 1 cột mobile, 2 cột >=768px, 3 cột >=1024px */
+.mypets-grid-3 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .mypets-grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mypets-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* Span helpers (áp dụng ở breakpoint >=768px để dễ đọc) */
+@media (min-width: 768px) {
+  .mypets-col-span-2 {
+    grid-column: span 2;
+  }
+
+  .mypets-col-span-3 {
+    grid-column: span 3;
+  }
+}
+
+/* Nhóm section có khung */
+.mypets-sectionCard {
+  background: #fff;
+  border-radius: 14px;
+  border: 2px solid #ffe7cf;
+  padding: 12px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
+}
+
+/* Label mini */
+.mypets-inputLabel {
+  display: block;
+  font-weight: 700;
+  margin: 6px 0 4px;
+  color: #0D1B2A;
+}

@@ -17,4 +17,20 @@ router.get("/:vetId/appointments", vetController.getAppointments);
 // // Ghi chú điều trị
 // router.post("/health-records", vetController.addHealthRecord);
 
+
+
+
+
+// của e đạt đừng xóa thưa ngài từ đây ==============================
+// Danh sách đăng ký
+router.get("/", vetController.list);
+
+// Xem chi tiết 1 đăng ký
+router.get("/:id", vetController.getById);
+
+// Từ chối (xóa)
+router.delete("/:id", vetController.remove);
+// đến đây ạ ======================================================
+
+
 module.exports = router;

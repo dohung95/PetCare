@@ -9,8 +9,9 @@ const cors = require('cors');
 const listEndpoints = require('express-list-endpoints');
 // --- Import Models ---
 require('./models/Owner');
-require('./models/Pet');
+require('./models/MyPets');
 require('./models/Appointment');
+require('./models/ManageStore');
 // Thêm các models khác nếu có
 
 // --- Import Routes ---
@@ -26,6 +27,21 @@ const feedbackRouter = require('./routes/Feedback.Route');
 const LPO = require('./routes/LPORoutes');
 const apptOwnerRouter = require('./routes/Appointment_owner.routes');
 const shelterPetRoutes = require('./routes/ShelterPetRoutes'); // ✅ đã được gộp lại
+const myPetsRoutes = require('./routes/MyPetsRoutes');
+const storeRoutes = require('./routes/ManageStoreRoutes');
+
+
+
+
+// e đạt mới thêm vào đừng xóa nha :v =======================
+const veterinarianRoutes = require('./routes/veterinarian');
+// có chút xíu à ============================================
+
+
+
+
+
+
 
 var app = express();
 const corsOptions = {
@@ -40,7 +56,8 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/uploads", express.static("uploads"));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/api/mypets", myPetsRoutes);
 
 // --- Database Connection ---
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/PetCare';
@@ -66,6 +83,16 @@ app.use('/api/feedbacks', feedbackRouter);
 app.use('/api/lpos', LPO);
 
 app.use('/api/owners', require('./routes/owners.routes'));
+app.use('/api/store', storeRoutes);
+
+
+
+// tất nhiên là ở đây cũng có rồi :v
+app.use('/api/veterinarians', veterinarianRoutes);
+// hẹ hẹ hẹ
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

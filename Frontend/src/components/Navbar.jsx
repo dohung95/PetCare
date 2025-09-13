@@ -85,7 +85,7 @@ export default function Navbar() {
     const ro = new ResizeObserver(setVar);
     ro.observe(el);
     window.addEventListener("resize", setVar);
-    if (document.fonts?.ready) document.fonts.ready.then(setVar).catch(() => {});
+    if (document.fonts?.ready) document.fonts.ready.then(setVar).catch(() => { });
     el.querySelectorAll("img").forEach(img => {
       if (!img.complete) img.addEventListener("load", setVar, { once: true });
     });
@@ -99,11 +99,13 @@ export default function Navbar() {
     user?.name?.split(" ")?.pop() ||
     user?.fullName?.split(" ")?.pop() ||
     user?.email;
-  const isVet = user?.role === "vet";
 
-  const navClass = `navbar fixed-top ${
-    enableTransparent ? (scrolled ? "navbar-scrolled" : "navbar-top") : "navbar-scrolled"
-  }`;
+  // set role
+  const isVet = user?.role === "vet";
+  const isAdmin = user?.role === "admin";
+
+  const navClass = `navbar fixed-top ${enableTransparent ? (scrolled ? "navbar-scrolled" : "navbar-top") : "navbar-scrolled"
+    }`;
 
   // Mobile: toggle bằng click; Desktop: dùng hover
   const onServiceTriggerClick = e => {
@@ -138,94 +140,76 @@ export default function Navbar() {
 
         {/* Menu */}
         <div className="menu d-flex align-items-center">
-          {role === "admin" ? (
-            <>
-              <div className="menu-item">
-                <Link to="/Dashboard" className="nav-link">Dashboard</Link>
-              </div>
-              <div className="menu-item">
-                <Link to="/Overview" className="nav-link">Overview</Link>
-              </div>
-              <div className="menu-item">
-                <Link to="/adminproductlist" className="nav-link">Manage Store</Link>
-              </div>
-              <div className="menu-item">
-                <Link to="/AdopPets" className="nav-link">Manage Pets</Link>
-              </div>
-              <div className="menu-item">
-                <Link to="/AdopRequest" className="nav-link">Manage Adoptions</Link>
-              </div>
-              <button type="button" className="nav-link btn-link menu-item" onClick={handleLogout}>
-                Logout
-              </button>
-            </>
+          <div className="menu-item">
+            <Link to="/" className="nav-link">Home</Link>
+          </div>
+
+          {/* Service Dropdown */}
+          <div
+            className={`menu-item dropdown ${serviceOpen ? "show" : ""}`}
+            {...(!isTouch && {
+              onMouseEnter: () => setServiceOpen(true),
+              onMouseLeave: () => setServiceOpen(false),
+            })}
+          >
+            <button
+              type="button"
+              className="nav-link btn-reset"
+              onClick={onServiceTriggerClick}
+              aria-haspopup="true"
+              aria-expanded={serviceOpen}
+            >
+              Service
+            </button>
+            <div className="dropdown-menu">
+              <Link to="/service/store" className="dropdown-item">Store</Link>
+              <Link to="/Appointment_owner" className="dropdown-item">Appointment</Link>
+            </div>
+          </div>
+
+          <div className="menu-item">
+            <Link to="/about" className="nav-link">About</Link>
+          </div>
+          <div className="menu-item">
+            <Link to="/contact" className="nav-link">Contact</Link>
+          </div>
+          <div className="menu-item">
+            <Link to="/adoption" className="nav-link">Adoption</Link>
+          </div>
+          <div>
+            <Link to="/job" className="nav-link">Job</Link>
+          </div>
+
+          {/* User/Login */}
+          {!user ? (
+            <div className="menu-item">
+              <Link to="/auth/login" className="nav-link">Login</Link>
+            </div>
           ) : (
-            <>
-              <div className="menu-item">
-                <Link to="/" className="nav-link">Home</Link>
-              </div>
-
-              {/* Service Dropdown */}
-              <div
-                className={`menu-item dropdown ${serviceOpen ? "show" : ""}`}
-                {...(!isTouch && {
-                  onMouseEnter: () => setServiceOpen(true),
-                  onMouseLeave: () => setServiceOpen(false),
-                })}
+            <div
+              className={`menu-item dropdown user-menu ${accountOpen ? "show" : ""}`}
+              {...(!isTouch && {
+                onMouseEnter: () => setAccountOpen(true),
+                onMouseLeave: () => setAccountOpen(false),
+              })}
+            >
+              <button
+                type="button"
+                className="nav-link user-name btn-reset"
+                onClick={onAccountTriggerClick}
+                aria-haspopup="true"
+                aria-expanded={accountOpen}
               >
-                <button
-                  type="button"
-                  className="nav-link btn-reset"
-                  onClick={onServiceTriggerClick}
-                  aria-haspopup="true"
-                  aria-expanded={serviceOpen}
-                >
-                  Service
-                </button>
-                <div className="dropdown-menu">
-                  <Link to="/service/store" className="dropdown-item">Store</Link>
-                  <Link to="/Appointment_owner" className="dropdown-item">Appointment</Link>
-                </div>
-              </div>
+                {LastName}
+              </button>
+              <div className="dropdown-menu">
+                <Link to="/profile_owner" className="dropdown-item">Profile</Link>
+                <Link to="/mypets" className="dropdown-item">My Pets</Link>
+                <Link to="/service/store" className="dropdown-item">Shopping</Link>
 
-              <div className="menu-item">
-                <Link to="/about" className="nav-link">About</Link>
-              </div>
-              <div className="menu-item">
-                <Link to="/contact" className="nav-link">Contact</Link>
-              </div>
-              <div className="menu-item">
-                <Link to="/adoption" className="nav-link">Adoption</Link>
-              </div>
-              <div>
-                <Link to="/job" className="nav-link">Job</Link>
-              </div>
-
-              {/* User/Login */}
-              {!user ? (
-                <div className="menu-item">
-                  <Link to="/auth/login" className="nav-link">Login</Link>
-                </div>
-              ) : (
-                <div
-                  className={`menu-item dropdown user-menu ${accountOpen ? "show" : ""}`}
-                  {...(!isTouch && {
-                    onMouseEnter: () => setAccountOpen(true),
-                    onMouseLeave: () => setAccountOpen(false),
-                  })}
-                >
-                  <button
-                    type="button"
-                    className="nav-link user-name btn-reset"
-                    onClick={onAccountTriggerClick}
-                    aria-haspopup="true"
-                    aria-expanded={accountOpen}
-                  >
-                    {LastName}
-                  </button>
-                  <div className="dropdown-menu">
-                    <Link to="/profile_owner" className="dropdown-item">Profile</Link>
-                    {isVet ? (
+                {(isVet || isAdmin) && (
+                  <>
+                    {isVet && (
                       <>
                         <Link to="/job/HealthRecord" className="dropdown-item">Health Record</Link>
                         <Link to="/job/AppointmentManagement" className="dropdown-item">
@@ -233,20 +217,19 @@ export default function Navbar() {
                         </Link>
                         <Link to="/job/LPO" className="dropdown-item">Log Processing & Observation</Link>
                       </>
-                    ) : (
+                    )}
+                    {isAdmin && (
                       <>
-                        {/* Comment out routes not in App.js */}
-                        {/* <Link to="/account/pets" className="dropdown-item">My Pets</Link> */}
-                        <Link to="/service/store" className="dropdown-item">Shopping</Link>
+                        <Link to="/Dashboard" className="dropdown-item">Admin Dashboard</Link>
                       </>
                     )}
-                    <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
+                  </>
+                )}
+                <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </div>
           )}
         </div>
       </div>
