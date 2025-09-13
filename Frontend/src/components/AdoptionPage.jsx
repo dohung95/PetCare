@@ -67,17 +67,20 @@ const AdoptionPage = () => {
   };
 
   return (
-    <div className="adoption-page">
-      {/* Banner */}
-      <motion.img
+    <div >
+      <div className="adoption-page" >
+        <motion.img
         src="/imgs/adop.jpg"
         alt="Pet"
         initial={{ opacity: 0, scale: 1.1 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        style={{ width: "100%", minHeight: "150px", maxHeight: "250px", objectFit: "cover" }}
+        style={{ width: "100%", minHeight: "150px", maxHeight: "250px", objectFit: "cover" ,marginBottom:"2%"}}
       />
+      <div style={{ backgroundColor: "#f8f9fad5",borderRadius:"2%"}} className="container">
+        {/* Banner */}
+      
 
       {/* Filter section */}
       <motion.div
@@ -95,7 +98,7 @@ const AdoptionPage = () => {
         </h2>
 
         {/* Type buttons */}
-        <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap">
+        <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap" >
           {["all", "dog", "cat", "other"].map((type) => (
             <button
               key={type}
@@ -104,10 +107,10 @@ const AdoptionPage = () => {
                 filters.type === type
                   ? type === "all"
                     ? "btn-primary text-white"
-                    : "btn-warning"
-                  : "btn-outline-warning"
+                    : "btn-warning "
+                  : "btn-outline-warning text-dark"
               }`}
-              style={{ minWidth: "90px", border: "none" }}
+              style={{ minWidth: "90px", border: "none", backgroundColor:"#ffc107"}}
               onClick={() => handleTypeClick(type)}
             >
               {type === "all" ? "All" : type === "dog" ? "Dog" : type === "cat" ? "Cat" : "Other"}
@@ -243,6 +246,8 @@ const AdoptionPage = () => {
           </AnimatePresence>
         </motion.div>
       </motion.div>
+      </div>
+    </div>
     </div>
   );
 };
