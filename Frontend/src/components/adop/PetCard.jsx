@@ -1,30 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
-
-const Home = () => {
-   useEffect(() => {
-    scrollToTop();
-  }, []); 
-}
 
 const PetCard = ({ pet }) => {
   // ✅ Hàm lấy URL đúng
   const getImageUrl = (img) => (img?.startsWith("http") ? img : `/${img}`);
 
   return (
-    <div className="card shadow-sm h-100" style={{ cursor: "pointer", borderRadius: "12px", overflow: "hidden", fontSize: "0.9rem" }}>
+    <div className="card shadow-sm h-150" style={{ cursor: "pointer", borderRadius: "12px", overflow: "hidden", fontSize: "0.9rem" }}>
       <img
         src={getImageUrl(pet.image)}
         className="card-img-top"
         alt={`Photo of ${pet.name}`}
-        style={{ height: "150px", objectFit: "cover" }}
+        style={{ height: "300px", objectFit: "cover" }}
       />
       <div className="card-body p-2">
         <h6 className="card-title fw-bold text-center mb-2">{pet.name}</h6>
