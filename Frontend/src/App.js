@@ -29,6 +29,10 @@ import Overview from "./components/Admin/Overview";
 import Appointment_owner from "./components/Appointment_owner.jsx";
 import ResetPassword from "./components/auth/ResetPassword";
 
+// import product
+import DogProducts from "./components/DogProducts";
+import CatProducts from "./components/CatProducts";
+
 function Layout() {
   const location = useLocation();
   const hideNavbar =
@@ -46,17 +50,14 @@ function Layout() {
     <div>
       {!hideNavbar && <Navbar />}
 
-<<<<<<< Updated upstream
       <div className="layout">
         <main className={`page-content ${needsOffset ? "with-offset" : ""}`}>
           <Routes>
             {/* Trang chủ */}
             <Route path="/" element={<Home />} />
-=======
             {/* =================STORE / PRODUCTS ==============*/}
             {/* <Route path="/service/productlist" element={<ProductList />}> */}
              {/* <Route index element={<DogProducts />} />  */}
->>>>>>> Stashed changes
 
             {/* Service & Store */}
             <Route path="/service" element={<h1>Service Page</h1>} /> {/* Thay bằng component thực nếu có */}
