@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
+// Function to scroll to top
 import { Link } from "react-router-dom";
 
 const scrollToTop = () => {
@@ -90,7 +91,7 @@ const Home = ({ minRating = 4, limit = 15 }) => {
           </h2>
 
           <Link
-            to="/profile_owner"
+            to="/Appointment_owner"
             className="px-4 py-2 fw-semibold text-white text-decoration-none text-uppercase"
             style={{
               display: "inline-block",
@@ -102,6 +103,7 @@ const Home = ({ minRating = 4, limit = 15 }) => {
           >
             Appointment now
           </Link>
+
         </div>
       </section>
 
@@ -238,21 +240,21 @@ const Home = ({ minRating = 4, limit = 15 }) => {
             className="fst-italic mt-4"
             style={{ maxWidth: "700px", margin: "0 auto", fontSize: "16px", color: "#444" }}
           >
-            “Transporting our dog internationally was challenging, but ADI handled everything smoothly
-            and gave us peace of mind throughout the process. We truly trust ADI!”
+            “Transporting our dog internationally was challenging, but SIGMA handled everything smoothly
+            and gave us peace of mind throughout the process. We truly trust SIGMA!”
           </p>
           <p className="fw-bold mt-2">SIGMA</p>
         </div>
       </section>
 
-      {/* REVIEWS (data từ DB) */}
+      {/* testimonials (data từ DB) */}
       <section className="py-5 bg-white">
         <div className="container text-center">
           <h3
             className="fw-bold mb-4"
             style={{ fontFamily: "'Nunito', sans-serif", fontSize: "28px", color: "#0D1B2A" }}
           >
-            Reviews
+            Testimonials
           </h3>
 
           {loadingReviews && <p>Loading Reviews…</p>}

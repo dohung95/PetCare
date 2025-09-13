@@ -111,3 +111,80 @@ exports.getAppointments = async (req, res) => {
 //     res.status(400).json({ error: err.message });
 //   }
 // };
+
+
+
+
+
+
+
+
+
+
+
+
+// CỦA E ĐẠT Ạ ==============================================
+// GET /api/veterinarians?q=&page=&limit=&sort=
+exports.list = async (req, res) => {
+  try {
+    const { q, page = 1, limit = 20, sort = "-createdAt" } = req.query;
+    const filter = {};
+    if (q) {
+      filter.$or = [
+        { name:  { $regex: q, $options: "i" } },
+        { email: { $regex: q, $options: "i" } },
+        { phone: { $regex: q, $options: "i" } },
+        { address: { $regex: q, $options: "i" } },
+        { specialization: { $regex: q, $options: "i" } },
+      ];
+    }
+
+    const pageNum = Math.max(1, Number(page));
+    const perPage = Math.min(100, Math.max(1, Number(limit)));
+
+    const [items, total] = await Promise.all([
+      Veterinarian.find(filter)
+        .sort(sort)
+        .skip((pageNum - 1) * perPage)
+        .limit(perPage)
+        .lean(),
+      Veterinarian.countDocuments(filter),
+    ]);
+
+    return res.json({
+      success: true,
+      data: items,
+      pagination: {
+        total,
+        page: pageNum,
+        limit: perPage,
+        pages: Math.ceil(total / perPage),
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// GET /api/veterinarians/:id
+exports.getById = async (req, res) => {
+  try {
+    const doc = await Veterinarian.findById(req.params.id).lean();
+    if (!doc) return res.status(404).json({ success: false, message: "Not found" });
+    return res.json({ success: true, data: doc });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+// DELETE /api/veterinarians/:id (từ chối = xóa)
+exports.remove = async (req, res) => {
+  try {
+    const doc = await Veterinarian.findByIdAndDelete(req.params.id);
+    if (!doc) return res.status(404).json({ success: false, message: "Not found" });
+    return res.json({ success: true, message: "Rejected & removed" });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+};
+// ĐẾN ĐÂY THÔI Ạ ===========================================
