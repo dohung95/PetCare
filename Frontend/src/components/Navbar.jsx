@@ -29,11 +29,9 @@ export default function Navbar() {
   // Load current user and role
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const r = localStorage.getItem("role");
-    setRole(r);
-
     if (!token) {
       setUser(null);
+      setRole(null);
       return;
     }
 
@@ -42,6 +40,7 @@ export default function Navbar() {
         const res = await api.get("/auth/me");
         const u = res.data?.user || res.data?.data || null;
         setUser(u);
+        setRole(u?.role); // <-- lấy role từ user
       } catch {
         ["token", "role", "ownerId", "ownerName", "ownerPhone", "ownerEmail", "ownerRole"].forEach(k =>
           localStorage.removeItem(k)
@@ -50,7 +49,7 @@ export default function Navbar() {
         setRole(null);
       }
     })();
-  }, []);
+  }, [location.pathname]);
 
   // Logout
   const handleLogout = () => {
@@ -85,7 +84,7 @@ export default function Navbar() {
     const ro = new ResizeObserver(setVar);
     ro.observe(el);
     window.addEventListener("resize", setVar);
-    if (document.fonts?.ready) document.fonts.ready.then(setVar).catch(() => {});
+    if (document.fonts?.ready) document.fonts.ready.then(setVar).catch(() => { });
     el.querySelectorAll("img").forEach(img => {
       if (!img.complete) img.addEventListener("load", setVar, { once: true });
     });
@@ -101,9 +100,8 @@ export default function Navbar() {
     user?.email;
   const isVet = user?.role === "vet";
 
-  const navClass = `navbar fixed-top ${
-    enableTransparent ? (scrolled ? "navbar-scrolled" : "navbar-top") : "navbar-scrolled"
-  }`;
+  const navClass = `navbar fixed-top ${enableTransparent ? (scrolled ? "navbar-scrolled" : "navbar-top") : "navbar-scrolled"
+    }`;
 
   // Mobile: toggle bằng click; Desktop: dùng hover
   const onServiceTriggerClick = e => {
@@ -138,7 +136,7 @@ export default function Navbar() {
 
         {/* Menu */}
         <div className="menu d-flex align-items-center">
-          {role === "admin" ? (
+          {role?.toLowerCase() === "admin" ? (
             <>
               <div className="menu-item">
                 <Link to="/Dashboard" className="nav-link">Dashboard</Link>
@@ -237,6 +235,7 @@ export default function Navbar() {
                       <>
                         <Link to="/account/pets" className="dropdown-item">My Pets</Link>
                         <Link to="/service/store" className="dropdown-item">Shopping</Link>
+
                       </>
                     )}
                     <button type="button" className="dropdown-item btn-link" onClick={handleLogout}>
