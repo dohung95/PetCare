@@ -1,0 +1,135 @@
+:root {
+    --primary: #6A5AE0;
+    --accent: #7C6BF3;
+    --border: #e6e6f0;
+    --text: #2b2b34;
+    --muted: #6f6f8a;
+    --ring: rgba(106, 90, 224, .18);
+}
+
+body {
+    background: linear-gradient(135deg, #e9e6ff 0%, #f6f4ff 100%);
+}
+
+.appt-card {
+    max-width: 980px;
+    margin: 28px auto;
+    padding: 26px 26px 34px;
+    background: #ffffffec;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(26, 24, 59, .12);
+}
+
+.appt-card h2 {
+    margin: 0 0 18px;
+    color: var(--primary);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.appt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.appt-grid .col-2 {
+    grid-column: 1 / span 2;
+}
+
+.field label {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.field .req {
+    color: #d6454a;
+    margin-left: 4px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    transition: .18s;
+    background: #fff;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--ring);
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.field input:disabled {
+  background: #f9f9f9;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2px;
+}
+
+.actions button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .18s;
+    letter-spacing: .2px;
+}
+
+.actions button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+}
+
+.actions button:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+.notice {
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    border: 1px solid #dcede6;
+    background: #f3fff8;
+    color: #1f7a47;
+}
+
+.notice.error {
+    background: #fff3f3;
+    border-color: #f1c2c2;
+    color: #a33;
+}
+
+@media (max-width: 640px) {
+    .appt-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .appt-card {
+        margin: 16px 12px;
+    }
+}

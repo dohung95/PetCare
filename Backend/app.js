@@ -1,5 +1,4 @@
 var createError = require('http-errors');
-const AuthRouter = require('./routes/AuthRoutes');
 require('dotenv').config();
 var express = require('express');
 var path = require('path');
@@ -7,22 +6,28 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+
+
+const AuthRouter = require('./routes/AuthRoutes');
+
 require('./models/Owner');
 require('./models/Pet');
 require('./models/Appointment');
 
 // Import the new ShelterPet routes
-const shelterPetRoutes = require('./routes/shelterPetRoutes'); 
+const shelterPetRoutes = require('./routes/ShelterPetRoutes'); 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const veterinarianRouter = require('./routes/veterinarian');
 const HealthRecordRouter = require('./routes/HealthRecordRoutes');
 const AppointmentRouter = require('./routes/AppointmentRoutes');
 const ShelterRoutes = require('./routes/ShelterRoutes');
+
+const feedbackRouter = require('./routes/Feedback.Route'); 
 const LPO = require('./routes/LPORoutes');
 
-
-
+const apptOwnerRouter = require('./routes/Appointment_owner.routes');
 
 var app = express();
 const corsOptions = {
@@ -44,6 +49,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/uploads", express.static("uploads"));
+
 
 // Routes
 app.use('/', indexRouter);
@@ -54,9 +61,11 @@ app.use('/api/appointments', AppointmentRouter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/Shelter', ShelterRoutes);
 
-app.use('/api/shelter-pets', shelterPetRoutes);
-app.use('/api/lpos', LPO);
+app.use('/api/appointments_owner', apptOwnerRouter);
 
+app.use('/api/shelter-pets', shelterPetRoutes);
+app.use('/api/feedbacks', feedbackRouter);
+app.use('/api/lpos', LPO);
 
 
 // catch 404 and forward to error handler

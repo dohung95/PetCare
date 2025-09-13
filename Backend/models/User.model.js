@@ -1,0 +1,20 @@
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true },
+  password: String,
+  // thêm 2 field phục vụ reset
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+});
+
+// hash password trước khi lưu (nếu chưa có)
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+module.exports = mongoose.model("User", userSchema);
