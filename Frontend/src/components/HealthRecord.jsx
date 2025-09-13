@@ -18,19 +18,27 @@ const HealthRecord = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Assume logged-in user's ID is available
+  const loggedInUserId = localStorage.getItem('userId'); // Replace with your auth mechanism (Redux, Context, etc.)
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // Fetch all health records
+  // Fetch health records filtered by vet_id
   useEffect(() => {
-    fetchHealthRecords();
-  }, []);
+    if (loggedInUserId) {
+      fetchHealthRecords();
+    } else {
+      setError('Please log in to view health records');
+    }
+  }, [loggedInUserId]);
 
   const fetchHealthRecords = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/health-records');
+      // Fetch records with vet_id filter
+      const response = await axios.get(`http://localhost:5000/api/health-records?vet_id=${loggedInUserId}`);
       console.log('Fetch response:', response.data);
       if (response.data.success) {
         setRecords(response.data.data);
@@ -81,7 +89,7 @@ const HealthRecord = () => {
       }
     } catch (err) {
       console.error('Submit error:', err.response ? err.response.data : err.message);
-      setError('Operation failed');
+      setError('Update failed');
     }
   };
 
@@ -119,7 +127,7 @@ const HealthRecord = () => {
           <input
             type="text"
             className="form-control health-input"
-            placeholder="Search by pet name, vet name, or diagnosis"
+            placeholder="Search by pet name, veterinarian name, or diagnosis"
             value={searchTerm}
             onChange={handleSearch}
           />
