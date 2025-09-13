@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import Sidebar from"./Sidebar"; // import Sidebar
+import axios from "axios";
 
 const DEFAULT_IMG = "https://placehold.co/120x80?text=Pet";
-
-const AdopPets = () => {
+const API_URL = "http://localhost:5000/api/shelter-pets";
+  const AdopPets = () => {
   const [pets, setPets] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [mode, setMode] = useState("add"); // 'add' | 'edit'
@@ -20,34 +21,21 @@ const AdopPets = () => {
     personalityText: "",
   });
 
-  useEffect(() => {
-    // mock data
-    setPets([
-      {
-        id: 1,
-        name: "Tin",
-        type: "Dog",
-        breed: "Shiba",
-        age: "2 years",
-        health: "Vaccinated, healthy",
-        vaccinated: true,
-        image: "https://i.imgur.com/DnQ2cyl.jpg",
-        personality: ["Friendly", "Playful"],
-      },
-      {
-        id: 2,
-        name: "Milo",
-        type: "Cat",
-        breed: "British Shorthair",
-        age: "1 year",
-        health: "Healthy",
-        vaccinated: false,
-        image: "https://i.imgur.com/nc2gFfv.jpg",
-        personality: ["Calm", "Gentle"],
-      },
-    ]);
-  }, []);
+    // Fetch all pets from the API
+  const fetchPets = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      setPets(response.data);
+    } catch (error) {
+      console.error("Error fetching pets:", error);
+      alert("Error fetching pets. Please try again later.");
+    }
+  };
 
+  useEffect(() => {
+    fetchPets();
+  }, []);
+  
   const openAdd = () => {
     setMode("add");
     setForm({
@@ -67,7 +55,7 @@ const AdopPets = () => {
   const openEdit = (pet) => {
     setMode("edit");
     setForm({
-      id: pet.id,
+      id: pet._id,
       name: pet.name,
       type: pet.type,
       breed: pet.breed || "",
@@ -80,13 +68,19 @@ const AdopPets = () => {
     setShowForm(true);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Xóa thú cưng này?")) {
-      setPets((prev) => prev.filter((p) => p.id !== id));
+      try{
+        await axios.delete(`${API_URL}/${id}`);
+        fetchPets();
+      }catch(err){
+        console.log("Error deleting pet:", err);
+      }
+      // setPets((prev) => prev.filter((p) => p.id !== id));
     }
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
     if (!form.name.trim()) return alert("Tên thú cưng là bắt buộc.");
     if (!form.age.trim()) return alert("Tuổi là bắt buộc.");
@@ -98,17 +92,26 @@ const AdopPets = () => {
         .map((s) => s.trim())
         .filter(Boolean) || [];
 
+      const petData = { ...form, personality };
+
+      try {
+
     if (mode === "add") {
-      const nextId = pets.length ? Math.max(...pets.map((p) => p.id)) + 1 : 1;
-      const newPet = { ...form, id: nextId, personality };
-      setPets((prev) => [newPet, ...prev]);
+      await axios.post(API_URL, petData);
+      // const nextId = pets.length ? Math.max(...pets.map((p) => p.id)) + 1 : 1;
+      // const newPet = { ...form, id: nextId, personality };
+      // setPets((prev) => [newPet, ...prev]);
     } else {
-      setPets((prev) =>
-        prev.map((p) => (p.id === form.id ? { ...form, personality } : p))
-      );
-    }
-    setShowForm(false);
-  };
+      await axios.put(`${API_URL}/${form.id}`, petData);}
+      fetchPets();
+      setShowForm(false);}
+      catch(err){
+        console.log("Error saving pet:", err);
+      }
+      // setPets((prev) =>
+      //   prev.map((p) => (p.id === form.id ? { ...form, personality } : p))
+    };
+    
 
   const closeForm = () => setShowForm(false);
 
@@ -124,7 +127,8 @@ const AdopPets = () => {
         <Col md={10} className="p-4">
           <div className="d-flex align-items-center justify-content-between">
             <h3 className="fw-bold mb-3">🐶 Manage Pets</h3>
-            <button className="btn btn-success" onClick={openAdd}>
+            <button className="btn btn-success" onClick={openAdd}
+            style={{ position: 'relative', zIndex: 9999 }}>
               + Add New Pet
             </button>
           </div>
@@ -145,7 +149,7 @@ const AdopPets = () => {
             </thead>
             <tbody>
               {pets.map((pet) => (
-                <tr key={pet.id}>
+                <tr key={pet._id}>
                   <td>
                     <img
                       src={pet.image || DEFAULT_IMG}
@@ -180,7 +184,7 @@ const AdopPets = () => {
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(pet.id)}
+                      onClick={() => handleDelete(pet._id)}
                     >
                       Delete
                     </button>

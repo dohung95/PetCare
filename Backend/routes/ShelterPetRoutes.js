@@ -1,20 +1,24 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const shelterPetController = require('../controllers/ShelterPetController');
+const shelterPetController = require("../controllers/ShelterPetController");
+const upload = require("../middlewares/upload");
 
-// Route to create a new pet
-router.post('/', shelterPetController.createShelterPet);
+// Create new pet (có thể có ảnh)
+router.post("/", upload.single("image"), shelterPetController.createShelterPet);
 
-// Route to get all pets
-router.get('/', shelterPetController.getAllShelterPets);
+// Get all pets
+router.get("/", shelterPetController.getAllShelterPets);
 
-// Route to get a single pet by ID
-router.get('/:id', shelterPetController.getShelterPetById);
+// Get a single pet
+router.get("/:id", shelterPetController.getShelterPetById);
 
-// Route to update a pet by ID
-router.put('/:id', shelterPetController.updateShelterPet);
+// Update pet (có thể có ảnh mới)
+router.put("/:id", upload.single("image"), shelterPetController.updateShelterPet);
 
-// Route to delete a pet by ID
-router.delete('/:id', shelterPetController.deleteShelterPet);
+// Toggle availability
+router.patch("/:id/toggle", shelterPetController.toggleAvailability);
+
+// Delete pet
+router.delete("/:id", shelterPetController.deleteShelterPet);
 
 module.exports = router;

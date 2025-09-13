@@ -7,6 +7,8 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
+
 const AuthRouter = require('./routes/AuthRoutes');
 
 require('./models/Owner');
@@ -47,6 +49,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/uploads", express.static("uploads"));
+
 
 // Routes
 app.use('/', indexRouter);
