@@ -8,7 +8,7 @@ const healthRecordSchema = new mongoose.Schema({
   },
   vet_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Owner',
+    ref: 'Veterinarian',
     required: true
   },
   visit_date: {
