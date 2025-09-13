@@ -9,7 +9,6 @@ import HealthRecord from "./components/HealthRecord";
 import About from "./components/about";
 import Contact from "./components/contact";
 
-// NGƯỜI BẢO HỘ
 import VeterinarianRegistration from "./components/Veterinarian_Registration";
 import Forgotpw from "./components/auth/Forgotpw";
 import AppointmentManagement from "./components/AppointmentManagement";
