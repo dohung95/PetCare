@@ -1,24 +1,31 @@
+// routes/shelterPetRoutes.js
+
 const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const shelterPetController = require("../controllers/ShelterPetController");
 const upload = require("../middlewares/upload");
 
-// Create new pet (có thể có ảnh)
+// --- API Routes for Shelter Pets ---
+
+// ✅ Pet Management
 router.post("/", upload.single("image"), shelterPetController.createShelterPet);
-
-// Get all pets
 router.get("/", shelterPetController.getAllShelterPets);
-
-// Get a single pet
 router.get("/:id", shelterPetController.getShelterPetById);
-
-// Update pet (có thể có ảnh mới)
 router.put("/:id", upload.single("image"), shelterPetController.updateShelterPet);
-
-// Toggle availability
+router.delete("/:id", shelterPetController.deleteShelterPet);
 router.patch("/:id/toggle", shelterPetController.toggleAvailability);
 
-// Delete pet
-router.delete("/:id", shelterPetController.deleteShelterPet);
+// Thêm middleware tạm ở đây
+router.use('/:id/logs', (req, res, next) => {
+  console.log(`[shelter-pets] ${req.method} /${req.params.id}/logs`);
+  next();
+});
+
+// ✅ Care Log Management
+router.get('/:id/logs', shelterPetController.getCareLogs);
+// Add new log
+router.post('/:id/logs', shelterPetController.addCareLog);
+// ✅ Log update
+router.put('/:id/logs/:logId', shelterPetController.updateCareLog);
 
 module.exports = router;
