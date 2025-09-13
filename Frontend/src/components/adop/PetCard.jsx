@@ -29,7 +29,10 @@ const PetCard = ({ pet }) => {
       <div className="card-body p-2">
         <h6 className="card-title fw-bold text-center mb-2">{pet.name}</h6>
         <hr className="my-2" />
-        <p className="mb-1"><strong>Gender:</strong> {pet.gender === true ? "Male" : pet.gender === false ? "Female" : pet.gender}</p>
+        <p className="mb-1">
+  <strong>Gender:</strong> {pet.gender === "male" ? "Male" : pet.gender === "female" ? "Female" : pet.gender}
+</p>
+
         <p className="mb-1">
           <strong>Age:</strong>{" "}
           {pet.ageCategory === "puppy"

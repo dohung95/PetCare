@@ -58,8 +58,11 @@ const AdoptionPage = () => {
     if (filters.type !== "all") result = result.filter((p) => p.type === filters.type);
     if (filters.gender !== "all") result = result.filter((p) => p.gender === filters.gender);
     if (filters.age !== "all") result = result.filter((p) => p.ageCategory === filters.age);
-    if (filters.neutered !== "all")
-      result = result.filter((p) => (filters.neutered === "yes" ? p.neutered : !p.neutered));
+    if (filters.neutered === "yes") {
+    result = result.filter((p) => p.neutered);
+} else if (filters.neutered === "no") {
+    result = result.filter((p) => !p.neutered);
+}
     if (filters.color !== "all") result = result.filter((p) => p.color === filters.color);
     if (filters.name.trim() !== "")
       result = result.filter((p) => p.name.toLowerCase().includes(filters.name.toLowerCase()));
