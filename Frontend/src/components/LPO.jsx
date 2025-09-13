@@ -5,7 +5,7 @@ import './Css/LPO.css';
 const LPO = () => {
   const [lpos, setLpos] = useState([]);
   const [formData, setFormData] = useState({
-    pet_id: '',
+    phone_number: '',
     diagnosis: '',
     prescription: '',
     symptoms: '',
@@ -17,10 +17,11 @@ const LPO = () => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-  // Fetch LPO list when component mounts
+
   useEffect(() => {
     fetchLPOs();
   }, []);
@@ -39,17 +40,15 @@ const LPO = () => {
     }
   };
 
-  // Handle input changes in form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setError('');
   };
 
-  // Handle form submission (create or update LPO)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.pet_id || !formData.diagnosis || !formData.prescription || !formData.symptoms) {
+    if (!formData.phone_number || !formData.diagnosis || !formData.prescription || !formData.symptoms) {
       setError('Please fill in all required fields');
       return;
     }
@@ -60,7 +59,6 @@ const LPO = () => {
       setSuccess('');
 
       if (editingId) {
-        // Update LPO
         const response = await axios.put(`/api/lpos/${editingId}`, formData);
         if (response.data.success) {
           setSuccess('LPO updated successfully');
@@ -69,7 +67,6 @@ const LPO = () => {
           setShowModal(false);
         }
       } else {
-        // Create new LPO
         const response = await axios.post('/api/lpos', formData);
         if (response.data.success) {
           setSuccess('LPO created successfully');
@@ -85,7 +82,6 @@ const LPO = () => {
     }
   };
 
-  // Handle LPO deletion
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this LPO?')) {
       try {
@@ -100,10 +96,9 @@ const LPO = () => {
     }
   };
 
-  // Handle LPO editing
   const handleEdit = (lpo) => {
     setFormData({
-      pet_id: lpo.pet_id?._id || lpo.pet_id || '',
+      phone_number: lpo.phone_number || '',
       diagnosis: lpo.diagnosis || '',
       prescription: lpo.prescription || '',
       symptoms: lpo.symptoms || '',
@@ -116,10 +111,9 @@ const LPO = () => {
     setShowModal(true);
   };
 
-  // Reset form and close modal
   const resetForm = () => {
     setFormData({
-      pet_id: '',
+      phone_number: '',
       diagnosis: '',
       prescription: '',
       symptoms: '',
@@ -131,7 +125,6 @@ const LPO = () => {
     setSuccess('');
   };
 
-  // Open modal for creating new LPO
   const openCreateModal = () => {
     resetForm();
     setShowModal(true);
@@ -153,7 +146,6 @@ const LPO = () => {
           </div>
         </div>
 
-        {/* Messages */}
         {error && (
           <div className="row mb-4">
             <div className="col-12">
@@ -175,7 +167,6 @@ const LPO = () => {
           </div>
         )}
 
-        {/* Modal for Create/Update LPO */}
         <div className={`modal fade ${showModal ? 'show' : ''}`} style={{ display: showModal ? 'block' : 'none' }} tabIndex="-1" role="dialog" aria-labelledby="lpoModalLabel" aria-hidden={!showModal}>
           <div className="modal-dialog modal-lg" role="document">
             <div className="modal-content lpo-modal">
@@ -190,15 +181,15 @@ const LPO = () => {
                   <div className="row">
                     <div className="col-md-6 mb-3">
                       <label className="form-label fw-medium text-dark lpo-label">
-                        <i className="fas fa-paw me-1"></i>Pet ID <span className="text-danger">*</span>
+                        <i className="fas fa-phone me-1"></i>Phone Number <span className="text-danger">*</span>
                       </label>
                       <input
-                        type="text"
-                        name="pet_id"
-                        value={formData.pet_id}
+                        type="tel"
+                        name="phone_number"
+                        value={formData.phone_number}
                         onChange={handleInputChange}
                         className="form-control lpo-input"
-                        placeholder="Enter Pet ID"
+                        placeholder="Enter phone number"
                         required
                       />
                     </div>
@@ -304,7 +295,6 @@ const LPO = () => {
         </div>
         {showModal && <div className="modal-backdrop fade show"></div>}
 
-        {/* LPO List */}
         <div className="row">
           <div className="col-12">
             <div className="card lpo-card">
@@ -331,7 +321,7 @@ const LPO = () => {
                     <table className="table table-hover table-striped mb-0 lpo-table">
                       <thead className="table-light">
                         <tr>
-                          <th scope="col">Pet</th>
+                          <th scope="col">Phone Number</th>
                           <th scope="col">Diagnosis</th>
                           <th scope="col">Symptoms</th>
                           <th scope="col">Prescription</th>
@@ -343,7 +333,7 @@ const LPO = () => {
                         {lpos.map((lpo) => (
                           <tr key={lpo._id} className="lpo-table-row">
                             <td className="align-middle">
-                              <i className="fas fa-paw me-1 text-info"></i>{lpo.pet_id.name}
+                              <i className="fas fa-phone me-1 text-info"></i>{lpo.phone_number}
                             </td>
                             <td className="align-middle">
                               <span className="text-dark lpo-text-truncate" title={lpo.diagnosis}>
