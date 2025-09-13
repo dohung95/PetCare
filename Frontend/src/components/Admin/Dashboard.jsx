@@ -3,33 +3,37 @@ import { Link } from "react-router-dom";
 import { Row, Col, Table, Button, Form, Collapse } from "react-bootstrap";
 import api from "../../api";
 import { useParams } from 'react-router-dom';
+import Sidebar from "./Sidebar";
+
+import AdminVetList from "./VetManager";
+
 // Sidebar (unchanged)
-const Sidebar = () => (
-  <div className="bg-dark text-white vh-100 p-3">
-    <h4 className="mb-4">
-      <Link to="/Dashboard" className="nav-link text-white">
-        🐾 Admin
-      </Link>
-    </h4>
-    <ul className="nav flex-column gap-2">
-      <li>
-        <Link to="/overview" className="nav-link text-white fw-bold">
-          📊 Overview
-        </Link>
-      </li>
-      <li>
-        <Link to="/adopPets" className="nav-link text-white">
-          🐶 Manage Pets
-        </Link>
-      </li>
-      <li>
-        <Link to="/adopRequest" className="nav-link text-white">
-          📑 Adoption Requests
-        </Link>
-      </li>
-    </ul>
-  </div>
-);
+// const Sidebar = () => (
+//   <div className="bg-dark text-white vh-100 p-3">
+//     <h4 className="mb-4">
+//       <Link to="/Dashboard" className="nav-link text-white">
+//         🐾 Admin
+//       </Link>
+//     </h4>
+//     <ul className="nav flex-column gap-2">
+//       <li>
+//         <Link to="/overview" className="nav-link text-white fw-bold">
+//           📊 Overview
+//         </Link>
+//       </li>
+//       <li>
+//         <Link to="/adopPets" className="nav-link text-white">
+//           🐶 Manage Pets
+//         </Link>
+//       </li>
+//       <li>
+//         <Link to="/adopRequest" className="nav-link text-white">
+//           📑 Adoption Requests
+//         </Link>
+//       </li>
+//     </ul>
+//   </div>
+// );
 
 // StatsCard (unchanged)
 const StatsCard = ({ title, value, variant }) => (
@@ -213,32 +217,32 @@ const Dashboard = () => {
   };
 
   const handleAddLog = async (petId, newLog) => {
-  if (!petId || !newLog) {
-    console.warn("Thiếu petId hoặc newLog");
-    return;
-  }
+    if (!petId || !newLog) {
+      console.warn("Thiếu petId hoặc newLog");
+      return;
+    }
 
-  // Tạo một đối tượng mới chỉ với các trường cần thiết
-  const sanitizedLog = {
-    type: newLog.type,
-    details: newLog.details,
-    time: newLog.time,
+    // Tạo một đối tượng mới chỉ với các trường cần thiết
+    const sanitizedLog = {
+      type: newLog.type,
+      details: newLog.details,
+      time: newLog.time,
+    };
+
+    try {
+      // Đặt console.log tại đây để kiểm tra đối tượng đã được làm sạch
+      console.log("Sending sanitized log:", sanitizedLog);
+
+      const res = await api.post(`/shelter-pets/${petId}/logs`, sanitizedLog);
+
+      setCareLogs((prevLogs) => ({
+        ...prevLogs,
+        [petId]: [...(prevLogs[petId] || []), res.data],
+      }));
+    } catch (err) {
+      console.error("Lỗi thêm log:", err);
+    }
   };
-
-  try {
-    // Đặt console.log tại đây để kiểm tra đối tượng đã được làm sạch
-    console.log("Sending sanitized log:", sanitizedLog);
-
-    const res = await api.post(`/shelter-pets/${petId}/logs`, sanitizedLog);
-
-    setCareLogs((prevLogs) => ({
-      ...prevLogs,
-      [petId]: [...(prevLogs[petId] || []), res.data],
-    }));
-  } catch (err) {
-    console.error("Lỗi thêm log:", err);
-  }
-};
 
 
   const handleUpdateLog = (petId, index, updatedLog) => {
