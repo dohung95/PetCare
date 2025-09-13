@@ -1,0 +1,224 @@
+/* Title chính */
+.HealthRecord .health-title {
+  color: #4B5EAA; /* Giữ màu gốc cho consistency */
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.HealthRecord .health-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #4B5EAA, #2A7F62);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Cards */
+.HealthRecord .health-form-card {
+  border: none !important;
+  border-radius: 15px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid #4B5EAA !important; /* Giữ border gốc */
+}
+
+.HealthRecord .health-form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+}
+
+.HealthRecord .health-table-card {
+  border: none !important;
+  border-radius: 15px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%) !important;
+  overflow: hidden;
+}
+
+/* Card titles */
+.HealthRecord .health-card-title {
+  color: #2A7F62;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Labels và Inputs */
+.HealthRecord .health-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.HealthRecord .health-input,
+.HealthRecord .health-treatment-input {
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  padding: 12px 15px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.HealthRecord .health-treatment-input {
+  width: 100%; /* Đảm bảo full width cho treatment */
+}
+
+.HealthRecord .health-input:focus {
+  border-color: #4B5EAA;
+  box-shadow: 0 0 0 0.2rem rgba(75, 94, 170, 0.25);
+  outline: none;
+}
+
+/* Alert */
+.HealthRecord .health-alert {
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons */
+.HealthRecord .health-button,
+.HealthRecord .health-action-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 24px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.HealthRecord .health-button-add {
+  background-color: #2A7F62 !important;
+  color: white !important;
+}
+
+.HealthRecord .health-button-add:hover {
+  background-color: #1e5c48 !important;
+  transform: translateY(-2px);
+}
+
+.HealthRecord .health-button-cancel,
+.HealthRecord .health-action-btn {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.HealthRecord .health-button-cancel:hover,
+.HealthRecord .health-action-btn:hover {
+  background-color: #545b62 !important;
+  transform: translateY(-1px);
+}
+
+.HealthRecord .health-action-btn.btn-warning {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.HealthRecord .health-action-btn.btn-warning:hover {
+  background-color: #e0a800 !important;
+}
+
+.HealthRecord .health-action-btn.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: white !important;
+}
+
+.HealthRecord .health-action-btn.btn-danger:hover {
+  background-color: #c82333 !important;
+}
+
+/* Table */
+.HealthRecord .health-table {
+  margin-bottom: 0;
+}
+
+.HealthRecord .health-table-row {
+  transition: background-color 0.2s ease;
+}
+
+.HealthRecord .health-table-row:hover {
+  background-color: rgba(42, 127, 98, 0.05);
+}
+
+.HealthRecord .health-text-truncate {
+  max-width: 150px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Empty state */
+.HealthRecord .health-empty-state {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animation fade-in cho cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.HealthRecord .health-form-card,
+.HealthRecord .health-table-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .HealthRecord .health-form-card,
+  .HealthRecord .health-table-card {
+    margin: 0 10px;
+  }
+  
+  .HealthRecord .health-title {
+    font-size: 1.5rem;
+  }
+  
+  .HealthRecord .health-input,
+  .HealthRecord .health-button {
+    font-size: 16px; /* Tăng cho mobile touch */
+  }
+  
+  .HealthRecord .health-table th,
+  .HealthRecord .health-table td {
+    padding: 8px 4px;
+    font-size: 14px;
+  }
+  
+  .HealthRecord .health-action-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .HealthRecord .d-flex.gap-2 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
