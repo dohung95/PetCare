@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
+import { Link } from "react-router-dom";
 // Function to scroll to top
 const scrollToTop = () => {
   window.scrollTo({
@@ -71,7 +72,7 @@ const Home = () => {
               border: "none",
             }}
           >
-            Appointment
+            <Link to="/profile_owner" className="text-white text-decoration-none text-bold text-uppercase">Appointment now</Link>            
           </button>
         </div>
       </section>

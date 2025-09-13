@@ -1,6 +1,7 @@
 import "../Css/Auth_forgotpw.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../api";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ export default function ForgotPassword() {
     setTimeout(() => setShake(false), 500);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -27,9 +28,15 @@ export default function ForgotPassword() {
       return;
     }
 
-    // Mock success (sau này gắn API)
-    setSuccess("If this email exists, we have sent you a reset link!");
+    try {
+      const res = await api.post("/auth/forgot-password", { email });
+      setSuccess(res.data.message || "If this email exists, we have sent you a reset link!");
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong, please try again.");
+      bounce();
+    }
   };
+
 
   return (
     <div className="fp-wrap">

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./Css/contact.css";
 import ContactReviewForm from "./ContactReviewForm";
 
 function Contact() {
+    useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   return (
     <section className="contact_page">
       <div className="contact-card">

@@ -1,7 +1,11 @@
 import React from 'react';
 import "./Css/About.css";
+import { useEffect } from 'react';
 
 function About() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   return (
     <div className="about_page bg-gray-100 py-10">
       <div className="container mx-auto px-4">
@@ -14,10 +18,10 @@ function About() {
               <strong>PetCare - Where the Love for Pets Flourishes!</strong>
             </p>
             <p className="text-lg mb-4">
-              Are you looking for a trustworthy place to entrust your "four-legged friend"? Welcome to PetCare, a comprehensive pet care website with a mission to provide the best for the special members of your family. We are proud to be a one-stop destination that meets all your pet's needs, from veterinary care and pet supplies to protection services.
+              Are you looking for a trustworthy place to entrust your "four-legged friend"? Welcome to PetCare, a comprehensive PetCare website with a mission to provide the best for the special members of your family. We are proud to be a one-stop destination that meets all your pet's needs, from veterinary care and pet supplies to protection services.
             </p>
             <p className="text-lg mb-4">
-              Our story began five years ago when our founder, a passionate pet lover, noticed the lack of reliable pet care services in the community. Inspired by her own rescued dog, she built PetCare to offer top-notch veterinary care, premium pet products, and a safe haven for pets—turning a personal mission into a thriving business.
+              Our story began five years ago when our founder, a passionate pet lover, noticed the lack of reliable PetCare services in the community. Inspired by her own rescued dog, she built PetCare to offer top-notch veterinary care, premium pet products, and a safe haven for pets—turning a personal mission into a thriving business.
             </p>
           </div>
 
@@ -26,7 +30,7 @@ function About() {
               At PetCare's professional veterinary service, our team of experienced and dedicated doctors is always ready to examine, treat, and fully vaccinate your pets, ensuring they stay healthy. Meet our team: Dr. Jane Doe, our lead veterinarian with over 10 years of experience specializing in canine health; Dr. Mark Lee, an expert in feline care with 8 years in the field; and our support staff, trained in animal behavior and welfare, ensuring every pet receives personalized attention.
             </p>
             <p className="text-lg mb-4">
-              We also offer animal protection services with a safe, clean living environment, helping your pets feel comfortable and loved while you are away. Our facility holds a certification from the National Pet Care Association for maintaining the highest standards of hygiene and care, and we were recently awarded the "Best Pet Protection Service 2024" by Pet Lovers Magazine.
+              We also offer animal protection services with a safe, clean living environment, helping your pets feel comfortable and loved while you are away. Our facility holds a certification from the National PetCare Association for maintaining the highest standards of hygiene and care, and we were recently awarded the "Best Pet Protection Service 2024" by Pet Lovers Magazine.
             </p>
             <p className="text-lg mb-4">
               What's more, PetCare's online store is a shopping paradise with thousands of high-quality products. From nutritious food and fun toys to fashionable clothes and accessories, everything is carefully selected from reputable brands. Let PetCare accompany you on your journey of caring for and loving your pets, making every day of their lives happier and more complete.
@@ -38,7 +42,7 @@ function About() {
         <div className='about-col about-story mb-8'>
           <h3 className="text-2xl font-semibold mb-4">Our Story</h3>
           <p className="text-lg mb-4">
-            Our journey at PetCare began five years ago with a heartfelt story. It all started when our founder, Hoai Thu, rescued a stray cat named Bong from the streets. Malnourished and abandoned, Bong's recovery inspired Thu to dedicate her life to helping pets in need. With her love for animals and a vision to create a safe haven, she founded PetCare in 2020. What began as a small clinic has grown into a comprehensive pet care hub, offering veterinary services, protection facilities, and a thriving online store. Every step of the way, Bong's wagging tail reminds us of our mission: to turn every pet’s life into a story of love and happiness. At PetCare, we don’t just care for pets—we build families.
+            Our journey at PetCare began five years ago with a heartfelt story. It all started when our founder, Hoai Thu, rescued a stray cat named Bong from the streets. Malnourished and abandoned, Bong's recovery inspired Thu to dedicate her life to helping pets in need. With her love for animals and a vision to create a safe haven, she founded PetCare in 2020. What began as a small clinic has grown into a comprehensive PetCare hub, offering veterinary services, protection facilities, and a thriving online store. Every step of the way, Bong's wagging tail reminds us of our mission: to turn every pet’s life into a story of love and happiness. At PetCare, we don’t just care for pets—we build families.
           </p>
         </div>
 
@@ -52,7 +56,7 @@ function About() {
                 src="./imgs/avarta/dat.jpg"
                 alt="Lê Quốc Đạt"
               />
-              <h4>Lê Quốc Đạt</h4>
+              <h4>Le Quoc Dat</h4>
               <p>Admin – 3 years exp.</p>
               <p className="rating">★★★★★ (5.0)</p>
               <p className="italic">"Ensuring smooth operations."</p>
@@ -63,7 +67,7 @@ function About() {
                 src="./imgs/avarta/hung.jpg"
                 alt="Đỗ Thanh HÙng"
               />
-              <h4>Đỗ Thanh Hùng</h4>
+              <h4>Do Thanh Hung</h4>
               <p>Admin – 2 years exp.</p>
               <p className="rating">★★★★ (4.7)</p>
               <p className="italic">"Organizing care with dedication."</p>
@@ -71,10 +75,10 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/vHuy.webp"
                 alt="Phù Vĩnh Huy"
               />
-              <h4>Phù Vĩnh Huy</h4>
+              <h4>Phu Vinh Huy</h4>
               <p>Shellter – 5 years exp.</p>
               <p className="rating">★★★★ (4.9)</p>
               <p className="italic">"Creating a safe haven for pets."</p>
@@ -83,10 +87,10 @@ function About() {
             {/* Hàng 2 */}
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/gia_huy.jpg"
                 alt="Lê Nguyễn Gia Huy"
               />
-              <h4>Lê NguyễnGia Huy</h4>
+              <h4>Le Nguyen Gia Huy</h4>
               <p>Shellter – 4 years exp.</p>
               <p className="rating">★★★★ (4.6)</p>
               <p className="italic">"Love and care in every shelter."</p>
@@ -94,10 +98,10 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/nhan.webp"
                 alt="Nguyễn Minh Nhân"
               />
-              <h4>Nguyễn Minh Nhân</h4>
+              <h4>Nguyen Minh Nhan</h4>
               <p>Veterinarian – 6 years exp.</p>
               <p className="rating">★★★★★ (5.0)</p>
               <p className="italic">"Healing pets with gentle hands."</p>
@@ -105,10 +109,10 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/thu.webp"
                 alt="Vũ Thị Hoài Thu"
               />
-              <h4>Vũ Thị Hoài Thu</h4>
+              <h4>Vu Thi Hoai Thu</h4>
               <p>Veterinarian – 7 years exp.</p>
               <p className="rating">★★★★ (4.8)</p>
               <p className="italic">"Dedicated to animal wellness."</p>
@@ -142,8 +146,8 @@ function About() {
                 <p><strong>Expert Care</strong>: Our team of highly skilled veterinarians and protectors brings years of experience to ensure your pet’s health and happiness.</p>
                 <p><strong>Comprehensive Services</strong>: From veterinary treatments and protection facilities to a wide range of premium pet products, we cover all your pet’s needs under one roof.</p>
                 <p><strong>Personalized Attention</strong>: We tailor our services to meet the unique needs of every pet and owner, ensuring a customized care experience.</p>
-                <p><strong>Convenience</strong>: Our online store and easy appointment booking make pet care accessible anytime, anywhere.</p>
-                <p><strong>Proven Results</strong>: With certifications and glowing customer reviews, we deliver consistent excellence in pet care.</p>
+                <p><strong>Convenience</strong>: Our online store and easy appointment booking make PetCare accessible anytime, anywhere.</p>
+                <p><strong>Proven Results</strong>: With certifications and glowing customer reviews, we deliver consistent excellence in PetCare.</p>
               </div>
               <p className="choose-us-conclusion mt-4">
                 Choose PetCare and experience the difference of a dedicated team committed to your pet’s well-being.
