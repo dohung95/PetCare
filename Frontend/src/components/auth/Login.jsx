@@ -52,8 +52,9 @@ export default function Login() {
         email: loginEmail,
         password: loginPassword,
       });
-      const { token, data } = res.data;
 
+      const { token, data } = res.data;
+    
       localStorage.setItem('token', token);
       localStorage.setItem('ownerId', data.id); 
       localStorage.setItem('ownerName', data.name || '');
@@ -69,6 +70,7 @@ export default function Login() {
         setLoginError(res.data.message || "Login failed");
         shake(setLoginShake);
       }
+
     } catch (err) {
       setLoginError(err.response?.data?.message || "Login failed");
       shake(setLoginShake);
@@ -123,6 +125,7 @@ export default function Login() {
         address: signupAddress,
       });
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.data.role);
       alert("Register successful!");
       setIsRightPanelActive(false); // tự động chuyển về form login
     } catch (err) {

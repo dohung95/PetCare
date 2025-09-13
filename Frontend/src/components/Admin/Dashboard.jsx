@@ -27,6 +27,9 @@ const Sidebar = () => (
       <li>
         <Link to="/adopRequest" className="nav-link text-white">📑 Adoption Requests</Link>
       </li>
+      <li>
+        <Link to="/adminproductlist" className="nav-link text-white">Manage Product</Link>
+      </li>
     </ul>
   </div>
 );

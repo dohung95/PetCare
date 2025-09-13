@@ -1,8 +1,8 @@
-const express = require('express');
-const { getOrders, getOrderById, createOrder, updateOrder, deleteOrder } = require('../controllers/OrderController');
+const express = require("express");
 const router = express.Router();
+const orderController = require("../controllers/OrderController");
 
-router.route('/').get(getOrders).post(createOrder);
-router.route('/:id').get(getOrderById).put(updateOrder).delete(deleteOrder);
+// Tạo order mới
+router.post("/", orderController.createOrder);
 
 module.exports = router;

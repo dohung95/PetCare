@@ -1,30 +1,44 @@
-import React from 'react';
+import React from "react";
 import "./Css/About.css";
-import { useEffect } from 'react';
 
 function About() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
   return (
     <div className="about_page bg-gray-100 py-10">
       <div className="container mx-auto px-4">
+        {/* Header */}
+        <h2 className="text-center text-3xl font-bold mb-4">About Us</h2>
+        <p className="lead text-center text-xl mb-6">
+          <strong>PetCare - Where the Love for Pets Flourishes!</strong>
+        </p>
+        <p className="text-lg mb-4">
+          Are you looking for a trustworthy place to entrust your "four-legged friend"? Welcome to PetCare, a comprehensive pet care website with a mission to provide the best for the special members of your family. We are proud to be a one-stop destination that meets all your pet's needs, from health care to providing daily essentials.
+        </p>
+        <p className="text-lg mb-4">
+          At PetCare's professional veterinary service, our team of experienced and dedicated doctors is always ready to examine, treat, and fully vaccinate your pets, ensuring they stay healthy. We also offer animal protection services with a safe, clean living environment, helping your pets feel comfortable and loved while you are away.
+        </p>
+        <p className="text-lg mb-4">
+          What's more, PetCare's online store is a shopping paradise with thousands of high-quality products. From nutritious food and fun toys to fashionable clothes and accessories, everything is carefully selected from reputable brands. Let PetCare accompany you on your journey of caring for and loving your pets, making every day of their lives happier and more complete.
+        </p>
+        <p className="fw-bold text-center text-lg">
+          Our mission: <em>“Healthy Pets, Happy Families.”</em>
+        </p>
 
-        {/* about content */}
+        {/* About Content */}
         <div className="about-grid mb-8">
           <div className="about-col">
             <h3 className="text-2xl font-semibold mb-4">About Us</h3>
+
             <p className="lead text-center text-xl mb-6">
               <strong>FurShield - Where the Love for Pets Flourishes!</strong>
             </p>
             <p className="text-lg mb-4">
               Are you looking for a trustworthy place to entrust your "four-legged friend"? Welcome to FurShield, a comprehensive FurShield website with a mission to provide the best for the special members of your family. We are proud to be a one-stop destination that meets all your pet's needs, from veterinary care and pet supplies to protection services.
             </p>
+
             <p className="text-lg mb-4">
               Our story began five years ago when our founder, a passionate pet lover, noticed the lack of reliable FurShield services in the community. Inspired by her own rescued dog, she built FurShield to offer top-notch veterinary care, premium pet products, and a safe haven for pets—turning a personal mission into a thriving business.
             </p>
           </div>
-
           <div className="about-col">
             <p className="text-lg mb-4">
               At FurShield's professional veterinary service, our team of experienced and dedicated doctors is always ready to examine, treat, and fully vaccinate your pets, ensuring they stay healthy. Meet our team: Dr. Jane Doe, our lead veterinarian with over 10 years of experience specializing in canine health; Dr. Mark Lee, an expert in feline care with 8 years in the field; and our support staff, trained in animal behavior and welfare, ensuring every pet receives personalized attention.
@@ -34,12 +48,13 @@ function About() {
             </p>
             <p className="text-lg mb-4">
               What's more, FurShield's online store is a shopping paradise with thousands of high-quality products. From nutritious food and fun toys to fashionable clothes and accessories, everything is carefully selected from reputable brands. Let FurShield accompany you on your journey of caring for and loving your pets, making every day of their lives happier and more complete.
+
             </p>
           </div>
         </div>
 
-        {/* story */}
-        <div className='about-col about-story mb-8'>
+        {/* Our Story */}
+        <div className="about-col about-story mb-8">
           <h3 className="text-2xl font-semibold mb-4">Our Story</h3>
           <p className="text-lg mb-4">
             Our journey at FurShield began five years ago with a heartfelt story. It all started when our founder, Hoai Thu, rescued a stray cat named Bong from the streets. Malnourished and abandoned, Bong's recovery inspired Thu to dedicate her life to helping pets in need. With her love for animals and a vision to create a safe haven, she founded FurShield in 2020. What began as a small clinic has grown into a comprehensive FurShield hub, offering veterinary services, protection facilities, and a thriving online store. Every step of the way, Bong's wagging tail reminds us of our mission: to turn every pet’s life into a story of love and happiness. At FurShield, we don’t just care for pets—we build families.
@@ -50,21 +65,16 @@ function About() {
         <div className="team-section mb-8">
           <h3 className="text-2xl font-semibold mb-4">Meet Our Team</h3>
           <div className="team-grid">
-            {/* Hàng 1 */}
             <div className="team-card">
-              <img
-                src="./imgs/avarta/dat.jpg"
-                alt="Lê Quốc Đạt"
-              />
+              <img src="./imgs/avarta/dat.jpg" alt="Lê Quốc Đạt" />
               <h4>Lê Quốc Đạt</h4>
               <p>Admin – 3 years exp.</p>
               <p className="rating">★★★★★ (5.0)</p>
               <p className="italic">"Ensuring smooth operations."</p>
             </div>
-
             <div className="team-card">
               <img
-                src="./imgs/avarta/hung.jpg"
+                src=""
                 alt="Đỗ Thanh HÙng"
               />
               <h4>Đỗ Thanh Hùng</h4>
@@ -72,46 +82,29 @@ function About() {
               <p className="rating">★★★★ (4.7)</p>
               <p className="italic">"Organizing care with dedication."</p>
             </div>
-
             <div className="team-card">
-              <img
-                src="./imgs/avarta/vHuy.webp"
-                alt="Phù Vĩnh Huy"
-              />
+              <img src="/imgs/placeholder.jpg" alt="Phù Vĩnh Huy" />
               <h4>Phù Vĩnh Huy</h4>
-              <p>Shellter – 5 years exp.</p>
+              <p>Shelter – 5 years exp.</p>
               <p className="rating">★★★★ (4.9)</p>
               <p className="italic">"Creating a safe haven for pets."</p>
             </div>
-
-            {/* Hàng 2 */}
             <div className="team-card">
-              <img
-                src="./imgs/avarta/gia_huy.jpg"
-                alt="Lê Nguyễn Gia Huy"
-              />
-              <h4>Lê NguyễnGia Huy</h4>
-              <p>Shellter – 4 years exp.</p>
+              <img src="/imgs/placeholder.jpg" alt="Lê Nguyễn Gia Huy" />
+              <h4>Lê Nguyễn Gia Huy</h4>
+              <p>Shelter – 4 years exp.</p>
               <p className="rating">★★★★ (4.6)</p>
               <p className="italic">"Love and care in every shelter."</p>
             </div>
-
             <div className="team-card">
-              <img
-                src="./imgs/avarta/nhan.webp"
-                alt="Nguyễn Minh Nhân"
-              />
+              <img src="/imgs/placeholder.jpg" alt="Nguyễn Minh Nhân" />
               <h4>Nguyễn Minh Nhân</h4>
               <p>Veterinarian – 6 years exp.</p>
               <p className="rating">★★★★★ (5.0)</p>
               <p className="italic">"Healing pets with gentle hands."</p>
             </div>
-
             <div className="team-card">
-              <img
-                src="./imgs/avarta/thu.webp"
-                alt="Vũ Thị Hoài Thu"
-              />
+              <img src="/imgs/placeholder.jpg" alt="Vũ Thị Hoài Thu" />
               <h4>Vũ Thị Hoài Thu</h4>
               <p>Veterinarian – 7 years exp.</p>
               <p className="rating">★★★★ (4.8)</p>
@@ -121,8 +114,7 @@ function About() {
         </div>
 
         {/* Core Values & Why Choose Us */}
-        <div className='about-core-why-section'>
-          {/* Core Values */}
+        <div className="about-core-why-section">
           <div className="about-col">
             <h3 className="text-2xl font-semibold mb-4">Our Core Values</h3>
             <div className="core-values-section">
@@ -137,8 +129,6 @@ function About() {
               </p>
             </div>
           </div>
-
-          {/* Why Choose Us */}
           <div className="about-col">
             <h3 className="text-2xl font-semibold mb-4">Why Choose Us?</h3>
             <div className="why-choose-us-section">
@@ -157,8 +147,9 @@ function About() {
         </div>
 
         {/* Testimonials */}
-        <div>
+        <div className="testimonials-section mb-8">
           <h3 className="text-2xl font-semibold mb-4">Testimonials</h3>
+
           <div className="testimonials-section">
             <div className="testimonials-list">
               <p>"FurShield saved my dog’s life with their expert care! Dr. Jane was amazing and so compassionate." - Sarah K.</p>

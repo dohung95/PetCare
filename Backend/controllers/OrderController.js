@@ -1,58 +1,58 @@
-const Order = require('../models/Order');
-
-exports.getOrders = async (req, res) => {
-  try {
-    const Orders = await Order.find();
-    res.status(200).json({success: true, data: Orders});
-
-  } catch (error) {
-    res.status(500).json({success: false, message: error.message});
-  }
-};
-
-exports.getOrderById = async (req, res) => {
-  try {
-    const Order = await Order.findById(req.params.id);
-    if (!Order){
-      return res.status(404).json({success: true, data: Order})
-    }
-  } catch (error) {
-    res.status(500).json({success: false, message: error.message}); 
-  }
-};
+// controllers/OrderController.js
+const Order = require("../models/Order");
+const OrderItem = require("../models/OrderItem");
+const Product = require("../models/Product");
 
 exports.createOrder = async (req, res) => {
   try {
-    const newOrder = await Order.create(req.body);
-    res.status(201).json({ success: true, data: newOrder });
-  } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
-  }
-};
+    const { owner_id, items } = req.body;
 
-exports.updateOrder = async (req, res) => {
-  try {
-    const updatedOrder = await Owner.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
+    if (!owner_id || !items || items.length === 0) {
+      return res.status(400).json({ message: "Thiếu owner_id hoặc items" });
+    }
+
+    // Tính tổng tiền
+    let totalAmount = 0;
+
+    const orderItems = await Promise.all(
+      items.map(async (item) => {
+        const product = await Product.findById(item.product_id);
+        if (!product) throw new Error("Sản phẩm không tồn tại");
+
+        if (product.stock_quantity < item.quantity) {
+          throw new Error(`Sản phẩm ${product.name} không đủ số lượng`);
+        }
+
+        // Trừ stock
+        product.stock_quantity -= item.quantity;
+        await product.save();
+
+        const priceEach = item.price_each || product.price;
+        totalAmount += priceEach * item.quantity;
+
+        return {
+          product_id: product._id,
+          quantity: item.quantity,
+          price_each: priceEach,
+        };
+      })
+    );
+
+    // Tạo đơn hàng
+    const order = new Order({
+      owner_id,
+      items: orderItems,
+      total_amount: totalAmount,
     });
-    if (!updatedOrder) {
-      return res.status(404).json({ success: false, message: 'Order not found' });
-    }
-    res.status(200).json({ success: true, data: updatedOrder });
-  } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
-  }
-};
 
-exports.deleteOrder = async (req, res) => {
-  try {
-    const deletedOrder = await Owner.findByIdAndDelete(req.params.id);
-    if (!deletedOrder) {
-      return res.status(404).json({ success: false, message: 'Owner not found' });
-    }
-    res.status(200).json({ success: true, message: 'Order deleted successfully' });
+    await order.save();
+
+    res.status(201).json({
+      message: "Order placed successfully!",
+      orderId: order._id,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Failed to place order!", error);
+    res.status(500).json({ message: "Server error", error });
   }
 };

@@ -20,12 +20,3 @@ footer {
 }
 
 
-:root { --nav-h: 72px; }          /* sẽ được Navbar override tự động */
-@media (max-width: 768px) { :root { --nav-h: 64px; } }
-
-html, body, #root { height: 100%; }
-.layout { min-height: 100vh; display: flex; flex-direction: column; }
-.page-content { flex: 1; }
-
-/* Trang không phải Home/Adoption sẽ được đẩy xuống */
-.page-content.with-offset { padding-top: var(--nav-h); }

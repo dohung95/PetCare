@@ -4,7 +4,7 @@ import VeterinarianRegistration from './Veterinarian_Registration';
 function Job() {
   return (
     <div >
-      <div >
+      <div>
         <VeterinarianRegistration/>
       </div>
     </div>

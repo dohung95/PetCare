@@ -11,15 +11,16 @@ const UserProfile = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // formData mở rộng
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: '',
     email: '',
-    gender: '',
-    dob: '',
-    avatarUrl: '',
-    emergencyPhone: ''
+    gender: '',          // NEW
+    dob: '',             // NEW (yyyy-mm-dd)
+    avatarUrl: '',       // NEW
+    emergencyPhone: ''   // NEW
   });
 
   useEffect(() => {
@@ -37,8 +38,9 @@ const UserProfile = () => {
           email: u.email || '',
           address: u.address || '',
           role: u.role || '',
-          gender: u.gender || '',
-          dob: u.dob ? String(u.dob).slice(0,10) : '',
+          // optional fields
+          gender: u.gender || '',                 // 'Male' | 'Female' | ...
+          dob: u.dob ? String(u.dob).slice(0,10) : '',  // ISO -> yyyy-mm-dd
           avatarUrl: u.avatarUrl || u.avatar || '',
           emergencyPhone: u.emergencyPhone || '',
           createdAt: u.createdAt || '',
@@ -58,6 +60,7 @@ const UserProfile = () => {
           emergencyPhone: normalized.emergencyPhone
         });
 
+        // đồng bộ localStorage (nếu bạn thích dùng lại)
         localStorage.setItem('ownerId', normalized.id);
         localStorage.setItem('ownerName', normalized.name);
         localStorage.setItem('ownerPhone', normalized.phone);
@@ -78,6 +81,7 @@ const UserProfile = () => {
     if (!user?.id) { setError('User id not found.'); return; }
     setError(''); setSuccess('');
 
+    // chỉ gửi các trường có trong formData (backend không có sẽ bỏ qua/ignore)
     const payload = {
       name: formData.name,
       phone: formData.phone,
@@ -90,6 +94,7 @@ const UserProfile = () => {
     };
 
     try {
+      // nếu có route owners/:id thì dùng; nếu không, fallback /user/profile
       let response;
       try {
         response = await api.put(`/owners/${user.id}`, payload);
@@ -126,6 +131,7 @@ const UserProfile = () => {
       setEditMode(false);
       setSuccess('Profile updated successfully');
 
+      // update localStorage
       localStorage.setItem('ownerName', normalized.name);
       localStorage.setItem('ownerPhone', normalized.phone);
       localStorage.setItem('ownerEmail', normalized.email);
@@ -156,16 +162,17 @@ const UserProfile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <Container className="user-profile profile-container">
+    <Container className="profile-container">
       <Row className="justify-content-center">
         <Col md={8}>
-          <Card className="user-profile profile-card">
-            <Card.Header as="h3" className="user-profile card-header text-center" style={{color: 'white' }}>
+          <Card className="profile-card">
+            <Card.Header as="h3" className="text-center" style={{color: 'white' }}>
               User Profile
             </Card.Header>
 
-            <Card.Body className="user-profile card-body">
-              <div className="user-profile d-flex align-items-center mb-3">
+            {/* Avatar + Basic info */}
+            <Card.Body>
+              <div className="d-flex align-items-center mb-3">
                 { (formData.avatarUrl || user.avatarUrl) ? (
                   <Image
                     src={formData.avatarUrl || user.avatarUrl}
@@ -174,72 +181,74 @@ const UserProfile = () => {
                     onError={(e) => { e.currentTarget.style.display='none'; }}
                   />
                 ) : (
-                  <div className="user-profile rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3"
+                  <div className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3"
                        style={{ width:72, height:72, fontWeight:700 }}>
                     { (user.name || 'U').slice(0,1).toUpperCase() }
                   </div>
                 )}
                 <div>
                   <div style={{ fontSize:18, fontWeight:700, color: 'white' }}>{user.name}</div>
-                  <div className="user-profile text-muted">{user.email}</div>
+                  <div className="text-muted">{user.email}</div>
                 </div>
               </div>
 
-              {error && <Alert variant="danger" className="user-profile alert">{error}</Alert>}
-              {success && <Alert variant="success" className="user-profile alert">{success}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
+              {success && <Alert variant="success">{success}</Alert>}
 
-              <Form className="user-profile profile-form-grid">
-                <Form.Group controlId="formName" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Name</Form.Label>
+              <Form className="profile-form-grid">
+                <Form.Group controlId="formName" className="mb-3">
+                  <Form.Label>Name</Form.Label>
                   <Form.Control type="text" name="name" value={formData.name}
-                    onChange={handleChange} disabled={!editMode} required minLength={2} className="user-profile form-control" />
+                    onChange={handleChange} disabled={!editMode} required minLength={2} />
                 </Form.Group>
 
-                <Form.Group controlId="formEmail" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Email</Form.Label>
+                <Form.Group controlId="formEmail" className="mb-3">
+                  <Form.Label>Email</Form.Label>
                   <Form.Control type="email" name="email" value={formData.email}
-                    onChange={handleChange} disabled={!editMode || user.role === 'admin'} required className="user-profile form-control" />
+                    onChange={handleChange} disabled={!editMode || user.role === 'admin'} required />
                 </Form.Group>
 
-                <Form.Group controlId="formPhone" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Phone</Form.Label>
+                <Form.Group controlId="formPhone" className="mb-3">
+                  <Form.Label>Phone</Form.Label>
                   <Form.Control type="text" name="phone" value={formData.phone}
-                    onChange={handleChange} disabled={!editMode} required pattern="^\+?\d{8,15}$" className="user-profile form-control" />
+                    onChange={handleChange} disabled={!editMode} required pattern="^\+?\d{8,15}$" />
                 </Form.Group>
 
-                <Form.Group controlId="formAddress" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Address</Form.Label>
+                <Form.Group controlId="formAddress" className="mb-3">
+                  <Form.Label>Address</Form.Label>
                   <Form.Control as="textarea" name="address" value={formData.address}
-                    onChange={handleChange} disabled={!editMode} required className="user-profile form-control" />
+                    onChange={handleChange} disabled={!editMode} required />
                 </Form.Group>
 
+                {/* NEW: optional editable fields */}
                 <Row>
                   <Col>
-                    <Form.Group controlId="formDob" className="user-profile mb-3">
-                      <Form.Label className="user-profile form-label">Date of Birth</Form.Label>
+                    <Form.Group controlId="formDob" className="mb-3">
+                      <Form.Label>Date of Birth</Form.Label>
                       <Form.Control type="date" name="dob" value={formData.dob}
-                        onChange={handleChange} disabled={!editMode} className="user-profile form-control" />
+                        onChange={handleChange} disabled={!editMode} />
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <Row className="user-profile mb-3">
+                {/* Read-only system info */}
+                <Row className="mb-3">
                   <Col>
-                    <Form.Group controlId="formRole" className="user-profile">
-                      <Form.Label className="user-profile form-label">Role</Form.Label>
-                      <Form.Control type="text" value={user.role || ''} disabled className="user-profile form-control" />
+                    <Form.Group controlId="formRole">
+                      <Form.Label>Role</Form.Label>
+                      <Form.Control type="text" value={user.role || ''} disabled />
                     </Form.Group>
                   </Col>
                 </Row>
 
-                <div className="user-profile text-center">
+                <div className="text-center">
                   {editMode ? (
                     <>
-                      <Button variant="success" onClick={handleSave} className="user-profile btn me-2">Save</Button>
-                      <Button variant="secondary" onClick={handleCancel} className="user-profile btn">Cancel</Button>
+                      <Button variant="success" onClick={handleSave} className="me-2">Save</Button>
+                      <Button variant="secondary" onClick={handleCancel}>Cancel</Button>
                     </>
                   ) : (
-                    <Button variant="primary" onClick={() => { setEditMode(true); setError(''); setSuccess(''); }} className="user-profile btn">
+                    <Button variant="primary" onClick={() => { setEditMode(true); setError(''); setSuccess(''); }}>
                       Edit Profile
                     </Button>
                   )}

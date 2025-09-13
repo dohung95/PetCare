@@ -10,9 +10,11 @@ exports.verifyToken = (req, res, next) => {
 
   try {
     const payload = jwt.verify(parts[1], process.env.JWT_SECRET, { algorithms: ['HS256'] });
+    console.log('Payload từ token:', payload); // Xem payload chứa gì
     req.user = payload; // { sub, role, iat, exp }
     next();
   } catch (err) {
+    console.error('Token verification error:', err);
     return res.status(401).json({ success: false, message: 'Invalid or expired token' });
   }
 };
