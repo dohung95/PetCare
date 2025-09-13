@@ -4,6 +4,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import PetCard from "../components/adop/PetCard";
 import axios from "axios";
 
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
+const Home = () => {
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+};
+
 const AdoptionPage = () => {
   const navigate = useNavigate();
   const [initialPets, setInitialPets] = useState([]);
@@ -66,7 +79,7 @@ const AdoptionPage = () => {
         style={{ width: "100%", minHeight: "150px", maxHeight: "250px", objectFit: "cover" }}
       />
 
-      {/* Bộ lọc */}
+      {/* Filter section */}
       <motion.div
         className="container py-5"
         initial={{ opacity: 0, y: 50 }}
@@ -75,13 +88,13 @@ const AdoptionPage = () => {
         transition={{ duration: 0.6 }}
       >
         <h2 className="text-center mb-4 fw-bold text-dark">
-          TÌM THÚ CƯNG
+          FIND YOUR PET
           <div style={{ fontSize: "1.2rem", color: "#3ec6e0" }}>
             <img src="/imgs/pet_foot.jpg" alt="Pet foot" style={{ width: 30, height: 30 }} />
           </div>
         </h2>
 
-        {/* Nút chọn loại */}
+        {/* Type buttons */}
         <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap">
           {["all", "dog", "cat", "other"].map((type) => (
             <button
@@ -97,93 +110,93 @@ const AdoptionPage = () => {
               style={{ minWidth: "90px", border: "none" }}
               onClick={() => handleTypeClick(type)}
             >
-              {type === "all" ? "Tất cả" : type === "dog" ? "Chó" : type === "cat" ? "Mèo" : "Khác"}
+              {type === "all" ? "All" : type === "dog" ? "Dog" : type === "cat" ? "Cat" : "Other"}
             </button>
           ))}
         </div>
 
-        {/* Form lọc */}
+        {/* Filter form */}
         <form onSubmit={handleSearch} className="row g-3 mb-5">
-          {/* Giới tính */}
+          {/* Gender */}
           <div className="col-md-4">
-            <label className="form-label fw-bold">Giới tính</label>
+            <label className="form-label fw-bold">Gender</label>
             <select
               className="form-select border border-danger"
               name="gender"
               value={filters.gender}
               onChange={handleChange}
             >
-              <option value="all">Tất cả</option>
-              <option value="male">Đực</option>
-              <option value="female">Cái</option>
+              <option value="all">All</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </div>
-          {/* Độ tuổi */}
+          {/* Age */}
           <div className="col-md-4">
-            <label className="form-label fw-bold">Độ tuổi</label>
+            <label className="form-label fw-bold">Age</label>
             <select
               className="form-select border border-danger"
               name="age"
               value={filters.age}
               onChange={handleChange}
             >
-              <option value="all">Tất cả</option>
-              <option value="puppy">Dưới 1 tuổi</option>
-              <option value="young">1-3 tuổi</option>
-              <option value="adult">Trên 3 tuổi</option>
+              <option value="all">All</option>
+              <option value="puppy">Under 1 year</option>
+              <option value="young">1-3 years</option>
+              <option value="adult">Over 3 years</option>
             </select>
           </div>
-          {/* Triệt sản */}
+          {/* Neutered */}
           <div className="col-md-4">
-            <label className="form-label fw-bold">Triệt sản</label>
+            <label className="form-label fw-bold">Neutered</label>
             <select
               className="form-select border border-danger"
               name="neutered"
               value={filters.neutered}
               onChange={handleChange}
             >
-              <option value="all">Tất cả</option>
-              <option value="yes">Đã triệt sản</option>
-              <option value="no">Chưa triệt sản</option>
+              <option value="all">All</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
             </select>
           </div>
-          {/* Màu */}
+          {/* Color */}
           <div className="col-md-4">
-            <label className="form-label fw-bold">Màu</label>
+            <label className="form-label fw-bold">Color</label>
             <select
               className="form-select border border-danger"
               name="color"
               value={filters.color}
               onChange={handleChange}
             >
-              <option value="all">Tất cả</option>
-              <option value="white">Trắng</option>
-              <option value="black">Đen</option>
-              <option value="brown">Nâu</option>
-              <option value="mixed">Pha trộn</option>
+              <option value="all">All</option>
+              <option value="white">White</option>
+              <option value="black">Black</option>
+              <option value="brown">Brown</option>
+              <option value="mixed">Mixed</option>
             </select>
           </div>
-          {/* Tên */}
+          {/* Name */}
           <div className="col-md-4">
-            <label className="form-label fw-bold">Tên</label>
+            <label className="form-label fw-bold">Name</label>
             <input
               type="text"
               className="form-control border border-danger"
-              placeholder="Nhập tên thú cưng..."
+              placeholder="Enter pet's name..."
               name="name"
               value={filters.name}
               onChange={handleChange}
             />
           </div>
-          {/* Nút tìm kiếm */}
+          {/* Search button */}
           <div className="col-md-4 d-flex align-items-end">
             <button type="submit" className="btn btn-danger w-100 rounded-pill fw-bold">
-              TÌM KIẾM
+              SEARCH
             </button>
           </div>
         </form>
 
-        {/* Danh sách thú cưng */}
+        {/* Pet list */}
         <motion.div
           className="row g-4"
           initial={{ opacity: 0, y: 50 }}
@@ -194,7 +207,7 @@ const AdoptionPage = () => {
           <AnimatePresence mode="sync">
             {loading ? (
               <div key="loading" className="text-center text-muted">
-                Đang tải dữ liệu...
+                Loading pets...
               </div>
             ) : error ? (
               <div key="error" className="text-center text-danger">
@@ -224,7 +237,7 @@ const AdoptionPage = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                Không tìm thấy thú cưng phù hợp.
+                No matching pets found.
               </motion.div>
             )}
           </AnimatePresence>

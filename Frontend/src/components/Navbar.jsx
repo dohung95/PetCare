@@ -78,8 +78,9 @@ const Navbar = () => {
         <div className="col-md-6">
           {/* Menu */}
         <div className="menu d-flex align-items-center">
-          <div className="menu-item">
-            <Link to="/" className="nav-link">Home</Link>
+          <div className="menu-item ">
+            <Link to="/" className="nav-link" >Home</Link>
+            
           </div>
           {/* Service dropdown */}
           <div

@@ -13,7 +13,6 @@ const scrollToTop = () => {
   });
 };
 
-
 const Home = () => {
    useEffect(() => {
     scrollToTop();

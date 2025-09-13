@@ -1,6 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
+const Home = () => {
+   useEffect(() => {
+    scrollToTop();
+  }, []); 
+}
+
 const PetCard = ({ pet }) => {
   // ✅ Hàm lấy URL đúng
   const getImageUrl = (img) => (img?.startsWith("http") ? img : `/${img}`);
