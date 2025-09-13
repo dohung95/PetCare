@@ -41,6 +41,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static("uploads"));
+app.use('/api/lpos', require('./routes/LPORoutes'));
+app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
+
 
 // --- Database Connection ---
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/PetCare';
@@ -66,6 +69,8 @@ app.use('/api/feedbacks', feedbackRouter);
 app.use('/api/lpos', LPO);
 
 app.use('/api/owners', require('./routes/owners.routes'));
+app.use('/api/owners_check',require('./routes/OwnerRoutes'));
+app.use('/api/pets', require('./routes/PetRoutes'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
