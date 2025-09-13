@@ -63,6 +63,8 @@ app.use('/api/shelter-pets', shelterPetRoutes);
 app.use('/api/feedbacks', feedbackRouter);
 app.use('/api/lpos', LPO);
 
+app.use('/api/owners', require('./routes/owners.routes'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
