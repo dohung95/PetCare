@@ -104,7 +104,7 @@ const VeterinarianRegistration = () => {
   };
 
   return (
-    <Container className="mt-4 Veterinarian_Registration">
+    <Container className="mt-4 Veterinarian_Registration" style={{paddingBottom: '3%' }}>
       <Card className="vet-card p-4">
         <Card.Body>
           <Row className="mb-4">

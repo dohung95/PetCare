@@ -1,7 +1,11 @@
 import React from 'react';
 import "./Css/About.css";
+import { useEffect } from 'react';
 
 function About() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   return (
     <div className="about_page bg-gray-100 py-10">
       <div className="container mx-auto px-4">
@@ -60,7 +64,7 @@ function About() {
 
             <div className="team-card">
               <img
-                src=""
+                src="./imgs/avarta/hung.jpg"
                 alt="Đỗ Thanh HÙng"
               />
               <h4>Đỗ Thanh Hùng</h4>
@@ -171,8 +175,6 @@ function About() {
           </div>
         </div>
       </div>
-    </div>
-    </div>
     </div>
   );
 }

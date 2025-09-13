@@ -36,24 +36,14 @@ function Footer() {
                     <li><Link to="/Appointment_owner" className="footer-sublink">Appointment</Link></li>
                   </ul>
                 </li>
-
                 <li><Link to="/about" className="footer-link">About Us</Link></li>
                 <li><Link to="/contact" className="footer-link">Contact</Link></li>
                 <li><Link to="/adoption" className="footer-link">Adoption</Link></li>
-
-                <li>
-                  <span className="footer-link">Job</span>
-                  <ul className="footer-submenu">
-                    <li><Link to="/job/Veterinarian_Registration" className="footer-sublink">Veterinarian Registration</Link></li>
-                    <li><Link to="/job/HealthRecord" className="footer-sublink">Health Record</Link></li>
-
-                  </ul>
-                </li>
+                <li><Link to="/job" className="footer-link">Job</Link></li>
               </ul>
 
             </div>
           </div>
-
           {/* Contact Info */}
           <div className="col-md-4 mb-4">
             <h5 className="fw-bold">Contact Us</h5>
