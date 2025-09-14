@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Table, Button, Form, Collapse } from "react-bootstrap";
-import api from "../../api"; // ✅ import API
+import api from "../../api";
+import { useParams } from 'react-router-dom';
+import Sidebar from "./Sidebar";
 
-// Sidebar
-const Sidebar = () => (
-  <div className="bg-dark text-white vh-100 p-3">
-    <h4 className="mb-4">
-      <Link to="/Dashboard" className="nav-link text-white">
-        🐾 Admin
-      </Link>
-    </h4>
-    <ul className="nav flex-column gap-2">
-      <li>
-        <Link to="/overview" className="nav-link text-white fw-bold">
-          📊 Overview
-        </Link>
-      </li>
-      <li>
-        <Link to="/adopPets" className="nav-link text-white">
-          🐶 Manage Pets
-        </Link>
-      </li>
-      <li>
-        <Link to="/adopRequest" className="nav-link text-white">
-          📑 Adoption Requests
-        </Link>
-      </li>
-    </ul>
-  </div>
-);
+import AdminVetList from "./VetManager";
 
-// StatsCard
+// Sidebar (unchanged)
+// const Sidebar = () => (
+//   <div className="bg-dark text-white vh-100 p-3">
+//     <h4 className="mb-4">
+//       <Link to="/Dashboard" className="nav-link text-white">
+//         🐾 Admin
+//       </Link>
+//     </h4>
+//     <ul className="nav flex-column gap-2">
+//       <li>
+//         <Link to="/overview" className="nav-link text-white fw-bold">
+//           📊 Overview
+//         </Link>
+//       </li>
+//       <li>
+//         <Link to="/adopPets" className="nav-link text-white">
+//           🐶 Manage Pets
+//         </Link>
+//       </li>
+//       <li>
+//         <Link to="/adopRequest" className="nav-link text-white">
+//           📑 Adoption Requests
+//         </Link>
+//       </li>
+//     </ul>
+//   </div>
+// );
+
+// StatsCard (unchanged)
 const StatsCard = ({ title, value, variant }) => (
   <div className={`card text-white bg-${variant} shadow p-3 text-center mb-3`}>
     <h5>{title}</h5>
@@ -39,14 +43,15 @@ const StatsCard = ({ title, value, variant }) => (
   </div>
 );
 
-// CareLogForm
+// CareLogForm (unchanged)
 const CareLogForm = ({ petId, onAdd }) => {
   const [form, setForm] = useState({ type: "feeding", details: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.details.trim()) return;
-    onAdd(petId, { ...form, time: new Date() });
+    onAdd(petId, { ...form, time: new Date().toISOString() });
+
     setForm({ type: "feeding", details: "" });
   };
 
@@ -83,8 +88,8 @@ const CareLogForm = ({ petId, onAdd }) => {
   );
 };
 
-// CareLogTable
-const CareLogTable = ({ logs, onUpdate }) => {
+// CareLogTable (unchanged)
+const CareLogTable = ({ petId, logs, onUpdate }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editForm, setEditForm] = useState({ type: "feeding", details: "" });
 
@@ -93,10 +98,20 @@ const CareLogTable = ({ logs, onUpdate }) => {
     setEditForm({ type: log.type, details: log.details });
   };
 
-  const handleSave = () => {
-    onUpdate(editingIndex, { ...editForm, time: new Date() });
-    setEditingIndex(null);
+  const handleSave = async () => {
+    try {
+      const logId = logs[editingIndex]._id;
+      const updatedLog = { ...editForm, time: new Date() };
+
+      const res = await api.put(`/shelter-pets/${petId}/logs/${logId}`, updatedLog);
+      onUpdate(petId, editingIndex, res.data);
+      setEditingIndex(null);
+      setEditForm({ type: "feeding", details: "" });
+    } catch (err) {
+      console.error("Lỗi cập nhật log:", err);
+    }
   };
+
 
   return (
     <Table size="sm" bordered hover>
@@ -110,7 +125,7 @@ const CareLogTable = ({ logs, onUpdate }) => {
       </thead>
       <tbody>
         {logs.map((log, i) => (
-          <tr key={i}>
+          <tr key={log._id || i}>
             <td>
               {editingIndex === i ? (
                 <Form.Select
@@ -173,11 +188,12 @@ const CareLogTable = ({ logs, onUpdate }) => {
 
 // Main Dashboard
 const Dashboard = () => {
+
   const [pets, setPets] = useState([]);
   const [careLogs, setCareLogs] = useState({});
   const [openPet, setOpenPet] = useState(null);
 
-  // ✅ Fetch pets từ backend
+  // Fetch pets từ backend
   useEffect(() => {
     fetchPets();
   }, []);
@@ -186,20 +202,48 @@ const Dashboard = () => {
     try {
       const res = await api.get("/shelter-pets");
       setPets(res.data);
-      const initLogs = {};
-      res.data.forEach((p) => (initLogs[p._id] = []));
-      setCareLogs(initLogs);
     } catch (err) {
       console.error("Lỗi load pets:", err);
     }
   };
 
-  const handleAddLog = (petId, log) => {
-    setCareLogs({
-      ...careLogs,
-      [petId]: [...(careLogs[petId] || []), log],
-    });
+  const fetchCareLogs = async (petId) => {
+    try {
+      const res = await api.get(`/shelter-pets/${petId}/logs`);
+      setCareLogs((prev) => ({ ...prev, [petId]: res.data }));
+    } catch (err) {
+      console.error("Lỗi load logs:", err);
+    }
   };
+
+  const handleAddLog = async (petId, newLog) => {
+    if (!petId || !newLog) {
+      console.warn("Thiếu petId hoặc newLog");
+      return;
+    }
+
+    // Tạo một đối tượng mới chỉ với các trường cần thiết
+    const sanitizedLog = {
+      type: newLog.type,
+      details: newLog.details,
+      time: newLog.time,
+    };
+
+    try {
+      // Đặt console.log tại đây để kiểm tra đối tượng đã được làm sạch
+      console.log("Sending sanitized log:", sanitizedLog);
+
+      const res = await api.post(`/shelter-pets/${petId}/logs`, sanitizedLog);
+
+      setCareLogs((prevLogs) => ({
+        ...prevLogs,
+        [petId]: [...(prevLogs[petId] || []), res.data],
+      }));
+    } catch (err) {
+      console.error("Lỗi thêm log:", err);
+    }
+  };
+
 
   const handleUpdateLog = (petId, index, updatedLog) => {
     setCareLogs({
@@ -210,7 +254,6 @@ const Dashboard = () => {
     });
   };
 
-  // ✅ Toggle trạng thái Available / Adopted
   const handleToggleStatus = async (petId, current) => {
     try {
       const res = await api.put(`/shelter-pets/${petId}`, {
@@ -222,7 +265,6 @@ const Dashboard = () => {
     }
   };
 
-  // ✅ Update healthStatus
   const handleUpdateHealth = async (petId, newHealth) => {
     try {
       const res = await api.put(`/shelter-pets/${petId}`, {
@@ -239,10 +281,8 @@ const Dashboard = () => {
       <Col md={2}>
         <Sidebar />
       </Col>
-
       <Col md={10} className="p-4">
         <h2 className="mb-4">📊 Shelter Dashboard</h2>
-
         <Row>
           <Col md={4}>
             <StatsCard title="Total Pets" value={pets.length} variant="primary" />
@@ -265,8 +305,74 @@ const Dashboard = () => {
             />
           </Col>
         </Row>
-{/* ====================================================== */}
-        
+        <h3 className="mt-4">🐶 Adoptable Pets & Care Status</h3>
+        <Table striped bordered hover responsive>
+          <thead className="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Age</th>
+              <th>Health</th>
+              <th>Status</th>
+              <th>Care Logs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pets.map((pet) => (
+              <React.Fragment key={pet._id}>
+                <tr>
+                  <td>{pet.name}</td>
+                  <td>{pet.type}</td>
+                  <td>{pet.age}</td>
+                  <td>{pet.healthStatus}</td>
+                  <td>
+                    <Button
+                      variant={pet.available ? "success" : "secondary"}
+                      size="sm"
+                      onClick={() => handleToggleStatus(pet._id, pet.available)}
+                    >
+                      {pet.available ? "Available" : "Adopted"}
+                    </Button>
+                  </td>
+                  <td>
+                    {/* ✅ Logic tối ưu tại đây */}
+                    <Button
+                      variant="info"
+                      size="sm"
+                      onClick={() => {
+                        const isOpen = openPet === pet._id;
+                        setOpenPet(isOpen ? null : pet._id);
+
+                        // ✅ Logic đã sửa: chỉ gọi API nếu dữ liệu logs cho pet này chưa tồn tại
+                        if (!isOpen && !careLogs.hasOwnProperty(pet._id)) {
+                          fetchCareLogs(pet._id);
+                        }
+                      }}
+                    >
+                      {openPet === pet._id ? "Hide" : "View / Update"}
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={6} className="p-0">
+                    {/* ✅ Collapse không thay đổi */}
+                    <Collapse in={openPet === pet._id}>
+                      <div className="p-3 bg-light">
+                        <h6>📝 Care Logs for {pet.name}</h6>
+                        <CareLogForm petId={pet._id} onAdd={handleAddLog} />
+                        <CareLogTable
+                          petId={pet._id}
+                          logs={careLogs[pet._id] || []}
+                          onUpdate={handleUpdateLog}
+                        />
+                      </div>
+                    </Collapse>
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </Table>
       </Col>
     </Row>
   );

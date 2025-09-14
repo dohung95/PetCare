@@ -25,16 +25,13 @@ const VeterinarianRegistration = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const navigate = useNavigate();
-<<<<<<< Updated upstream
-=======
   const [cvFile, setCvFile] = useState(null);
   const [certificateFiles, setCertificateFiles] = useState([]);
 
-
->>>>>>> Stashed changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -120,7 +117,7 @@ const VeterinarianRegistration = () => {
   };
 
   return (
-    <Container className="mt-4 Veterinarian_Registration" style={{paddingBottom: '3%' }}>
+    <Container className="mt-4 Veterinarian_Registration" style={{ paddingBottom: '3%' }}>
       <Card className="vet-card p-4">
         <Card.Body>
           <Row className="mb-4">
@@ -149,7 +146,7 @@ const VeterinarianRegistration = () => {
 
           <Row className="mb-4">
             <Col>
-              <Card.Text style={{ fontSize: '1.5rem', color: '#555' }}>
+              <div style={{ fontSize: '1.5rem', color: '#555' }}>
                 <b>Job Requirements</b><br />
                 <ul className="list-unstyled">
                   <li><i className="bi bi-check-circle"></i> Access and manage pet health records of scheduled clients.</li>
@@ -157,7 +154,7 @@ const VeterinarianRegistration = () => {
                   <li><i className="bi bi-check-circle"></i> Manage appointments, confirm or adjust appointment times.</li>
                   <li><i className="bi bi-check-circle"></i> Ensure information is updated accurately and promptly on the system.</li>
                 </ul>
-              </Card.Text>
+              </div>
             </Col>
           </Row>
 

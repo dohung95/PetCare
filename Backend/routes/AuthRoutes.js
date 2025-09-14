@@ -87,7 +87,6 @@ router.post('/reset-password/:token', async (req, res) => {
   }
 });
 
-
 // DEBUG: kiểm tra token nhanh
 router.get('/check-token/:token', async (req, res) => {
   try {

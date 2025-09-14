@@ -1,27 +1,382 @@
-.store-container {
+/* ========== PetStore.css (refined) ========== */
+
+/* CSS reset nhẹ cho phạm vi component */
+.petstore-container * {
+  box-sizing: border-box;
+}
+
+/* Layout chính */
+.petstore-container {
+  --ps-gap: 16px;
+  --ps-radius: 12px;
+  --ps-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+  --ps-shadow-sm: 0 4px 12px rgba(0, 0, 0, .06);
+  --ps-border: 1px solid #e5e7eb;
+  --ps-primary: #2563eb;
+  /* xanh dương primary */
+  --ps-primary-dark: #1e40af;
+  --ps-green: #22c55e;
+  --ps-green-dark: #16a34a;
+  --ps-bg: #fafafa;
+  --ps-text: #111827;
+  --ps-text-muted: #6b7280;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--ps-text);
+}
+
+/* Tiêu đề */
+.petstore-title {
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 2.25rem);
+  font-weight: 800;
   text-align: center;
+  margin: 0 0 20px;
+  letter-spacing: .2px;
 }
 
-.store-tabs {
-  margin-bottom: 20px;
+/* Thanh filter/search */
+.petstore-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ps-gap);
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 22px;
+  padding: 12px;
+  background: #fff;
+  border: var(--ps-border);
+  border-radius: var(--ps-radius);
+  box-shadow: var(--ps-shadow-sm);
 }
 
-.tab-btn {
-  margin-right: 10px;
-  padding: 10px 20px;
-  background: #ccc;
-  color: #000;
+.petstore-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.petstore-filter-label {
+  font-weight: 600;
+  color: var(--ps-text-muted);
+  white-space: nowrap;
+}
+
+.petstore-filter-select,
+.petstore-search-input {
+  appearance: none;
+  padding: 10px 12px;
+  border: var(--ps-border);
+  border-radius: 10px;
+  font-size: 14px;
+  min-width: 160px;
+  outline: none;
+  background: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.petstore-search-input {
+  min-width: 240px;
+}
+
+.petstore-filter-select:focus,
+.petstore-search-input:focus {
+  border-color: var(--ps-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+}
+
+/* Lưới sản phẩm */
+.petstore-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+/* Card */
+.petstore-card {
+  background: #fff;
+  border-radius: var(--ps-radius);
+  border: var(--ps-border);
+  box-shadow: var(--ps-shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.petstore-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ps-shadow);
+}
+
+.petstore-card-image-container {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f3f4f6 0%, #e5e7eb 100%);
+}
+
+.petstore-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.petstore-card-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.petstore-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+  color: var(--ps-text);
+}
+
+.petstore-card-text {
+  font-size: .9rem;
+  color: var(--ps-text-muted);
+  margin: 0;
+}
+
+.petstore-card-description {
+  font-size: .88rem;
+  color: #4b5563;
+  margin-top: 4px;
+  min-height: 36px;
+}
+
+/* Số lượng */
+.petstore-quantity-group {
+  display: inline-flex;
+  align-items: center;
+  border: var(--ps-border);
+  border-radius: 10px;
+  overflow: hidden;
+  width: fit-content;
+  margin-top: 4px;
+}
+
+.petstore-quantity-button {
+  background: #f3f4f6;
   border: none;
-  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background .15s ease;
 }
 
-.tab-btn.active {
-  background: #333;
+.petstore-quantity-button:hover {
+  background: #e5e7eb;
+}
+
+.petstore-quantity-text {
+  min-width: 42px;
+  text-align: center;
+  font-weight: 600;
+  padding: 8px 10px;
+  background: #fff;
+  border-left: var(--ps-border);
+  border-right: var(--ps-border);
+}
+
+/* Nút mua */
+.petstore-buy-button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--ps-green);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, transform .06s ease;
+}
+
+.petstore-buy-button:hover {
+  background: var(--ps-green-dark);
+}
+
+.petstore-buy-button:active {
+  transform: translateY(1px);
+}
+
+/* Modal overlay */
+.petstore-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+/* Modal */
+.petstore-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: min(480px, 100%);
+  padding: 18px;
+  border: var(--ps-border);
+  box-shadow: var(--ps-shadow);
+  animation: petstore-pop .18s ease-out;
+}
+
+@keyframes petstore-pop {
+  from {
+    transform: translateY(6px) scale(.98);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.petstore-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.petstore-modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.petstore-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.petstore-modal-close:hover {
+  color: #374151;
+}
+
+.petstore-modal-body {
+  margin-top: 6px;
+}
+
+.petstore-modal-form-group {
+  margin-bottom: 14px;
+}
+
+.petstore-modal-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ps-text);
+}
+
+.petstore-modal-input,
+.petstore-modal-input-disabled {
+  width: 100%;
+  padding: 10px 12px;
+  border: var(--ps-border);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.petstore-modal-input:focus {
+  border-color: var(--ps-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+}
+
+.petstore-modal-input-disabled {
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.petstore-modal-total {
+  display: inline-block;
+  font-weight: 800;
+  color: var(--ps-text);
+}
+
+/* Nút modal */
+.petstore-modal-button {
+  width: 100%;
+  padding: 11px 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, transform .06s ease;
+}
+
+.petstore-modal-confirm {
+  background: var(--ps-primary);
   color: #fff;
 }
 
-.store-content {
-  font-size: 1.2rem;
-  margin-top: 20px;
+.petstore-modal-confirm:hover {
+  background: var(--ps-primary-dark);
+}
+
+.petstore-modal-confirm:active {
+  transform: translateY(1px);
+}
+
+.petstore-modal-cancel {
+  margin-top: 10px;
+  background: #ef4444;
+  color: #fff;
+}
+
+.petstore-modal-cancel:hover {
+  background: #dc2626;
+}
+
+.petstore-modal-cancel:active {
+  transform: translateY(1px);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .petstore-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .petstore-filter-container {
+    padding: 10px;
+  }
+
+  .petstore-search-input {
+    min-width: 180px;
+  }
+
+  .petstore-card-body {
+    padding: 12px;
+  }
+}
+
+/* A11y: giảm animation nếu user prefers */
+@media (prefers-reduced-motion: reduce) {
+
+  .petstore-card,
+  .petstore-modal {
+    transition: none;
+    animation: none;
+  }
 }

@@ -38,9 +38,9 @@ function About() {
           </div>
         </div>
 
-        {/* story */}
+        {/* The Beginning / Our Origins */}
         <div className='about-col about-story mb-8'>
-          <h3 className="text-2xl font-semibold mb-4">Our Story</h3>
+          <h3 className="text-2xl font-semibold mb-4">The Beginning / Our Origins</h3>
           <p className="text-lg mb-4">
             Our journey at PetCare began five years ago with a heartfelt story. It all started when our founder, Hoai Thu, rescued a stray cat named Bong from the streets. Malnourished and abandoned, Bong's recovery inspired Thu to dedicate her life to helping pets in need. With her love for animals and a vision to create a safe haven, she founded PetCare in 2020. What began as a small clinic has grown into a comprehensive PetCare hub, offering veterinary services, protection facilities, and a thriving online store. Every step of the way, Bong's wagging tail reminds us of our mission: to turn every pet’s life into a story of love and happiness. At PetCare, we don’t just care for pets—we build families.
           </p>
@@ -120,11 +120,11 @@ function About() {
           </div>
         </div>
 
-        {/* Core Values & Why Choose Us */}
+        {/* The PetCare Way & Why Choose Us */}
         <div className='about-core-why-section'>
-          {/* Core Values */}
+          {/* The PetCare Way */}
           <div className="about-col">
-            <h3 className="text-2xl font-semibold mb-4">Our Core Values</h3>
+            <h3 className="text-2xl font-semibold mb-4">The PetCare Way</h3>
             <div className="core-values-section">
               <div className="values-list space-y-3">
                 <p><strong>Compassion</strong>: We treat every pet with love and empathy, understanding their unique needs and emotions.</p>
@@ -152,25 +152,6 @@ function About() {
               <p className="choose-us-conclusion mt-4">
                 Choose PetCare and experience the difference of a dedicated team committed to your pet’s well-being.
               </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div>
-          <h3 className="text-2xl font-semibold mb-4">Testimonials</h3>
-          <div className="testimonials-section">
-            <div className="testimonials-list">
-              <p>"PetCare saved my dog’s life with their expert care! Dr. Jane was amazing and so compassionate." - Sarah K.</p>
-              <p>"The online store has the best selection of pet toys. My cat loves them!" - John D.</p>
-              <p>"I left my puppy at their protection service, and he came back happier than ever. Highly recommend!" - Emily N.</p>
-              <p>"The staff treated my rabbit with such care during his check-up. Five stars!" - Mark L.</p>
-              <p>"Booking an appointment was so easy, and the veterinary service was top-notch. Thank you, PetCare!" - Linh T.</p>
-              <p>"The quality of the pet food from their store is unmatched. My dog’s health has improved a lot!" - Tom W.</p>
-              <p>"Their protection facility is clean and safe. I felt at ease while I was away." - Anna P.</p>
-              <p>"Dr. Mark Lee’s expertise with my cat’s illness was incredible. I’m so grateful!" - David H.</p>
-              <p>"The personalized attention my parrot received was beyond expectations. Great team!" - Sophie R.</p>
-              <p>"PetCare’s customer service is excellent. They helped me choose the perfect accessories!" - James B.</p>
             </div>
           </div>
         </div>

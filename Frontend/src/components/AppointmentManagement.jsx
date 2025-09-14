@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import AppointmentForm from './AppointmentForm';
-import './Css/AppointmentManagement.css'; // Import CSS custom
+import './Css/AppointmentManagement.css';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -14,53 +14,73 @@ const AppointmentManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
   const [searchTerm, setSearchTerm] = useState('');
-  const [formLoading, setFormLoading] = useState(false);
 
-  // Format date and time
+  // Get ownerId from localStorage
+  const ownerId = localStorage.getItem('ownerId');
+
+  // Format date and time for display
   const formatDateTime = (dateString) => {
-    return new Date(dateString).toLocaleString('en-GB', {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return isNaN(date) ? 'Invalid Date' : date.toLocaleString('en-GB', {
       year: 'numeric', month: '2-digit', day: '2-digit',
       hour: '2-digit', minute: '2-digit'
     });
   };
 
-  // Fetch appointments with populated pet_id and owner_id
+  // Fetch appointments from API
   const fetchAppointments = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(`${API_BASE_URL}/appointments`);
-      if (response.data.success) {
-        setAppointments(response.data.data);
-        setFilteredAppointments(response.data.data);
+      const response = await axios.get(`${API_BASE_URL}/appointments`, {
+        timeout: 5000
+      });
+      
+      if (response.data.success && Array.isArray(response.data.data)) {
+        // Filter appointments where vet_id matches ownerId
+        const matchedAppointments = response.data.data.filter(appointment => 
+          appointment.vet_id === ownerId
+        );
+        setAppointments(matchedAppointments);
+        setFilteredAppointments(matchedAppointments);
       } else {
-        setError(response.data.message);
+        setError(response.data.message || 'No appointments found');
+        setAppointments([]);
+        setFilteredAppointments([]);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Error loading data');
+      console.error('Error fetching appointments:', err);
+      setError(err.response?.data?.message || 'Failed to connect to the server');
+      setAppointments([]);
+      setFilteredAppointments([]);
     } finally {
       setLoading(false);
     }
   };
+
+  // Initial fetch and scroll to top
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-  useEffect(() => {
-    fetchAppointments();
+    if (!ownerId) {
+      window.location.href = '/auth/login'; // Redirect to login if not authenticated
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      fetchAppointments();
+    }
   }, []);
 
-  // Filter appointments by pet name, owner name, status, or date
+  // Filter appointments based on search term
   useEffect(() => {
     const filtered = appointments.filter(appointment =>
       (appointment.pet_id?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (appointment.owner_id?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      appointment.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      new Date(appointment.appointment_time).toLocaleDateString('en-GB').includes(searchTerm)
+      (appointment.status || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      formatDateTime(appointment.appointment_time).toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredAppointments(filtered);
   }, [searchTerm, appointments]);
 
-  // Memoized table rows
+  // Memoize table rows for performance
   const tableRows = useMemo(() =>
     filteredAppointments.map((appointment) => (
       <tr key={appointment._id}>
@@ -70,102 +90,72 @@ const AppointmentManagement = () => {
         <td className="px-3 py-2">
           <span className={`badge ${appointment.status === 'pending' ? 'bg-warning text-dark' :
             appointment.status === 'confirmed' ? 'bg-success' :
-              appointment.status === 'cancelled' ? 'bg-danger' :
-                'bg-primary'
-            }`}>
-            {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+            appointment.status === 'cancelled' ? 'bg-danger' : 'bg-primary'
+          }`}>
+            {appointment.status ? appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1) : 'N/A'}
           </span>
         </td>
         <td className="px-3 py-2">{formatDateTime(appointment.createdAt)}</td>
         <td className="px-3 py-2">
           <button
             onClick={() => handleEdit(appointment)}
-            className="btn btn-link text-primary p-0 me-2"
+            className="btn btn-link text-primary p-0"
             aria-label={`Edit appointment for ${appointment.pet_id?.name || 'N/A'}`}
           >
             Edit
-          </button>
-          <button
-            onClick={() => handleDelete(appointment._id)}
-            className="btn btn-link text-danger p-0"
-            aria-label={`Delete appointment for ${appointment.pet_id?.name || 'N/A'}`}
-          >
-            Delete
           </button>
         </td>
       </tr>
     )), [filteredAppointments]
   );
 
+  // Handle form submission for editing
   const handleSubmit = async (data) => {
     try {
-      setFormLoading(true);
-      let response;
-      if (editingId) {
-        response = await axios.put(`${API_BASE_URL}/appointments/${editingId}`, data);
-        setMessage({ text: 'Updated successfully!', type: 'success' });
-      } else {
-        response = await axios.post(`${API_BASE_URL}/appointments`, data);
-        setMessage({ text: 'Created successfully!', type: 'success' });
-      }
+      setLoading(true);
+      const response = await axios.put(`${API_BASE_URL}/appointments/${editingId}`, data);
+      setMessage({ text: 'Updated successfully!', type: 'success' });
       setShowModal(false);
       setEditingId(null);
-      fetchAppointments();
+      await fetchAppointments();
     } catch (err) {
+      console.error('Error updating appointment:', err);
       setMessage({ text: err.response?.data?.message || 'Error saving data', type: 'error' });
     } finally {
-      setFormLoading(false);
+      setLoading(false);
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this appointment?')) {
-      try {
-        await axios.delete(`${API_BASE_URL}/appointments/${id}`);
-        setMessage({ text: 'Deleted successfully!', type: 'success' });
-        fetchAppointments();
-      } catch (err) {
-        setMessage({ text: err.response?.data?.message || 'Error deleting data', type: 'error' });
-      }
-    }
-  };
-
+  // Handle edit button click
   const handleEdit = (appointment) => {
     setEditingId(appointment._id);
     setShowModal(true);
   };
 
+  // Handle modal cancel
   const handleCancel = () => {
     setShowModal(false);
     setEditingId(null);
+    setMessage({ text: '', type: '' });
   };
 
   return (
     <div className="container py-4 AppointmentManagement">
       <div style={{ backgroundColor: '#f8f9fab2', padding: '2%', borderRadius: '10px' }}>
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h1 className="h3">Appointment Management</h1>
-          <button
-            onClick={() => setShowModal(true)}
-            className="btn btn-primary"
-            aria-label="Add new appointment"
-          >
-            Add New
-          </button>
-        </div>
+        <h1 className="h3 mb-4">Appointment Management</h1>
 
-        {/* Search bar */}
+        {/* Search Input */}
         <div className="mb-4">
           <input
             type="text"
             className="form-control"
-            placeholder="Search by Pet Name, Owner Name, status, or date..."
+            placeholder="Search by Pet Name, Owner Name, Status, or Date..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        {/* Messages */}
+        {/* Message Alert */}
         {message.text && (
           <div className={`alert alert-${message.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show mb-4`} role="alert">
             {message.text}
@@ -178,7 +168,7 @@ const AppointmentManagement = () => {
           </div>
         )}
 
-        {/* Loading spinner */}
+        {/* Loading Spinner */}
         {loading && (
           <div className="text-center my-5">
             <div className="spinner-border text-primary" role="status">
@@ -187,7 +177,7 @@ const AppointmentManagement = () => {
           </div>
         )}
 
-        {/* Table */}
+        {/* Appointments Table */}
         {!loading && (
           <div className="table-responsive">
             <table className="table table-hover">
@@ -205,7 +195,7 @@ const AppointmentManagement = () => {
                 {tableRows.length > 0 ? tableRows : (
                   <tr>
                     <td colSpan="6" className="text-center">
-                      {searchTerm ? 'No results found' : 'No appointments available'}
+                      {searchTerm ? 'No results found' : 'No appointments available for this vet'}
                     </td>
                   </tr>
                 )}
@@ -214,16 +204,26 @@ const AppointmentManagement = () => {
           </div>
         )}
 
-        {error && (
-          <div className="alert alert-danger mt-4" role="alert">{error}</div>
+        {/* Error Message */}
+        {error && !loading && (
+          <div className="alert alert-danger mt-4" role="alert">
+            {error}
+            <button
+              type="button"
+              className="btn btn-link text-primary ms-3"
+              onClick={fetchAppointments}
+            >
+              Retry
+            </button>
+          </div>
         )}
 
-        {/* Modal */}
+        {/* Edit Modal */}
         <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" aria-hidden={!showModal}>
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">{editingId ? 'Edit Appointment' : 'Add New Appointment'}</h5>
+                <h5 className="modal-title">Edit Appointment</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -236,7 +236,7 @@ const AppointmentManagement = () => {
                   initialData={editingId ? {
                     pet_id: appointments.find(a => a._id === editingId)?.pet_id?._id || '',
                     owner_id: appointments.find(a => a._id === editingId)?.owner_id?._id || '',
-                    vet_id: appointments.find(a => a._id === editingId)?.vet_id?._id || '',
+                    vet_id: appointments.find(a => a._id === editingId)?.vet_id || '',
                     appointment_time: appointments.find(a => a._id === editingId)?.appointment_time
                       ? new Date(appointments.find(a => a._id === editingId).appointment_time).toISOString().slice(0, 16)
                       : '',
@@ -245,7 +245,7 @@ const AppointmentManagement = () => {
                   onSubmit={handleSubmit}
                   onCancel={handleCancel}
                   isEditing={!!editingId}
-                  loading={formLoading}
+                  loading={loading}
                 />
               </div>
             </div>
