@@ -130,16 +130,6 @@ export default function AdminVetList() {
                                         <div><strong>Address:</strong> {selected.address || "-"}</div>
                                         <div><strong>Specialization:</strong> {selected.specialization || "-"}</div>
                                         <div><strong>Experience:</strong> {selected.experience ?? "-"}</div>
-                                        <div className="mt-2">
-                                            <strong>Available slots:</strong>
-                                            <div className="vetadm-chips mt-1">
-                                                {(selected.available_slots || []).length
-                                                    ? selected.available_slots.map(s => <span key={s} className="vetadm-chip">{s}</span>)
-                                                    : <span className="text-muted">No slots</span>
-                                                }
-                                            </div>
-                                        </div>
-
                                         {/* Nút bạn sẽ thêm sau để làm hành động khác */}
                                         {/* <Button className="mt-3" variant="outline-primary">Your next action</Button> */}
                                     </div>
