@@ -282,7 +282,7 @@ const Dashboard = () => {
         <Sidebar />
       </Col>
       <Col md={10} className="p-4">
-        <h2 className="mb-4">📊 Shelter Dashboard</h2>
+        <h2 className="mb-4" style={{backgroundColor:"#ffffffe1",width:"30%",textAlign:"center",borderRadius:"10px"}}>📊 Shelter Dashboard</h2>
         <Row>
           <Col md={4}>
             <StatsCard title="Total Pets" value={pets.length} variant="primary" />
@@ -305,7 +305,7 @@ const Dashboard = () => {
             />
           </Col>
         </Row>
-        <h3 className="mt-4">🐶 Adoptable Pets & Care Status</h3>
+        <h3 className="mt-4" style={{backgroundColor:"#ffffffe1",width:"35%",textAlign:"center",borderRadius:"10px"}}>🐶 Adoptable Pets & Care Status</h3>
         <Table striped bordered hover responsive>
           <thead className="table-light">
             <tr>
