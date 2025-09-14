@@ -140,7 +140,7 @@ const HealthRecord = () => {
 
   return (
     <div className="container mt-4 HealthRecord" style={{ backgroundColor: '#f8f9fab2', padding: '2%', borderRadius: '10px' }}>
-      <h1 className="text-center mb-4 health-title">Health Record Management</h1>
+      <h1 className="text-center mb-4 health-title">Health Record</h1>
 
       {/* Search Input */}
       <div className="mb-4">

@@ -9,14 +9,12 @@ const UserProfile = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // formData mở rộng
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: '',
     email: '',
-    gender: '',
-    avatarUrl: '',
-    emergencyPhone: ''
   });
 
   useEffect(() => {
@@ -36,7 +34,6 @@ const UserProfile = () => {
           email: u.email || '',
           address: u.address || '',
           role: u.role || '',
-          gender: u.gender || '',
           avatarUrl: u.avatarUrl || u.avatar || '',
           emergencyPhone: u.emergencyPhone || '',
           createdAt: u.createdAt || '',
@@ -55,6 +52,7 @@ const UserProfile = () => {
           emergencyPhone: normalized.emergencyPhone
         });
 
+        // đồng bộ localStorage (nếu bạn thích dùng lại)
         localStorage.setItem('ownerId', normalized.id);
         localStorage.setItem('ownerName', normalized.name);
         localStorage.setItem('ownerPhone', normalized.phone);
@@ -75,6 +73,7 @@ const UserProfile = () => {
     if (!user?.id) { setError('User id not found.'); return; }
     setError(''); setSuccess('');
 
+    // chỉ gửi các trường có trong formData (backend không có sẽ bỏ qua/ignore)
     const payload = {
       name: formData.name,
       phone: formData.phone,
@@ -86,10 +85,6 @@ const UserProfile = () => {
     };
 
     try {
-      // Nếu backend đã có PUT /api/user/profile: dùng thẳng endpoint đó cho gọn
-      // const response = await api.put('/api/user/profile', payload);
-
-      // Giữ cách gọi theo code cũ của bạn:
       let response;
       try {
         response = await api.put(`/owners/${user.id}`, payload);
@@ -124,6 +119,7 @@ const UserProfile = () => {
       setEditMode(false);
       setSuccess('Profile updated successfully');
 
+      // update localStorage
       localStorage.setItem('ownerName', normalized.name);
       localStorage.setItem('ownerPhone', normalized.phone);
       localStorage.setItem('ownerEmail', normalized.email);
@@ -153,9 +149,10 @@ const UserProfile = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <Container className="user-profile profile-container">
+    <Container className="profile-container">
       <Row className="justify-content-center">
         <Col md={8}>
+          {/* Avatar + Basic info */}
           <Card className="user-profile profile-card">
             <Card.Header as="h3" className="user-profile card-header text-center" style={{ color: 'white' }}>
               User Profile
@@ -164,6 +161,7 @@ const UserProfile = () => {
             <Card.Body className="user-profile card-body">
               <div className="user-profile d-flex align-items-center mb-3">
                 {(formData.avatarUrl || user.avatarUrl) ? (
+
                   <Image
                     src={formData.avatarUrl || user.avatarUrl}
                     roundedCircle width={72} height={72} className="me-3"
@@ -179,11 +177,12 @@ const UserProfile = () => {
                 <div>
                   <div style={{ fontSize: 18, fontWeight: 700, color: 'white' }}>{user.name}</div>
                   <div className="user-profile text-muted">{user.email}</div>
+
                 </div>
               </div>
 
-              {error && <Alert variant="danger" className="user-profile alert">{error}</Alert>}
-              {success && <Alert variant="success" className="user-profile alert">{success}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
+              {success && <Alert variant="success">{success}</Alert>}
 
               <Form className="user-profile profile-form-grid">
                 <Form.Group controlId="formName" className="user-profile mb-3">
@@ -233,11 +232,11 @@ const UserProfile = () => {
                 </Form.Group>
 
 
-                <div className="user-profile text-center">
+                <div className="text-center">
                   {editMode ? (
                     <>
-                      <Button variant="success" onClick={handleSave} className="user-profile btn me-2">Save</Button>
-                      <Button variant="secondary" onClick={handleCancel} className="user-profile btn">Cancel</Button>
+                      <Button variant="success" onClick={handleSave} className="me-2">Save</Button>
+                      <Button variant="secondary" onClick={handleCancel}>Cancel</Button>
                     </>
                   ) : (
                     <Button

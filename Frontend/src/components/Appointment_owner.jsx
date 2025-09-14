@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
 import './Css/Appointment_owner.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function Appointment_owner() {
   const ownerId = localStorage.getItem('ownerId'); // nếu login thì có
   const [owner, setOwner] = useState(null);
+  const navigate = useNavigate();
 
   const [notice, setNotice] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -36,7 +38,7 @@ export default function Appointment_owner() {
   // Nếu có ownerId -> fetch và prefill vào state (để payload vẫn có đủ field bắt buộc)
 useEffect(() => {
   const token = localStorage.getItem('token');
-  if (!token) return;
+  if (!token) return navigate('/auth/login');
 
   (async () => {
     try {

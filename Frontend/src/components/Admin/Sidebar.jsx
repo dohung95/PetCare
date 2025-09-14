@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+
   return (
     <div className="bg-dark text-white vh-100 p-3">
       <h4 className="mb-4">
@@ -10,6 +11,7 @@ const Sidebar = () => {
         </Link>
       </h4>
       <ul className="nav flex-column gap-2">
+        {/* Shellter */}
         <li>
           <Link to="/overview" className="nav-link text-white fw-bold">
             📊 Overview
@@ -23,6 +25,18 @@ const Sidebar = () => {
         <li>
           <Link to="/adopRequest" className="nav-link text-white">
             📑 Adoption Requests
+          </Link>
+        </li>
+
+        {/* admin */}
+        <li>
+          <Link to="/VetManager_list" className="nav-link text-white">
+            📑 Veterinarian Profile Manager
+          </Link>
+        </li>
+        <li>
+          <Link to="/ManageStore" className="nav-link text-white">
+            📑 Manage Store
           </Link>
         </li>
       </ul>
