@@ -69,7 +69,7 @@ const PetDetail = () => {
       ></div>
 
       {/* Card block */}
-      <div className="container">
+      <div className="container" >
         <div className="card shadow-lg p-4" style={{ marginTop: "-120px", borderRadius: "16px", maxWidth: "700px", marginLeft: "auto", marginRight: "auto" }}>
           <div className="row g-4 align-items-center">
             {/* Pet images carousel */}
@@ -113,7 +113,7 @@ const PetDetail = () => {
       )}
 
       {/* Adoption Process */}
-      <div className="adoption-process my-5 container">
+      <div className="adoption-process my-5 container" style={{backgroundColor: "#f9f9f9f0", padding: "30px", borderRadius: "16px"}}>
         <h3 className="fw-bold text-center mb-4 text-uppercase">The Adoption Process</h3>
         <div className="timeline">
           {adoptionSteps.map((step) => (

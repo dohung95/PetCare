@@ -40,12 +40,12 @@ const adoptionSteps = [
 
 const AdoptionProcess = () => {
   return (
-    <div className="container my-5">
+    <div className="container my-5" >
       <h3 className="fw-bold text-center mb-4 text-uppercase">
         The Adoption Process
       </h3>
 
-      <div className="timeline position-relative">
+      <div className="timeline position-relative" > 
         {adoptionSteps.map((step, idx) => (
           <div key={idx} className="row align-items-start mb-5 position-relative">
             {/* Circle + line */}
