@@ -186,48 +186,48 @@ const UserProfile = () => {
 
               <Form className="user-profile profile-form-grid">
                 <Form.Group controlId="formName" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Name</Form.Label>
+                  <Form.Label className="user-profile form-label text-light">Name</Form.Label>
                   <Form.Control
                     type="text" name="name" value={formData.name}
                     onChange={handleChange} disabled={!editMode}
-                    required minLength={2} className="user-profile form-control"
+                    required minLength={2} className="text-light user-profile form-control"
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formEmail" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Email</Form.Label>
+                  <Form.Label className="user-profile form-label text-light">Email</Form.Label>
                   <Form.Control
                     type="email" name="email" value={formData.email}
                     onChange={handleChange} disabled={!editMode || user.role === 'admin'}
-                    required className="user-profile form-control"
+                    required className="text-light user-profile form-control"
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formPhone" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Phone</Form.Label>
+                  <Form.Label className="user-profile form-label text-light">Phone</Form.Label>
                   <Form.Control
                     type="text" name="phone" value={formData.phone}
                     onChange={handleChange} disabled={!editMode}
-                    required pattern="^\\+?\\d{8,15}$" className="user-profile form-control"
+                    required pattern="^\\+?\\d{8,15}$" className="text-light user-profile form-control"
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formAddress" className="user-profile mb-3">
-                  <Form.Label className="user-profile form-label">Address</Form.Label>
+                  <Form.Label className="user-profile form-label text-light">Address</Form.Label>
                   <Form.Control
                     as="textarea" name="address" value={formData.address}
                     onChange={handleChange} disabled={!editMode}
-                    required className="user-profile form-control"
+                    required className=" text-light user-profile form-control"
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formRole" className="user-profile mb-3 span-2">
-                  <Form.Label className="user-profile form-label">Role</Form.Label>
+                  <Form.Label className="user-profile form-label text-light">Role</Form.Label>
                   <Form.Control
                     type="text"
                     value={user.role || ''}
                     disabled
-                    className="user-profile form-control"
+                    className="user-profile form-control text-light"
                   />
                 </Form.Group>
 

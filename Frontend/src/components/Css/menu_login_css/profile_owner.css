@@ -40,6 +40,8 @@
 
 .profile-card .card-body {
   padding: clamp(18px, 2.4vw, 28px);
+  background-color: #0b1220;
+  color: white;
 }
 
 /* ---------- Avatar row ---------- */
