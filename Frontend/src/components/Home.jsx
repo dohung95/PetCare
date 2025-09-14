@@ -181,18 +181,6 @@ const Home = ({ minRating = 4, limit = 15 }) => {
                 Every visit to SIGMA supports our mission and efforts to help more animals receive the love and quality care
                 they deserve from dedicated experts and veterinarians.
               </p>
-
-              <button
-                className="btn text-white mt-3"
-                style={{
-                  backgroundColor: "#75010A",
-                  borderRadius: "6px",
-                  padding: "10px 20px",
-                  fontWeight: "600",
-                }}
-              >
-                Our Journey
-              </button>
             </div>
           </div>
         </div>
