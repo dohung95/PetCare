@@ -73,7 +73,7 @@ function Layout() {
 
             {/* Adoption/User */}
             <Route path="/adoption" element={<AdoptionPage />} />
-            <Route path="/pets/:id" element={<PetDetail />} /> {/* Unified path */}
+            <Route path="/shelter-pets/:id" element={<PetDetail />} /> {/* Unified path */}
             <Route path="/formadop" element={<FormAdop />} />
             <Route path="/thankyou" element={<ThankYou />} />
 

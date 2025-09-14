@@ -29,11 +29,9 @@ export default function Navbar() {
   // Load current user and role
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const r = localStorage.getItem("role");
-    setRole(r);
-
     if (!token) {
       setUser(null);
+      setRole(null);
       return;
     }
 
@@ -42,6 +40,7 @@ export default function Navbar() {
         const res = await api.get("/auth/me");
         const u = res.data?.user || res.data?.data || null;
         setUser(u);
+        setRole(u?.role); // <-- lấy role từ user
       } catch {
         ["token", "role", "ownerId", "ownerName", "ownerPhone", "ownerEmail", "ownerRole"].forEach(k =>
           localStorage.removeItem(k)
@@ -50,7 +49,7 @@ export default function Navbar() {
         setRole(null);
       }
     })();
-  }, []);
+  }, [location.pathname]);
 
   // Logout
   const handleLogout = () => {
@@ -140,10 +139,32 @@ export default function Navbar() {
 
         {/* Menu */}
         <div className="menu d-flex align-items-center">
-          <div className="menu-item">
-            <Link to="/" className="nav-link">Home</Link>
-          </div>
-
+          {role?.toLowerCase() === "admin" ? (
+            <>
+              <div className="menu-item">
+                <Link to="/Dashboard" className="nav-link">Dashboard</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/Overview" className="nav-link">Overview</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/adminproductlist" className="nav-link">Manage Store</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/AdopPets" className="nav-link">Manage Pets</Link>
+              </div>
+              <div className="menu-item">
+                <Link to="/AdopRequest" className="nav-link">Manage Adoptions</Link>
+              </div>
+              <button type="button" className="nav-link btn-link menu-item" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <div className="menu-item">
+                <Link to="/" className="nav-link">Home</Link>
+              </div>
           {/* Service Dropdown */}
           <div
             className={`menu-item dropdown ${serviceOpen ? "show" : ""}`}
@@ -219,7 +240,9 @@ export default function Navbar() {
                     )}
                     {isAdmin && (
                       <>
-                        <Link to="/Dashboard" className="dropdown-item">Admin Dashboard</Link>
+                        <Link to="/account/pets" className="dropdown-item">My Pets</Link>
+                        <Link to="/service/store" className="dropdown-item">Shopping</Link>
+
                       </>
                     )}
                   </>
