@@ -1,34 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
-
-// Sidebar component
-const Sidebar = () => (
-  <div className="bg-dark text-white vh-100 p-3">
-    <h4 className="mb-4">
-      <Link to="/Dashboard" className="text-white text-decoration-none">
-        🐾 Admin
-      </Link>
-    </h4>
-    <ul className="nav flex-column gap-2">
-      <li>
-        <Link to="/overview" className="nav-link text-white fw-bold">
-          📊 Overview
-        </Link>
-      </li>
-      <li>
-        <Link to="/adopPets" className="nav-link text-white">
-          🐶 Manage Pets
-        </Link>
-      </li>
-      <li>
-        <Link to="/adopRequest" className="nav-link text-white">
-          📑 Adoption Requests
-        </Link>
-      </li>
-    </ul>
-  </div>
-);
+import Sidebar from "./Sidebar";
 
 const Overview = () => {
   const [stats, setStats] = useState({ pets: 0, adoptions: 0, pending: 0 });
