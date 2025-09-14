@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const vetController = require("../controllers/veterinarianController");
 const multer = require("multer");
+const path = require("path");
 
-// Configure multer for file uploads
+// Cấu hình multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === "cv") {
@@ -20,22 +21,37 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (file.fieldname === "cv" && file.mimetype !== "application/pdf") {
-      return cb(new Error("CV must be a PDF file"));
+    const ext = path.extname(file.originalname).toLowerCase();
+
+    if (file.fieldname === "cv") {
+      if (ext !== ".pdf") {
+        return cb(new Error("CV must be a PDF file"), false);
+      }
     }
-    if (file.fieldname === "certificates" && !["image/jpeg", "image/png"].includes(file.mimetype)) {
-      return cb(new Error("Certificates must be JPEG or PNG images"));
+
+    if (file.fieldname === "certificates") {
+      if (![".jpg", ".jpeg", ".png"].includes(ext)) {
+        return cb(new Error("Certificates must be JPEG or PNG images"), false);
+      }
     }
+
     cb(null, true);
   }
 });
 
-// Đăng ký bác sĩ with file uploads
-router.post("/register", 
+// ✅ Route đăng ký
+router.post(
+  "/register",
   upload.fields([
     { name: "cv", maxCount: 1 },
     { name: "certificates", maxCount: 5 }
-  ]), 
+  ]),
+  (err, req, res, next) => {
+    if (err instanceof multer.MulterError || err) {
+      return res.status(400).json({ error: err.message });
+    }
+    next();
+  },
   vetController.registerVet
 );
 

@@ -12,35 +12,55 @@ if (!fs.existsSync(certDir)) fs.mkdirSync(certDir, { recursive: true });
 exports.registerVet = async (req, res) => {
   try {
     const { name, email, phone, address, specialization, experience, available_slots } = req.body;
-    
-    // Handle CV file
+
+    // CV file (multer đã lưu sẵn)
     let cvPath = null;
-    if (req.files?.cv) {
-      const cvFile = req.files.cv;
-      if (cvFile.mimetype !== "application/pdf") {
-        return res.status(400).json({ error: "CV must be a PDF file" });
-      }
-      const cvFileName = `${Date.now()}_${cvFile.name}`;
-      cvPath = path.join("uploads/cvs", cvFileName);
-      await cvFile.mv(path.join(__dirname, "../", cvPath));
+    if (req.files?.cv && req.files.cv.length > 0) {
+      cvPath = req.files.cv[0].path;
     }
 
-    // Handle certificate files
+    // Certificate files (multer đã lưu sẵn)
     const certificatePaths = [];
     if (req.files?.certificates) {
-      const certFiles = Array.isArray(req.files.certificates) 
-        ? req.files.certificates 
-        : [req.files.certificates];
-      
-      for (const certFile of certFiles) {
-        if (!["image/jpeg", "image/png"].includes(certFile.mimetype)) {
-          return res.status(400).json({ error: "Certificates must be JPEG or PNG images" });
-        }
-        const certFileName = `${Date.now()}_${certFile.name}`;
-        const certPath = path.join("uploads/certificates", certFileName);
-        await certFile.mv(path.join(__dirname, "../", certPath));
-        certificatePaths.push(certPath);
-      }
+      req.files.certificates.forEach(file => {
+        certificatePaths.push(file.path);
+      });
+    }
+
+    const vet = new Veterinarian({
+      name,
+      email,
+      phone,
+      address,
+      specialization,
+      experience,
+      available_slots: available_slots ? JSON.parse(available_slots) : [],
+      cv_path: cvPath,
+      certificate_paths: certificatePaths
+    });
+
+    await vet.save();
+    res.status(201).json(vet);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};// 1. Đăng ký bác sĩ with file uploads
+exports.registerVet = async (req, res) => {
+  try {
+    const { name, email, phone, address, specialization, experience, available_slots } = req.body;
+
+    // CV file (multer đã lưu sẵn)
+    let cvPath = null;
+    if (req.files?.cv && req.files.cv.length > 0) {
+      cvPath = req.files.cv[0].path;
+    }
+
+    // Certificate files (multer đã lưu sẵn)
+    const certificatePaths = [];
+    if (req.files?.certificates) {
+      req.files.certificates.forEach(file => {
+        certificatePaths.push(file.path);
+      });
     }
 
     const vet = new Veterinarian({
