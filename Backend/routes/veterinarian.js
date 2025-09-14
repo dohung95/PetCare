@@ -22,21 +22,20 @@ const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-
-    if (file.fieldname === "cv") {
-      if (ext !== ".pdf") {
-        return cb(new Error("CV must be a PDF file"), false);
-      }
+  
+    // ✅ Chỉ cần check đuôi file cv là .pdf
+    if (file.fieldname === "cv" && !ext.endsWith(".pdf")) {
+      return cb(new Error("CV must be a PDF file"), false);
     }
-
-    if (file.fieldname === "certificates") {
-      if (![".jpg", ".jpeg", ".png"].includes(ext)) {
-        return cb(new Error("Certificates must be JPEG or PNG images"), false);
-      }
+  
+    // ✅ Chỉ cần check đuôi file certificate là .jpg|.jpeg|.png
+    if (file.fieldname === "certificates" && ![".jpg", ".jpeg", ".png"].includes(ext)) {
+      return cb(new Error("Certificates must be JPEG or PNG images"), false);
     }
-
+  
     cb(null, true);
   }
+  
 });
 
 // ✅ Route đăng ký
